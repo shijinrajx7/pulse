@@ -1,21 +1,26 @@
+
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8">
+<html lang="en">
+<head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
 <title>PULSE – Technology Intelligence</title>
 
+<!-- SEO Metadata -->
 <meta name="description" content="PULSE is a technology intelligence platform tracking breaking technology news, artificial intelligence, cybersecurity, emerging innovations, global tech developments and company announcements.">
 
 <meta name="robots" content="index, follow">
-
 <meta name="author" content="PULSE">
-
 <link rel="canonical" href="https://pulsex-phi.vercel.app/">
 
+<!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="PULSE – Technology Intelligence">
 <meta property="og:description" content="Track breaking technology news, AI developments, cybersecurity alerts and emerging innovations with PULSE.">
 <meta property="og:url" content="https://pulsex-phi.vercel.app/">
 
+<!-- Twitter / Social Sharing -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PULSE – Technology Intelligence">
 <meta name="twitter:description" content="Your window into breaking technology news, AI, cybersecurity and emerging innovations.">
@@ -42,7 +47,9 @@ button.b{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
 .empty{color:var(--mut);border:1px dashed var(--bd);border-radius:8px;padding:16px;text-align:center;font-size:13px}
 .scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--bd);vertical-align:top}th{color:var(--mut)}
 small{color:var(--mut)}a{color:var(--ac)}.t{font-weight:600;text-decoration:none}
-</style></head><body>
+</style>
+</head>
+<body>
 <header><div class="top"><span class="logo">PULSE</span><input id="q" type="search" placeholder="Search title or summary, press Enter"><button class="b g" id="th">◐</button></div><nav id="nav"></nav></header>
 <main id="m"></main>
 <script src="config.js"></script>
@@ -92,4 +99,6 @@ $("th").onclick=function(){var r=document.documentElement,d=r.getAttribute("data
 window.addEventListener("hashchange",function(){cur=location.hash.slice(1)||"overview";go()});
 var last="";function tick(){if(!OK||document.visibilityState!="visible")return;Promise.all([api("events?select=id,detected_at&order=detected_at.desc&limit=1"),api("sources?select=last_run_at&order=last_run_at.desc.nullslast&limit=1")]).then(function(a){var k=(a[0][0]?a[0][0].id+a[0][0].detected_at:"")+"|"+(a[1][0]?a[1][0].last_run_at:"");if(last&&k!=last&&cur!="notif")go();last=k}).catch(function(){})}
 go();tick();setInterval(tick,10000);
-</script></body></html>
+</script>
+</body>
+</html>
