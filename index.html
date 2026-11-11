@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PULSE – Technology Intelligence</title>
+<style>
+:root{--bg:#f4f5f7;--card:#fff;--tx:#14171c;--mut:#5d6673;--bd:#d9dde3;--ac:#1f6feb;--ok:#1a7f37;--warn:#9a6700;--bad:#cf222e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d0f12;--card:#161a1f;--tx:#e6e9ee;--mut:#8b94a1;--bd:#262c34;--ac:#4c8dff;--ok:#3fb950;--warn:#d29922;--bad:#f85149;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d0f12;--card:#161a1f;--tx:#e6e9ee;--mut:#8b94a1;--bd:#262c34;--ac:#4c8dff;--ok:#3fb950;--warn:#d29922;--bad:#f85149;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5;border-bottom:1px solid var(--bd)}
+.top{display:flex;gap:8px;align-items:center;padding:10px 12px}.logo{font-weight:800;letter-spacing:.12em;color:var(--ac)}.top input{flex:1;min-width:0}
+nav{display:flex;overflow-x:auto;gap:4px;padding:0 8px 8px;scrollbar-width:none}
+nav button{white-space:nowrap;background:none;border:1px solid transparent;color:var(--mut);padding:6px 10px;border-radius:6px;font-size:13px;font-weight:600}
+nav button.on{color:var(--ac);border-color:var(--ac)}
+main{max-width:980px;margin:0 auto;padding:12px}h2{margin:4px 0 2px;font-size:19px}p.sub{color:var(--mut);margin:0 0 12px;font-size:13px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:12px;margin-bottom:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}.stat b{display:block;font-size:22px}.stat span{color:var(--mut);font-size:12px}
+input,select,button.b{background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:6px;padding:8px;font:inherit;max-width:100%}
+button.b{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}button.g{background:none;color:var(--tx);border-color:var(--bd)}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0;align-items:center}
+.tag{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:99px;border:1px solid var(--bd);color:var(--mut);margin-right:4px}
+.wait,.warn{color:var(--warn);border-color:var(--warn)}.ok{color:var(--ok);border-color:var(--ok)}.off{color:var(--bad);border-color:var(--bad)}
+.empty{color:var(--mut);border:1px dashed var(--bd);border-radius:8px;padding:16px;text-align:center;font-size:13px}
+.scroll{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:13px}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--bd);vertical-align:top}th{color:var(--mut)}
+small{color:var(--mut)}a{color:var(--ac)}.t{font-weight:600;text-decoration:none}
+</style></head><body>
+<header><div class="top"><span class="logo">PULSE</span><input id="q" type="search" placeholder="Search title or summary, press Enter"><button class="b g" id="th">◐</button></div><nav id="nav"></nav></header>
+<main id="m"></main>
+<script src="config.js"></script>
+<script>
+var S=[["overview","Overview"],["breaking","Breaking News"],["social","Social Pulse"],["early","Early Signals"],["ai","AI Intelligence"],["cyber","Cyber Radar"],["tech","Tech Radar"],["map","Global Map"],["company","Companies"],["local","Local"],["sources","Source Monitor"],["notif","Notifications"]];
+var DESC={breaking:"Latest reporting from monitored news, company, tech and AI sources.",social:"Community discussion. Popularity is not proof of accuracy.",early:"Recent community discussions gaining points. EARLY SIGNALS are unconfirmed, never breaking news.",ai:"AI releases and research from monitored sources.",cyber:"Defensive only: official advisories, CVEs and known exploited vulnerabilities.",tech:"Technology reporting from monitored sources.",company:"Official company announcements from monitored sources.",local:"Events from sources registered for India and other regions."};
+var Q={breaking:"category=in.(news,company,tech,ai)",social:"category=eq.social",early:"category=eq.social",ai:"category=eq.ai",cyber:"category=eq.cyber",tech:"category=eq.tech",company:"category=eq.company",local:"region=like.IN*"};
+var SEL="select=id,title,url,summary,label,platform,severity,score,published_at,detected_at,meta,sources(name)";
+var C=window.PULSE||{},OK=!!(C.url&&C.key),cur=(location.hash||"#overview").slice(1),T=0,term="";
+var LS="pulse.rules";function rules(){try{return JSON.parse(localStorage.getItem(LS))||[]}catch(e){return[]}}
+function setRules(r){try{localStorage.setItem(LS,JSON.stringify(r))}catch(e){}}
+function $(i){return document.getElementById(i)}
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function url(u){return /^https?:\/\//i.test(u)?esc(u):"#"}
+function api(p,count){var h={apikey:C.key};if(/^eyJ/.test(C.key))h.Authorization="Bearer "+C.key;if(count)h.Prefer="count=exact";
+return fetch(C.url+"/rest/v1/"+p,{headers:h}).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);var cr=r.headers.get("content-range");return r.json().then(function(j){return count?+String(cr).split("/")[1]:j})})}
+function dur(ms){ms=Math.max(0,ms);return ms<6e4?Math.round(ms/1e3)+"s":ms<36e5?Math.round(ms/6e4)+"m":ms<864e5?Math.round(ms/36e5)+"h":Math.round(ms/864e5)+"d"}
+function ago(t){return t?dur(Date.now()-Date.parse(t))+" ago":"never"}
+function srch(){var q=term.replace(/[,()*]/g," ").trim();return q?"&or=(title.ilike.*"+encodeURIComponent(q)+"*,summary.ilike.*"+encodeURIComponent(q)+"*)":""}
+function card(e){var m=e.meta||{},s="";if(e.severity)s+='<span class="tag off">'+esc(e.severity)+(m.cvss!=null?" "+esc(m.cvss):"")+"</span>";
+if(m.known_exploited)s+='<span class="tag off">KNOWN EXPLOITED</span>';if(e.label)s+='<span class="tag">'+esc(e.label)+"</span>";
+var lat=e.published_at?" · detected "+dur(Date.parse(e.detected_at)-Date.parse(e.published_at))+" after publication":"";
+var v="";if(e.platform&&e.score!=null&&e.published_at)v='<br><small>≈'+(e.score/Math.max((Date.now()-Date.parse(e.published_at))/36e5,.25)).toFixed(1)+" points/hour (rough estimate) · trend state: INSUFFICIENT DATA (no baseline yet)</small>";
+var d=m.discussion?' · <a href="'+url(m.discussion)+'" target="_blank" rel="noopener">Discussion</a>':"";
+return '<div class="card">'+s+'<br><a class="t" href="'+url(e.url)+'" target="_blank" rel="noopener">'+esc(e.title)+'</a><br><small>'+esc(e.sources&&e.sources.name)+" · "+(e.published_at?"published "+ago(e.published_at):"publication time unknown")+lat+d+"</small>"+(e.summary?"<p>"+esc(e.summary.slice(0,280))+"</p>":"")+v+"</div>"}
+function emp(t){return '<div class="empty">'+(t||"No events yet. Run the worker once (see README), then refresh.")+"</div>"}
+function head(id){var n=S.filter(function(x){return x[0]==id})[0];return "<h2>"+n[1]+'</h2><p class="sub">'+(DESC[id]||"")+"</p>"}
+function stat(s){var iv=s.interval_min*6e4*3;if(!s.last_run_at)return["AWAITING CONFIGURATION","wait"];if(s.status=="rate_limited")return["RATE LIMITED","warn"];if(s.status=="offline")return["OFFLINE","off"];if(s.status=="degraded")return["DEGRADED","warn"];if(Date.now()-Date.parse(s.last_success_at)>iv)return["DELAYED","warn"];return["OPERATIONAL","ok"]}
+function list(id){var o=id=="social"||id=="early"?"score.desc.nullslast":"published_at.desc.nullslast";var f=id=="early"?"&published_at=gte."+new Date(Date.now()-216e5).toISOString():"";
+return api("events?"+SEL+"&"+Q[id]+f+srch()+"&order="+o+"&limit=50").then(function(r){return head(id)+(r.length?r.map(card).join(""):emp(id=="early"?"No recent discussions yet. Early signals come from social sources only.":0))})}
+function ov(){var d=new Date(Date.now()-864e5).toISOString();return Promise.all([api("events?select=id&limit=1",1),api("events?select=id&limit=1&detected_at=gte."+d,1),api("sources?select=*"),api("events?"+SEL+srch()+"&order=published_at.desc.nullslast&limit=8"),api("events?"+SEL+"&severity=eq.CRITICAL&order=published_at.desc.nullslast&limit=4")]).then(function(a){var ok=a[2].filter(function(s){return stat(s)[0]=="OPERATIONAL"}).length,bad=a[2].filter(function(s){var x=stat(s)[0];return x=="OFFLINE"||x=="DEGRADED"}).length;
+return '<h2>Global Overview</h2><p class="sub">All figures are counted from the database.</p><div class="grid"><div class="card stat"><b>'+a[0]+'</b><span>Stored events</span></div><div class="card stat"><b>'+a[1]+'</b><span>Detected in 24h</span></div><div class="card stat"><b>'+ok+"/"+a[2].length+'</b><span>Sources operational</span></div><div class="card stat"><b>'+bad+'</b><span>Degraded or offline</span></div></div><div class="card">AI provider <span class="tag wait">NOT CONFIGURED</span> <small>Original publisher text is shown. No AI analysis is performed in this version.</small></div>'+(a[4].length?"<h2>Critical vulnerabilities</h2>"+a[4].map(card).join(""):"")+"<h2>Latest events</h2>"+(a[3].length?a[3].map(card).join(""):emp())})}
+function src(){return api("sources?select=*&order=name.asc").then(function(r){var t=r.map(function(s){var x=stat(s);return "<tr><td><b>"+esc(s.name)+"</b><br><small>"+esc(s.type)+" · "+esc(s.category)+" · "+esc(s.region)+" · every "+s.interval_min+"m</small></td><td><span class='tag "+x[1]+"'>"+x[0]+"</span>"+(s.enabled?"":"<span class='tag'>DISABLED</span>")+"</td><td>"+ago(s.last_success_at)+"</td><td>"+(s.last_latency_ms!=null?s.last_latency_ms+" ms":"—")+"</td><td>"+s.items_last_run+"</td><td><small>"+esc(s.last_error||"")+"</small></td></tr>"}).join("");
+return head2("Source Monitor","Status comes from real worker fetches. To add, edit or disable sources, use the Supabase Table Editor.")+'<div class="card scroll"><table><tr><th>Source</th><th>Status</th><th>Last success</th><th>Fetch time</th><th>Items</th><th>Last error</th></tr>'+t+"</table></div>"})}
+function head2(a,b){return "<h2>"+a+'</h2><p class="sub">'+b+"</p>"}
+function mp(){return Promise.resolve(head2("Global Map","Only events with reliable source-provided coordinates get a marker.")+emp("No connected source provides coordinates yet, so no markers are shown. Markers are never invented."))}
+function nt(){var R=rules();return api("events?"+SEL+"&order=published_at.desc.nullslast&limit=100").then(function(ev){var hits=[];R.forEach(function(r){ev.forEach(function(e){if((e.title+" "+(e.summary||"")).toLowerCase().indexOf(r.toLowerCase())>-1&&hits.indexOf(e)<0)hits.push(e)})});
+return head2("Notifications","Rules are saved in this browser. Matches below are in-app only.")+'<div class="card"><b>Delivery channels</b><br><small>Browser push, email and Telegram: <span class="tag wait">NOT CONFIGURED</span> No delivery is claimed.</small></div><div class="card"><div class="row"><input id="rk" placeholder="Keyword, e.g. NVIDIA"><button class="b" onclick="addR()">Add rule</button></div>'+(R.length?R.map(function(r,i){return '<span class="tag">'+esc(r)+' <a href="#" onclick="delR('+i+');return false">✕</a></span>'}).join(""):"<small>No rules yet.</small>")+"</div>"+(R.length?(hits.length?hits.map(card).join(""):emp("No recent events match your rules.")):"")})}
+function addR(){var k=$("rk").value.trim();if(!k)return;var R=rules();R.push(k);setRules(R);go()}
+function delR(i){var R=rules();R.splice(i,1);setRules(R);go()}
+function go(){$("nav").innerHTML=S.map(function(s){return '<button class="'+(s[0]==cur?"on":"")+'" onclick="cur=\''+s[0]+'\';location.hash=cur;go()">'+s[1]+"</button>"}).join("");var m=$("m");
+if(!OK){m.innerHTML=head2("Setup needed","Database connection <span class='tag wait'>AWAITING CONFIGURATION</span>")+emp("Open config.js and set your Supabase URL and anon (publishable) key. See README.");return}
+var t=++T;m.innerHTML='<p class="sub">Loading…</p>';var p=cur=="overview"?ov():cur=="sources"?src():cur=="notif"?nt():cur=="map"?mp():list(cur);
+p.then(function(h){if(t==T)m.innerHTML=h}).catch(function(e){if(t==T)m.innerHTML=head2("Connection problem","Database <span class='tag off'>OFFLINE</span>")+emp("Could not read the database ("+esc(e.message)+"). Check config.js, that schema.sql was run, and that the project is not paused.")})}
+$("q").addEventListener("keydown",function(e){if(e.key=="Enter"){term=this.value;go()}});
+$("th").onclick=function(){var r=document.documentElement,d=r.getAttribute("data-theme")=="dark"||(!r.getAttribute("data-theme")&&matchMedia("(prefers-color-scheme:dark)").matches);r.setAttribute("data-theme",d?"light":"dark")};
+window.addEventListener("hashchange",function(){cur=location.hash.slice(1)||"overview";go()});
+go();setInterval(function(){if(OK&&document.visibilityState=="visible"&&cur!="notif")go()},60000);
+</script></body></html>
