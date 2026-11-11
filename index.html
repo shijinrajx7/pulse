@@ -72,5 +72,6 @@ p.then(function(h){if(t==T)m.innerHTML=h}).catch(function(e){if(t==T)m.innerHTML
 $("q").addEventListener("keydown",function(e){if(e.key=="Enter"){term=this.value;go()}});
 $("th").onclick=function(){var r=document.documentElement,d=r.getAttribute("data-theme")=="dark"||(!r.getAttribute("data-theme")&&matchMedia("(prefers-color-scheme:dark)").matches);r.setAttribute("data-theme",d?"light":"dark")};
 window.addEventListener("hashchange",function(){cur=location.hash.slice(1)||"overview";go()});
-go();setInterval(function(){if(OK&&document.visibilityState=="visible"&&cur!="notif")go()},60000);
+var last="";function tick(){if(!OK||document.visibilityState!="visible")return;Promise.all([api("events?select=id,detected_at&order=detected_at.desc&limit=1"),api("sources?select=last_run_at&order=last_run_at.desc.nullslast&limit=1")]).then(function(a){var k=(a[0][0]?a[0][0].id+a[0][0].detected_at:"")+"|"+(a[1][0]?a[1][0].last_run_at:"");if(last&&k!=last&&cur!="notif")go();last=k}).catch(function(){})}
+go();tick();setInterval(tick,10000);
 </script></body></html>
