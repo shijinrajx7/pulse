@@ -60,6 +60,7 @@ small{color:var(--mut)}a{color:var(--ac)}.t{font-weight:600;text-decoration:none
 <body>
 <header><div class="top"><span class="logo">PULSE</span><input id="q" type="search" placeholder="Search title or summary, press Enter"><button class="b g" id="th" aria-label="Change color theme" title="Change color theme">◐</button><button class="b g" id="snd" aria-label="Toggle ambient sound" title="Sound off">♫</button></div><nav id="nav"></nav></header>
 <main id="m"></main>
+<div id="intro" class="intro-screen" aria-label="PULSE startup animation"><div class="intro-halo"></div><img src="pulse-intro.png" alt="PULSE hooded figure" class="intro-portrait"><div class="intro-title">PULSE</div><div class="intro-caption">Technology intelligence · coming online</div><div class="intro-progress"><i></i></div><button id="intro-skip" type="button">Skip intro</button></div>
 <script src="config.js"></script>
 <script>
 var S=[["overview","Overview"],["breaking","Breaking News"],["social","Social Pulse"],["early","Early Signals"],["ai","AI Intelligence"],["cyber","Cyber Radar"],["tech","Tech Radar"],["map","Global Map"],["company","Companies"],["local","Local"],["sources","Source Monitor"],["notif","Notifications"]];
@@ -111,6 +112,5 @@ window.addEventListener("hashchange",function(){cur=location.hash.slice(1)||"ove
 var last="",seenEventIds=null;function tick(){if(!OK||document.visibilityState!="visible")return;Promise.all([api("events?select=id,title,summary,detected_at&order=detected_at.desc&limit=100"),api("sources?select=last_run_at&order=last_run_at.desc.nullsfirst&limit=1")]).then(function(a){var events=a[0],latest=events[0],k=(latest?latest.id+latest.detected_at:"")+"|"+(a[1][0]?a[1][0].last_run_at:"");if(seenEventIds===null)seenEventIds=new Set(events.map(function(e){return String(e.id)}));else{var fresh=events.filter(function(e){return!seenEventIds.has(String(e.id))});fresh.forEach(function(e){seenEventIds.add(String(e.id));if(window.Notification&&Notification.permission==="granted"&&rules().some(function(w){return(e.title+" "+(e.summary||"")).toLowerCase().indexOf(w.toLowerCase())>=0}))new Notification("PULSE keyword alert",{body:e.title,tag:String(e.id)})})}if(last&&k!=last&&cur!="notif")go();last=k}).catch(function(){})}
 go();tick();setInterval(tick,10000);
 </script>
-<div id="intro" class="intro-screen" aria-label="PULSE startup animation"><div class="intro-halo"></div><img src="pulse-intro.png" alt="PULSE hooded figure" class="intro-portrait"><div class="intro-title">PULSE</div><div class="intro-caption">Technology intelligence · coming online</div><div class="intro-progress"><i></i></div><button id="intro-skip" type="button">Skip intro</button></div>
 </body>
 </html>
