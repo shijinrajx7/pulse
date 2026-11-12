@@ -624,9 +624,208 @@ a{
   }
 }
 </style>
+<style>
+/* PULSE interface identity: instrument-panel surfaces, signal accents, quiet motion. */
+:root{
+  --bg:#080d13;
+  --card:#101923;
+  --tx:#e9f3fb;
+  --mut:#90a5b5;
+  --bd:#203343;
+  --ac:#45d9ff;
+  --ok:#54ddb0;
+  --warn:#f1bd64;
+  --bad:#ff7188;
+  color-scheme:dark;
+  scroll-behavior:smooth
+}
+@media(prefers-color-scheme:light){
+  :root:not([data-theme]){
+    --bg:#edf4f7;
+    --card:#fff;
+    --tx:#12212b;
+    --mut:#587080;
+    --bd:#cbdce4;
+    --ac:#087fa3;
+    --ok:#16835f;
+    --warn:#9a6700;
+    --bad:#c43b51;
+    color-scheme:light
+  }
+}
+:root[data-theme="light"]{
+  --bg:#edf4f7;
+  --card:#fff;
+  --tx:#12212b;
+  --mut:#587080;
+  --bd:#cbdce4;
+  --ac:#087fa3;
+  --ok:#16835f;
+  --warn:#9a6700;
+  --bad:#c43b51;
+  color-scheme:light
+}
+:root[data-theme="violet"]{
+  --bg:#100d1c;
+  --card:#19142b;
+  --tx:#f3efff;
+  --mut:#a39abf;
+  --bd:#332a4b;
+  --ac:#b18cff;
+  --ok:#67d5a5;
+  --warn:#f0bd65;
+  --bad:#ff8292;
+  color-scheme:dark
+}
+:root[data-theme="ocean"]{
+  --bg:#061820;
+  --card:#0b2530;
+  --tx:#e8f6ff;
+  --mut:#8caeba;
+  --bd:#204150;
+  --ac:#39c7e8;
+  --ok:#63d6ad;
+  --warn:#f0bd65;
+  --bad:#ff8292;
+  color-scheme:dark
+}
+body{
+  min-height:100vh;
+  background-image:radial-gradient(ellipse at 76% -18%,color-mix(in srgb,var(--ac) 10%,transparent),transparent 42%),linear-gradient(180deg,color-mix(in srgb,var(--bg) 94%,#0c2230),var(--bg) 340px);
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  letter-spacing:.005em
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:-1;
+  opacity:.13;
+  background-image:linear-gradient(color-mix(in srgb,var(--bd) 30%,transparent) 1px,transparent 1px),linear-gradient(90deg,color-mix(in srgb,var(--bd) 30%,transparent) 1px,transparent 1px);
+  background-size:48px 48px;
+  mask-image:linear-gradient(to bottom,#000,transparent 75%)
+}
+header{
+  background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  border-bottom-color:color-mix(in srgb,var(--ac) 20%,var(--bd));
+  box-shadow:0 10px 35px #0002
+}
+.top{max-width:1320px;margin:auto;padding:12px 20px;gap:12px}
+.logo{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  color:var(--tx);
+  font-size:15px;
+  letter-spacing:.24em
+}
+.logo::before{content:none}
+.pulse-mark{width:30px;height:22px;overflow:visible;flex:none;color:var(--ac)}
+.pulse-mark path{fill:none;stroke:currentColor;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:58;stroke-dashoffset:0;filter:drop-shadow(0 0 4px color-mix(in srgb,var(--ac) 65%,transparent));animation:pulse-trace 2.8s ease-in-out infinite}
+.top input{
+  min-height:40px;
+  background:color-mix(in srgb,var(--card) 78%,var(--bg));
+  border-color:var(--bd);
+  border-radius:10px
+}
+input:focus,select:focus,button:focus-visible,a:focus-visible{
+  outline:2px solid color-mix(in srgb,var(--ac) 70%,white);
+  outline-offset:2px
+}
+nav{
+  max-width:1320px;
+  margin:auto;
+  padding:0 16px 10px;
+  gap:6px
+}
+nav button{
+  border-radius:8px;
+  padding:7px 11px;
+  transition:color .2s,background .2s,border-color .2s,transform .2s
+}
+nav button:hover{color:var(--tx);background:color-mix(in srgb,var(--ac) 8%,var(--card));transform:translateY(-1px)}
+nav button.on{
+  color:var(--ac);
+  border-color:color-mix(in srgb,var(--ac) 50%,var(--bd));
+  background:color-mix(in srgb,var(--ac) 9%,var(--card));
+  box-shadow:inset 0 0 18px color-mix(in srgb,var(--ac) 7%,transparent)
+}
+main{max-width:1240px;padding:26px 22px 60px}
+main>h2{
+  margin:10px 0 4px;
+  font-size:clamp(22px,3vw,30px);
+  line-height:1.18;
+  letter-spacing:-.035em;
+  font-weight:750
+}
+main>h2:not(:first-child){margin-top:30px}
+p.sub{max-width:780px;margin:0 0 18px;line-height:1.65;color:var(--mut)}
+.card{
+  position:relative;
+  background:linear-gradient(145deg,color-mix(in srgb,var(--card) 97%,var(--ac)),var(--card) 65%);
+  border-color:color-mix(in srgb,var(--bd) 85%,var(--ac));
+  border-radius:12px;
+  padding:16px;
+  margin-bottom:12px;
+  box-shadow:0 8px 24px #00000012;
+  transition:border-color .24s,transform .24s,box-shadow .24s;
+  animation:panel-enter .42s cubic-bezier(.2,.75,.2,1) both
+}
+.card:hover{
+  transform:translateY(-2px);
+  border-color:color-mix(in srgb,var(--ac) 45%,var(--bd));
+  box-shadow:0 14px 32px #0002,0 0 0 1px color-mix(in srgb,var(--ac) 8%,transparent)
+}
+.card:nth-of-type(2){animation-delay:.035s}.card:nth-of-type(3){animation-delay:.07s}.card:nth-of-type(4){animation-delay:.105s}.card:nth-of-type(5){animation-delay:.14s}
+.stat{min-height:108px;display:flex;flex-direction:column;justify-content:center;gap:5px}
+.stat b{font-size:clamp(23px,3vw,32px);letter-spacing:-.04em;color:var(--ac);font-variant-numeric:tabular-nums}
+.stat span{font-size:12px;letter-spacing:.045em;text-transform:uppercase}
+.t{color:var(--ac);line-height:1.4}
+.t:hover{color:var(--tx);text-decoration:underline;text-decoration-color:var(--ac);text-underline-offset:3px}
+.tag{border-radius:999px;padding:2px 8px;letter-spacing:.04em}
+input,select,button.b{border-radius:9px;transition:background .2s,border-color .2s,transform .2s,box-shadow .2s}
+button.b{box-shadow:0 4px 12px color-mix(in srgb,var(--ac) 18%,transparent)}
+button.b:hover{filter:brightness(1.08);transform:translateY(-1px)}
+button.g{box-shadow:none;background:color-mix(in srgb,var(--card) 78%,transparent)}
+.empty,.map-empty{border-radius:12px;background:color-mix(in srgb,var(--card) 62%,transparent);line-height:1.65}
+.globe-shell{border-radius:14px;border-color:color-mix(in srgb,var(--ac) 25%,var(--bd));box-shadow:0 18px 55px #0003,0 0 34px color-mix(in srgb,var(--ac) 7%,transparent);isolation:isolate}
+.globe-shell::before{content:"";position:absolute;z-index:-1;width:min(48vw,460px);aspect-ratio:1;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 32% 28%,#65ecff 0,#147d9b 13%,#073448 45%,#04111f 72%);box-shadow:inset -28px -15px 50px #01070f,0 0 70px #11bfe533;opacity:.78}
+.globe-shell::after{content:"";position:absolute;z-index:-1;width:min(48vw,460px);aspect-ratio:1;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:repeating-linear-gradient(0deg,transparent 0 35px,#a9f3ff1c 36px 37px,transparent 38px 72px),repeating-linear-gradient(90deg,transparent 0 35px,#a9f3ff12 36px 37px,transparent 38px 72px);mask-image:radial-gradient(circle,#000 0 68%,transparent 70%);opacity:.35;pointer-events:none}
+.globe-shell #pulse-globe{position:relative;z-index:0}
+.globe-status{border-radius:9px;backdrop-filter:blur(12px);box-shadow:0 6px 22px #0003}
+.map-toolbar small{letter-spacing:.02em}
+.map-credits{line-height:1.6}
+.intro-screen{background:radial-gradient(ellipse at 50% 44%,#102f3d 0,#071016 42%,#03070b 100%)}
+.intro-halo{border-color:#48d8fb55;box-shadow:0 0 0 22px #48d8fb0e,0 0 0 58px #48d8fb09,0 0 100px #03b8ff24}
+.intro-portrait{border-radius:24px;box-shadow:0 0 0 8px #42d9ff0a,0 0 64px #09bafc55,0 24px 70px #0008}
+.intro-title{letter-spacing:.34em}
+.intro-caption{text-transform:uppercase;font-size:10px;letter-spacing:.19em}
+.intro-progress{border-radius:999px;background:#18313b}
+.intro-progress i{border-radius:inherit}
+.intro-screen button{transition:background .2s,border-color .2s,transform .2s}
+.intro-screen button:hover{transform:translateY(-2px);border-color:#42d9ff}
+@keyframes pulse-trace{0%,15%{stroke-dashoffset:58;opacity:.55}48%,78%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:-58;opacity:.55}}
+@keyframes panel-enter{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:640px){
+  .top{padding:10px 12px}
+  nav{padding:0 10px 9px}
+  main{padding:20px 13px 42px}
+  .card{padding:14px;border-radius:11px}
+  .card:hover{transform:none}
+  .intro-caption{max-width:85vw;text-align:center;line-height:1.6}
+}
+@media(prefers-reduced-motion:reduce){
+  :root{scroll-behavior:auto}
+  .pulse-mark path,.card{animation:none!important}
+  .card,nav button,button.b,.intro-screen button{transition:none!important}
+}
+</style>
 </head>
 <body>
-<header><div class="top"><span class="logo">PULSE</span><input id="q" type="search" placeholder="Search title or summary, press Enter"><button class="b g" id="th" aria-label="Change color theme" title="Change color theme">◐</button><button class="b g" id="snd" aria-label="Toggle ambient sound" title="Sound off">♫</button></div><nav id="nav"></nav></header>
+<header><div class="top"><span class="logo"><svg class="pulse-mark" viewBox="0 0 34 22" aria-hidden="true"><path d="M1 12h8l4-9 6 17 5-12 3 4h6"/></svg><span>PULSE</span></span><input id="q" type="search" placeholder="Search title or summary, press Enter"><button class="b g" id="th" aria-label="Change color theme" title="Change color theme">◐</button><button class="b g" id="snd" aria-label="Toggle ambient sound" title="Sound off">♫</button></div><nav id="nav"></nav></header>
 <main id="m"></main>
 <div id="intro" class="intro-screen" aria-label="PULSE startup animation"><div class="intro-halo"></div><img src="pulse-intro.png" alt="PULSE hooded figure" class="intro-portrait"><div class="intro-title">PULSE</div><div class="intro-caption">Technology intelligence · coming online</div><div class="intro-progress"><i></i></div><button id="intro-skip" type="button">Skip intro</button></div>
 <script src="config.js">
@@ -691,7 +890,7 @@ return '<h2>Global Overview</h2><p class="sub">All figures are counted from the 
 function src(){return api("sources?select=*&order=name.asc").then(function(r){var t=r.map(function(s){var x=stat(s);return "<tr><td><b>"+esc(s.name)+"</b><br><small>"+esc(s.type)+" · "+esc(s.category)+" · "+esc(s.region)+" · every "+s.interval_min+"m</small></td><td><span class='tag "+x[1]+"'>"+x[0]+"</span>"+(s.enabled?"":"<span class='tag'>DISABLED</span>")+"</td><td>"+ago(s.last_success_at)+"</td><td>"+(s.last_latency_ms!=null?s.last_latency_ms+" ms":"—")+"</td><td>"+s.items_last_run+"</td><td><small>"+esc(s.last_error||"")+"</small></td></tr>"}).join("");
 return head2("Source Monitor","Status comes from real worker fetches. To add, edit or disable sources, use the Supabase Table Editor.")+'<div class="card scroll"><table><tr><th>Source</th><th>Status</th><th>Last success</th><th>Fetch time</th><th>Items</th><th>Last error</th></tr>'+t+"</table></div>"})}
 function head2(a,b){return "<h2>"+a+'</h2><p class="sub">'+b+"</p>"}
-var cesiumLoad=null,pulseViewer=null,pulseEntities=[],quakeEntities=[],volcanoEntities=[],pulseMapTimer=null,quakesEnabled=true,volcanoesEnabled=true,quakeCount=0,volcanoCount=0,pulsePointCount=0;
+var cesiumLoad=null,pulseViewer=null,pulseEntities=[],quakeEntities=[],volcanoEntities=[],pulseMapTimer=null,globeResizeObserver=null,quakesEnabled=true,volcanoesEnabled=true,quakeCount=0,volcanoCount=0,pulsePointCount=0;
 function loadCesium(){if(window.Cesium)return Promise.resolve();if(cesiumLoad)return cesiumLoad;var base="https://cesium.com/downloads/cesiumjs/releases/1.146/Build/Cesium/";window.CESIUM_BASE_URL=base;var css=document.createElement("link");css.rel="stylesheet";css.href=base+"Widgets/widgets.css";document.head.appendChild(css);cesiumLoad=new Promise(function(resolve,reject){var s=document.createElement("script");s.src=base+"Cesium.js";s.onload=resolve;s.onerror=function(){cesiumLoad=null;reject(new Error("Could not load the globe library. Check your internet connection and reload the map."))};document.head.appendChild(s)});return cesiumLoad}
 function detailBox(html){return '<div style="box-sizing:border-box;min-height:100%;padding:10px;background:#f4f8fb;color:#16232d;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif">'+html+"</div>"}
 function getMapPoints(){return api("events?select=id,title,url,summary,published_at,detected_at,meta,sources(name)&order=detected_at.desc&limit=100").then(function(ev){return ev.map(function(e){var m=e.meta||{},la=m.latitude!=null?m.latitude:m.lat,lo=m.longitude!=null?m.longitude:m.lon,lat=la==null||la===""?NaN:Number(la),lon=lo==null||lo===""?NaN:Number(lo);return{e:e,lat:lat,lon:lon}}).filter(function(p){return Number.isFinite(p.lat)&&Number.isFinite(p.lon)&&Math.abs(p.lat)<=90&&Math.abs(p.lon)<=180})})}
@@ -701,7 +900,8 @@ function plotVolcanoes(features){if(!pulseViewer)return;volcanoCount=features.le
 function updateGlobeStatus(){var status=$("globe-status");if(status)status.textContent=pulsePointCount+" located PULSE report"+(pulsePointCount===1?"":"s")+" · "+(quakesEnabled?quakeCount+" USGS earthquakes":"earthquakes off")+" · "+(volcanoesEnabled?volcanoCount+" GDACS volcano alerts":"volcano layer off")+" · updated "+new Date().toLocaleTimeString()}
 function quakeDetails(f,pr,c,mag){var rows='<strong>M'+esc(mag.toFixed(1))+' earthquake</strong><br><b>Location:</b> '+esc(pr.place||"Location not reported")+'<br><b>Time:</b> '+esc(new Date(pr.time||Date.now()).toLocaleString())+'<br><b>Coordinates:</b> '+esc(Number(c[1]).toFixed(3))+', '+esc(Number(c[0]).toFixed(3))+'<br><b>Depth:</b> '+esc(Number(c[2]||0).toFixed(1))+' km';if(pr.felt!=null)rows+='<br><b>Felt reports:</b> '+esc(pr.felt);if(pr.alert)rows+='<br><b>USGS alert:</b> '+esc(pr.alert);rows+='<br><b>Tsunami flag:</b> '+(pr.tsunami?'Yes':'No');if(pr.significance!=null)rows+='<br><b>Significance:</b> '+esc(pr.significance);if(pr.url)rows+='<br><a style="color:#075eb5" href="'+url(pr.url)+'" target="_blank" rel="noopener">Open USGS event page</a>';return detailBox(rows)}
 function loadQuakes(){return fetch("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson").then(function(r){if(!r.ok)throw new Error("USGS feed HTTP "+r.status);return r.json()}).then(function(j){var features=j.features||[];quakeCount=features.length;if(pulseViewer){quakeEntities.forEach(function(x){pulseViewer.entities.remove(x)});quakeEntities=[];if(quakesEnabled)features.forEach(function(f){var c=f.geometry&&f.geometry.coordinates;if(!c||!Number.isFinite(c[0])||!Number.isFinite(c[1]))return;var pr=f.properties||{},mag=Number(pr.mag)||0,en=pulseViewer.entities.add({id:"usgs-quake-"+f.id,position:Cesium.Cartesian3.fromDegrees(c[0],c[1],Math.max(500,c[2]||0)),point:{pixelSize:Math.max(6,Math.min(19,6+mag*2)),color:Cesium.Color.fromCssColorString("#ffad42").withAlpha(.9),outlineColor:Cesium.Color.WHITE,outlineWidth:1,disableDepthTestDistance:Number.POSITIVE_INFINITY},description:quakeDetails(f,pr,c,mag)});quakeEntities.push(en)})}updateGlobeStatus();return features})}
-function startGlobe(){var box=$("pulse-globe");if(!box)return;loadCesium().then(function(){if(!$("pulse-globe"))return;if(!pulseViewer){pulseViewer=new Cesium.Viewer("pulse-globe",{baseLayer:new Cesium.ImageryLayer(new Cesium.OpenStreetMapImageryProvider({url:"https://tile.openstreetmap.org/"})),baseLayerPicker:false,geocoder:false,homeButton:false,sceneModePicker:false,navigationHelpButton:false,animation:false,timeline:false,fullscreenButton:false,infoBox:true,selectionIndicator:true,scene3DOnly:true,shouldAnimate:false});pulseViewer.scene.globe.enableLighting=true;pulseViewer.scene.globe.showGroundAtmosphere=true;pulseViewer.camera.setView({destination:Cesium.Cartesian3.fromDegrees(10,18,23000000)})}getMapPoints().then(plotMapPoints).catch(function(e){var status=$("globe-status");if(status)status.textContent="PULSE reports unavailable: "+e.message});loadQuakes().catch(function(e){var status=$("globe-status");if(status)status.textContent="Earthquake feed unavailable: "+e.message});getVolcanoes().then(plotVolcanoes).catch(function(e){var status=$("globe-status");if(status)status.textContent="Volcano feed unavailable: "+e.message})}).catch(function(e){var box=$("globe-status");if(box)box.textContent=e.message})}
+function resizePulseGlobe(){var box=$("pulse-globe");if(!pulseViewer||!box)return;if(box.clientWidth<120||box.clientHeight<180){requestAnimationFrame(resizePulseGlobe);return}pulseViewer.resize();pulseViewer.scene.requestRender()}
+function startGlobe(){var box=$("pulse-globe");if(!box)return;loadCesium().then(function(){box=$("pulse-globe");if(!box)return;if(!pulseViewer){pulseViewer=new Cesium.Viewer("pulse-globe",{baseLayer:new Cesium.ImageryLayer(new Cesium.OpenStreetMapImageryProvider({url:"https://tile.openstreetmap.org/"})),baseLayerPicker:false,geocoder:false,homeButton:false,sceneModePicker:false,navigationHelpButton:false,animation:false,timeline:false,fullscreenButton:false,infoBox:true,selectionIndicator:true,scene3DOnly:true,shouldAnimate:false});pulseViewer.scene.globe.show=true;pulseViewer.scene.globe.enableLighting=true;pulseViewer.scene.globe.showGroundAtmosphere=true;pulseViewer.camera.setView({destination:Cesium.Cartesian3.fromDegrees(10,18,23000000)})}if(window.ResizeObserver){if(globeResizeObserver)globeResizeObserver.disconnect();globeResizeObserver=new ResizeObserver(resizePulseGlobe);globeResizeObserver.observe(box.parentElement||box)}requestAnimationFrame(function(){requestAnimationFrame(resizePulseGlobe)});getMapPoints().then(plotMapPoints).catch(function(e){var status=$("globe-status");if(status)status.textContent="PULSE reports unavailable: "+e.message});loadQuakes().catch(function(e){var status=$("globe-status");if(status)status.textContent="Earthquake feed unavailable: "+e.message});getVolcanoes().then(plotVolcanoes).catch(function(e){var status=$("globe-status");if(status)status.textContent="Volcano feed unavailable: "+e.message})}).catch(function(e){var status=$("globe-status");if(status)status.textContent=e.message})}
 function mp(){return getMapPoints().then(function(pts){return head2("Global Map","Interactive 3D Earth for PULSE reports, USGS earthquakes and current GDACS volcano alerts. Click a marker to open its information and source link.")+'<div class="map-toolbar"><small>Drag to orbit · scroll to zoom · click a marker for details</small><div class="row"><button class="b g" id="quake-toggle" type="button">USGS earthquakes: '+(quakesEnabled?"ON":"OFF")+'</button><button class="b g" id="volcano-toggle" type="button">GDACS volcanoes: '+(volcanoesEnabled?"ON":"OFF")+'</button><button class="b g" id="globe-home" type="button">Reset globe</button><button class="b g" id="globe-refresh" type="button">Refresh data</button></div></div><div class="globe-shell"><div id="pulse-globe" aria-label="Interactive 3D Earth globe"></div><div id="globe-status" class="globe-status">Loading 3D globe and live data…</div></div><div class="map-credits">Map tiles © OpenStreetMap contributors · Earthquakes: USGS live feed · Volcano alerts: GDACS global feed. PULSE report markers require coordinates provided by their source.</div><h2>Located reports</h2><p class="sub">'+pts.length+' coordinate-backed PULSE event'+(pts.length===1?"":"s")+' in the latest 100 events. Data refreshes every minute while this page is open.</p><div id="map-events" class="map-events">'+(pts.length?pts.slice(0,12).map(function(p){return card(p.e)}).join(""):'<div class="map-empty">No PULSE event in the latest 100 has a usable source-provided latitude and longitude. The globe is ready; markers appear when a monitored source supplies coordinates.</div>')+'</div>'})}
 function notificationPermissionText(){if(!window.isSecureContext)return"Open PULSE at https://pulsex-phi.vercel.app to enable browser alerts. Browser permission prompts do not work from a local file.";if(!("Notification" in window))return"This browser does not support desktop notifications. Use PULSE in a supported browser on HTTPS.";if(Notification.permission==="denied")return'Your browser already blocked PULSE alerts, so it will not show the prompt again. In Firefox, open Settings → Privacy & Security → Permissions → Notifications → Settings, set pulsex-phi.vercel.app to Allow (or remove the blocked entry), save, then reload. <a href="https://support.mozilla.org/en-US/kb/push-notifications-firefox" target="_blank" rel="noopener">Firefox help</a>.';if(Notification.permission==="granted")return"Permission is allowed. Use Send test alert to confirm your desktop can show it.";return"Permission has not been decided. Press Enable desktop alerts and choose Allow in the browser prompt."}
 function requestPulsePermission(){var status=$("alert-permission"),button=$("allow-alerts");if(!status)return;if(!window.isSecureContext||!("Notification" in window)){status.textContent=notificationPermissionText();return}if(Notification.permission==="denied"){status.innerHTML=notificationPermissionText();if(button)button.textContent="How to allow alerts";return}function showTest(){try{new Notification("PULSE alerts are enabled",{body:"Test notification received. Keyword alerts are ready."});status.textContent="Test sent. New matching events can alert while PULSE is open."}catch(e){status.textContent="Permission is allowed, but the browser or device blocked the notification. Check system notification settings."}}if(Notification.permission==="granted"){showTest();return}status.textContent="Waiting for your browser choice…";Notification.requestPermission().then(function(permission){status.innerHTML=notificationPermissionText();if(button)button.textContent=permission==="granted"?"Send test alert":permission==="denied"?"How to allow alerts":"Enable desktop alerts";if(permission==="granted")showTest()}).catch(function(){status.textContent="The browser could not request permission. Check this site's notification setting and reload."})}
@@ -727,10 +927,10 @@ function nt(){
 }
 function addR(){var input=$("rk"),status=$("rule-status"),k=input?input.value.trim():"";if(!k){if(status)status.textContent="Type a keyword or phrase first.";if(input)input.focus();return}var R=rules();if(R.some(function(x){return String(x).toLowerCase()===k.toLowerCase()})){if(status)status.textContent="That keyword is already on your watch list.";return}R.push(k);if(!setRules(R)){if(status)status.textContent="Could not save this rule. Allow site storage in your browser and try again.";return}go()}
 function delR(i){var R=rules();if(i<0||i>=R.length)return;R.splice(i,1);if(setRules(R))go()}
-function go(){if(pulseMapTimer){clearInterval(pulseMapTimer);pulseMapTimer=null}if(pulseViewer){pulseViewer.destroy();pulseViewer=null;pulseEntities=[];quakeEntities=[];volcanoEntities=[]}$("nav").innerHTML=S.map(function(s){return '<button class="'+(s[0]==cur?"on":"")+'" onclick="cur=\''+s[0]+'\';location.hash=cur;go()">'+s[1]+"</button>"}).join("");var m=$("m");
+function go(){if(pulseMapTimer){clearInterval(pulseMapTimer);pulseMapTimer=null}if(globeResizeObserver){globeResizeObserver.disconnect();globeResizeObserver=null}if(pulseViewer){pulseViewer.destroy();pulseViewer=null;pulseEntities=[];quakeEntities=[];volcanoEntities=[]}$("nav").innerHTML=S.map(function(s){return '<button class="'+(s[0]==cur?"on":"")+'" onclick="cur=\''+s[0]+'\';location.hash=cur;go()">'+s[1]+"</button>"}).join("");var m=$("m");
 if(!OK){m.innerHTML=head2("Setup needed","Database connection <span class='tag wait'>AWAITING CONFIGURATION</span>")+emp("Open config.js and set your Supabase URL and anon (publishable) key. See README.");return}
 var t=++T;m.innerHTML='<p class="sub">Loading…</p>';var p=cur=="overview"?ov():cur=="sources"?src():cur=="notif"?nt():cur=="map"?mp():list(cur);
-p.then(function(h){if(t==T){m.innerHTML=h;if(cur=="map"){startGlobe();$("globe-home").onclick=function(){if(pulseViewer)pulseViewer.camera.flyTo({destination:Cesium.Cartesian3.fromDegrees(10,18,23000000),duration:1.5})};$("globe-refresh").onclick=function(){Promise.all([getMapPoints().then(plotMapPoints),loadQuakes(),getVolcanoes().then(plotVolcanoes)]).catch(function(e){var status=$("globe-status");if(status)status.textContent="Refresh failed: "+e.message})};$("quake-toggle").onclick=function(){quakesEnabled=!quakesEnabled;this.textContent="USGS earthquakes: "+(quakesEnabled?"ON":"OFF");loadQuakes().catch(function(e){var s=$("globe-status");if(s)s.textContent="USGS feed unavailable: "+e.message})};$("volcano-toggle").onclick=function(){volcanoesEnabled=!volcanoesEnabled;this.textContent="GDACS volcanoes: "+(volcanoesEnabled?"ON":"OFF");getVolcanoes().then(plotVolcanoes).catch(function(e){var status=$("globe-status");if(status)status.textContent="Volcano feed unavailable: "+e.message})};pulseMapTimer=setInterval(function(){if(cur=="map"&&document.visibilityState=="visible"){getMapPoints().then(plotMapPoints).catch(function(){});loadQuakes().catch(function(){});getVolcanoes().then(plotVolcanoes).catch(function(){})}},60000)}}}).catch(function(e){if(t==T)m.innerHTML=head2("Connection problem","Database <span class='tag off'>OFFLINE</span>")+emp("Could not read the database ("+esc(e.message)+"). Check config.js, that schema.sql was run, and that the project is not paused.")})}
+p.then(function(h){if(t==T){m.innerHTML=h;if(cur=="map"){startGlobe();$("globe-home").onclick=function(){if(pulseViewer)pulseViewer.camera.flyTo({destination:Cesium.Cartesian3.fromDegrees(10,18,23000000),duration:1.5})};$("globe-refresh").onclick=function(){if(!pulseViewer)startGlobe();Promise.all([getMapPoints().then(plotMapPoints),loadQuakes(),getVolcanoes().then(plotVolcanoes)]).catch(function(e){var status=$("globe-status");if(status)status.textContent="Refresh failed: "+e.message})};$("quake-toggle").onclick=function(){quakesEnabled=!quakesEnabled;this.textContent="USGS earthquakes: "+(quakesEnabled?"ON":"OFF");loadQuakes().catch(function(e){var s=$("globe-status");if(s)s.textContent="USGS feed unavailable: "+e.message})};$("volcano-toggle").onclick=function(){volcanoesEnabled=!volcanoesEnabled;this.textContent="GDACS volcanoes: "+(volcanoesEnabled?"ON":"OFF");getVolcanoes().then(plotVolcanoes).catch(function(e){var status=$("globe-status");if(status)status.textContent="Volcano feed unavailable: "+e.message})};pulseMapTimer=setInterval(function(){if(cur=="map"&&document.visibilityState=="visible"){getMapPoints().then(plotMapPoints).catch(function(){});loadQuakes().catch(function(){});getVolcanoes().then(plotVolcanoes).catch(function(){})}},60000)}}}).catch(function(e){if(t==T)m.innerHTML=head2("Connection problem","Database <span class='tag off'>OFFLINE</span>")+emp("Could not read the database ("+esc(e.message)+"). Check config.js, that schema.sql was run, and that the project is not paused.")})}
 $("q").addEventListener("keydown",function(e){if(e.key=="Enter"){term=this.value;go()}});
 $("th").onclick=function(){var r=document.documentElement,opts=["system","light","dark","violet","ocean"],curt=r.getAttribute("data-theme")||"system",n=(opts.indexOf(curt)+1)%opts.length;if(opts[n]==="system")r.removeAttribute("data-theme");else r.setAttribute("data-theme",opts[n]);this.title="Theme: "+opts[n];this.setAttribute("aria-label",this.title)};
 var audioCtx=null,audioOsc=[],musicTimer=null,musicStep=0;
@@ -777,4 +977,3 @@ go();tick();setInterval(tick,10000);
 </script>
 </body>
 </html>
-
