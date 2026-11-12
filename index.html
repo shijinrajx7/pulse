@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +9,7 @@
 
 <!-- SEO Metadata -->
 <meta name="description" content="PULSE is a technology intelligence platform tracking breaking technology news, artificial intelligence, cybersecurity, emerging innovations, global tech developments and company announcements.">
+
 <meta name="robots" content="index, follow">
 <meta name="author" content="PULSE">
 <link rel="canonical" href="https://pulsex-phi.vercel.app/">
@@ -24,314 +26,680 @@
 <meta name="twitter:description" content="Your window into breaking technology news, AI, cybersecurity and emerging innovations.">
 
 <style>
-:root{--bg:#f4f5f7;--card:#fff;--tx:#14171c;--mut:#5d6673;--bd:#d9dde3;--ac:#1f6feb;--ok:#1a7f37;--warn:#9a6700;--bad:#cf222e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d0f12;--card:#161a1f;--tx:#e6e9ee;--mut:#8b94a1;--bd:#262c34;--ac:#4c8dff;--ok:#3fb950;--warn:#d29922;--bad:#f85149;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0d0f12;--card:#161a1f;--tx:#e6e9ee;--mut:#8b94a1;--bd:#262c34;--ac:#4c8dff;--ok:#3fb950;--warn:#d29922;--bad:#f85149;color-scheme:dark}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5;border-bottom:1px solid var(--bd)}
-.top{display:flex;gap:8px;align-items:center;padding:10px 12px}
-.logo{font-weight:800;letter-spacing:.12em;color:var(--ac)}
-.top input{flex:1;min-width:0}
-nav{display:flex;overflow-x:auto;gap:4px;padding:0 8px 8px;scrollbar-width:none}
-nav button{white-space:nowrap;background:none;border:1px solid transparent;color:var(--mut);padding:6px 10px;border-radius:6px;font-size:13px;font-weight:600}
-nav button.on{color:var(--ac);border-color:var(--ac)}
-main{max-width:980px;margin:0 auto;padding:12px}
-h2{margin:4px 0 2px;font-size:19px}
-p.sub{color:var(--mut);margin:0 0 12px;font-size:13px}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:12px;margin-bottom:10px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
-.stat b{display:block;font-size:22px}
-.stat span{color:var(--mut);font-size:12px}
-input,select,button.b{background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:6px;padding:8px;font:inherit;max-width:100%}
-button.b{background:var(--ac);border-color:var(--ac);color:#fff;font-weight:600}
-button.g{background:none;color:var(--tx);border-color:var(--bd)}
-.row{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0;align-items:center}
-.tag{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:99px;border:1px solid var(--bd);color:var(--mut);margin-right:4px}
-.wait,.warn{color:var(--warn);border-color:var(--warn)}
-.ok{color:var(--ok);border-color:var(--ok)}
-.off{color:var(--bad);border-color:var(--bad)}
-.empty{color:var(--mut);border:1px dashed var(--bd);border-radius:8px;padding:16px;text-align:center;font-size:13px}
-.scroll{overflow-x:auto}
-table{border-collapse:collapse;width:100%;font-size:13px}
-th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--bd);vertical-align:top}
-th{color:var(--mut)}
-small{color:var(--mut)}
-a{color:var(--ac)}
-.t{font-weight:600;text-decoration:none}
+:root{
+  --bg:#f4f5f7;
+  --card:#fff;
+  --tx:#14171c;
+  --mut:#5d6673;
+  --bd:#d9dde3;
+  --ac:#1f6feb;
+  --ok:#1a7f37;
+  --warn:#9a6700;
+  --bad:#cf222e;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  color-scheme:light
+}
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0d0f12;
+    --card:#161a1f;
+    --tx:#e6e9ee;
+    --mut:#8b94a1;
+    --bd:#262c34;
+    --ac:#4c8dff;
+    --ok:#3fb950;
+    --warn:#d29922;
+    --bad:#f85149;
+    color-scheme:dark
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0d0f12;
+  --card:#161a1f;
+  --tx:#e6e9ee;
+  --mut:#8b94a1;
+  --bd:#262c34;
+  --ac:#4c8dff;
+  --ok:#3fb950;
+  --warn:#d29922;
+  --bad:#f85149;
+  color-scheme:dark
+}
+html{
+  scroll-padding-top:env(safe-area-inset-top,0px)
+}
+*{
+  box-sizing:border-box
+}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--tx);
+  font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif
+}
+header{
+  position:sticky;
+  top:env(safe-area-inset-top,0px);
+  background:var(--bg);
+  z-index:5;
+  border-bottom:1px solid var(--bd)
+}
+.top{
+  display:flex;
+  gap:8px;
+  align-items:center;
+  padding:10px 12px
+}
+.logo{
+  font-weight:800;
+  letter-spacing:.12em;
+  color:var(--ac)
+}
+.top input{
+  flex:1;
+  min-width:0
+}
+nav{
+  display:flex;
+  overflow-x:auto;
+  gap:4px;
+  padding:0 8px 8px;
+  scrollbar-width:none
+}
+nav button{
+  white-space:nowrap;
+  background:none;
+  border:1px solid transparent;
+  color:var(--mut);
+  padding:6px 10px;
+  border-radius:6px;
+  font-size:13px;
+  font-weight:600
+}
+nav button.on{
+  color:var(--ac);
+  border-color:var(--ac)
+}
+main{
+  max-width:980px;
+  margin:0 auto;
+  padding:12px
+}
+h2{
+  margin:4px 0 2px;
+  font-size:19px
+}
+p.sub{
+  color:var(--mut);
+  margin:0 0 12px;
+  font-size:13px
+}
+.card{
+  background:var(--card);
+  border:1px solid var(--bd);
+  border-radius:8px;
+  padding:12px;
+  margin-bottom:10px
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:8px
+}
+.stat b{
+  display:block;
+  font-size:22px
+}
+.stat span{
+  color:var(--mut);
+  font-size:12px
+}
+input,select,button.b{
+  background:var(--bg);
+  color:var(--tx);
+  border:1px solid var(--bd);
+  border-radius:6px;
+  padding:8px;
+  font:inherit;
+  max-width:100%
+}
+button.b{
+  background:var(--ac);
+  border-color:var(--ac);
+  color:#fff;
+  font-weight:600
+}
+button.g{
+  background:none;
+  color:var(--tx);
+  border-color:var(--bd)
+}
+.row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin:8px 0;
+  align-items:center
+}
+.tag{
+  display:inline-block;
+  font-size:11px;
+  font-weight:700;
+  padding:1px 7px;
+  border-radius:99px;
+  border:1px solid var(--bd);
+  color:var(--mut);
+  margin-right:4px
+}
+.wait,.warn{
+  color:var(--warn);
+  border-color:var(--warn)
+}
+.ok{
+  color:var(--ok);
+  border-color:var(--ok)
+}
+.off{
+  color:var(--bad);
+  border-color:var(--bad)
+}
+.empty{
+  color:var(--mut);
+  border:1px dashed var(--bd);
+  border-radius:8px;
+  padding:16px;
+  text-align:center;
+  font-size:13px
+}
+.scroll{
+  overflow-x:auto
+}
+table{
+  border-collapse:collapse;
+  width:100%;
+  font-size:13px
+}
+th,td{
+  text-align:left;
+  padding:6px 8px;
+  border-bottom:1px solid var(--bd);
+  vertical-align:top
+}
+th{
+  color:var(--mut)
+}
+small{
+  color:var(--mut)
+}
+a{
+  color:var(--ac)
+}
+.t{
+  font-weight:600;
+  text-decoration:none
+}
 </style>
-
 <style>
-/* PULSE themes and visual controls */
-:root[data-theme="violet"]{--bg:#100d1c;--card:#19142b;--tx:#f3efff;--mut:#a39abf;--bd:#332a4b;--ac:#ad8cff;--ok:#67d5a5;--warn:#f0bd65;--bad:#ff8292;color-scheme:dark}
-:root[data-theme="ocean"]{--bg:#071720;--card:#0e2430;--tx:#e8f6ff;--mut:#8caeba;--bd:#204150;--ac:#39c7e8;--ok:#63d6ad;--warn:#f0bd65;--bad:#ff8292;color-scheme:dark}
-.top{gap:8px}
-.top button{width:38px;height:38px;padding:0;font-size:18px;flex:none}
-
-/* Startup identity intro */
-.intro-screen{position:fixed;inset:0;z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;background:radial-gradient(ellipse at 50% 44%,#103143 0,#071016 42%,#03070b 100%);color:#effbff;opacity:1;visibility:visible;transition:opacity .7s,visibility .7s;animation:intro-failsafe .7s 4.2s forwards}
-.intro-screen.done{opacity:0;visibility:hidden;pointer-events:none;animation:none}
-.intro-halo{position:absolute;width:min(75vw,540px);aspect-ratio:1;border:1px solid #48d8fb44;border-radius:50%;box-shadow:0 0 0 22px #48d8fb0d,0 0 0 58px #48d8fb08,0 0 90px #03b8ff20;animation:halo-spin 12s linear infinite}
-.intro-portrait{position:relative;width:clamp(170px,27vw,290px);height:clamp(170px,27vw,290px);object-fit:cover;border-radius:28px;border:1px solid #52d9ff88;box-shadow:0 0 55px #09bafc55;animation:portrait-arrive 1.15s cubic-bezier(.16,1,.3,1) both,portrait-float 4s 1.2s ease-in-out infinite}
-.intro-title{position:relative;margin-top:22px;font:800 clamp(22px,4vw,34px)/1 system-ui,sans-serif;letter-spacing:.3em;text-shadow:0 0 28px #31cfffaa;animation:intro-fade .65s .35s both}
-.intro-caption{position:relative;color:#91bac9;font-size:12px;letter-spacing:.08em;margin-top:9px;animation:intro-fade .6s .55s both}
-.intro-progress{position:relative;width:150px;height:2px;background:#18313b;margin-top:23px;overflow:hidden}
-.intro-progress i{display:block;height:100%;background:#42d9ff;box-shadow:0 0 12px #42d9ff;animation:intro-load 2.2s ease-out both}
-.intro-screen button{position:relative;margin-top:18px;border:1px solid #4c7b8b88;border-radius:999px;background:#06121ab8;color:#c7efff;padding:8px 16px;font:12px system-ui;cursor:pointer}
-.intro-screen button:hover{background:#11303d;color:#fff}
-
-/* Global map */
-.map-visual{background:#0a151d;border:1px solid var(--bd);border-radius:9px;overflow:hidden;margin:12px 0}
-.map-visual svg{display:block;width:100%;height:auto;min-height:220px}
-.map-land{fill:#17323d;stroke:#28515e;stroke-width:1.3}
-.map-grid{stroke:#316174;stroke-width:.8;opacity:.32}
-.map-marker{fill:#42d9ff;stroke:#e5fbff;stroke-width:2;filter:drop-shadow(0 0 6px #42d9ff)}
-.map-marker:hover{r:8}
-.map-list{display:grid;gap:0}
-.map-list .card{margin-bottom:7px}
-.map-toolbar{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin:10px 0}
-.map-toolbar .row{margin:0}
-.globe-shell{height:min(68vh,700px);min-height:360px;border:1px solid var(--bd);border-radius:10px;overflow:hidden;background:#07131d;position:relative}
-.globe-shell #pulse-globe{width:100%;height:100%}
-.globe-status{position:absolute;left:12px;top:12px;z-index:2;padding:6px 9px;border:1px solid #346071;border-radius:7px;background:#07131ddd;color:#c7efff;font-size:11px;pointer-events:none}
-.map-credits{font-size:11px;color:var(--mut);margin:5px 0 12px}
-.map-events{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:8px}
-.map-events .card{margin:0}
-.map-events .card p{margin-bottom:0}
-.map-empty{padding:12px;border:1px dashed var(--bd);border-radius:8px;color:var(--mut);font-size:13px}
-
-@keyframes portrait-arrive{from{opacity:0;transform:translateY(28px) scale(.78);filter:brightness(.35) blur(8px)}to{opacity:1;transform:translateY(0) scale(1);filter:brightness(1) blur(0)}}
-@keyframes portrait-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
-@keyframes intro-fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-@keyframes intro-load{from{width:0}to{width:100%}}
-@keyframes halo-spin{to{transform:rotate(360deg)}}
-@keyframes intro-failsafe{to{opacity:0;visibility:hidden;pointer-events:none}}
-@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+/* PULSE visual controls */ :root[data-theme="violet"]{
+  --bg:#100d1c;
+  --card:#19142b;
+  --tx:#f3efff;
+  --mut:#a39abf;
+  --bd:#332a4b;
+  --ac:#ad8cff;
+  --ok:#67d5a5;
+  --warn:#f0bd65;
+  --bad:#ff8292;
+  color-scheme:dark
+}
+:root[data-theme="ocean"]{
+  --bg:#071720;
+  --card:#0e2430;
+  --tx:#e8f6ff;
+  --mut:#8caeba;
+  --bd:#204150;
+  --ac:#39c7e8;
+  --ok:#63d6ad;
+  --warn:#f0bd65;
+  --bad:#ff8292;
+  color-scheme:dark
+}
+.top{
+  gap:8px
+}
+.top button{
+  width:38px;
+  height:38px;
+  padding:0;
+  font-size:18px;
+  flex:none
+}
+.intro-screen{
+  position:fixed;
+  inset:0;
+  z-index:30;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  background:radial-gradient(ellipse at 50% 44%,#103143 0,#071016 42%,#03070b 100%);
+  color:#effbff;
+  opacity:1;
+  visibility:visible;
+  transition:opacity .7s,visibility .7s;
+  animation:intro-failsafe .7s 4.2s forwards
+}
+.intro-screen.done{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  animation:none
+}
+.intro-halo{
+  position:absolute;
+  width:min(75vw,540px);
+  aspect-ratio:1;
+  border:1px solid #48d8fb44;
+  border-radius:50%;
+  box-shadow:0 0 0 22px #48d8fb0d,0 0 0 58px #48d8fb08,0 0 90px #03b8ff20;
+  animation:halo-spin 12s linear infinite
+}
+.intro-portrait{
+  position:relative;
+  width:clamp(170px,27vw,290px);
+  height:clamp(170px,27vw,290px);
+  object-fit:cover;
+  border-radius:28px;
+  border:1px solid #52d9ff88;
+  box-shadow:0 0 55px #09bafc55;
+  animation:portrait-arrive 1.15s cubic-bezier(.16,1,.3,1) both,portrait-float 4s 1.2s ease-in-out infinite
+}
+.intro-title{
+  position:relative;
+  margin-top:22px;
+  font:800 clamp(22px,4vw,34px)/1 system-ui,sans-serif;
+  letter-spacing:.3em;
+  text-shadow:0 0 28px #31cfffaa;
+  animation:intro-fade .65s .35s both
+}
+.intro-caption{
+  position:relative;
+  color:#91bac9;
+  font-size:12px;
+  letter-spacing:.08em;
+  margin-top:9px;
+  animation:intro-fade .6s .55s both
+}
+.intro-progress{
+  position:relative;
+  width:150px;
+  height:2px;
+  background:#18313b;
+  margin-top:23px;
+  overflow:hidden
+}
+.intro-progress i{
+  display:block;
+  height:100%;
+  background:#42d9ff;
+  box-shadow:0 0 12px #42d9ff;
+  animation:intro-load 2.2s ease-out both
+}
+.intro-screen button{
+  position:relative;
+  margin-top:18px;
+  border:1px solid #4c7b8b88;
+  border-radius:999px;
+  background:#06121ab8;
+  color:#c7efff;
+  padding:8px 16px;
+  font:12px system-ui;
+  cursor:pointer
+}
+.intro-screen button:hover{
+  background:#11303d;
+  color:#fff
+}
+.map-visual{
+  background:#0a151d;
+  border:1px solid var(--bd);
+  border-radius:9px;
+  overflow:hidden;
+  margin:12px 0
+}
+.map-visual svg{
+  display:block;
+  width:100%;
+  height:auto;
+  min-height:220px
+}
+.map-land{
+  fill:#17323d;
+  stroke:#28515e;
+  stroke-width:1.3
+}
+.map-grid{
+  stroke:#316174;
+  stroke-width:.8;
+  opacity:.32
+}
+.map-marker{
+  fill:#42d9ff;
+  stroke:#e5fbff;
+  stroke-width:2;
+  filter:drop-shadow(0 0 6px #42d9ff)
+}
+.map-marker:hover{
+  r:8
+}
+.map-list{
+  display:grid;
+  gap:0
+}
+.map-list .card{
+  margin-bottom:7px
+}
+.map-toolbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  flex-wrap:wrap;
+  margin:10px 0
+}
+.map-toolbar .row{
+  margin:0
+}
+.globe-shell{
+  height:min(68vh,700px);
+  min-height:360px;
+  border:1px solid var(--bd);
+  border-radius:10px;
+  overflow:hidden;
+  background:#07131d;
+  position:relative
+}
+.globe-shell #pulse-globe{
+  width:100%;
+  height:100%
+}
+.globe-status{
+  position:absolute;
+  left:12px;
+  top:12px;
+  z-index:2;
+  padding:6px 9px;
+  border:1px solid #346071;
+  border-radius:7px;
+  background:#07131ddd;
+  color:#c7efff;
+  font-size:11px;
+  pointer-events:none
+}
+.map-credits{
+  font-size:11px;
+  color:var(--mut);
+  margin:5px 0 12px
+}
+.map-events{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));
+  gap:8px
+}
+.map-events .card{
+  margin:0
+}
+.map-events .card p{
+  margin-bottom:0
+}
+.map-empty{
+  padding:12px;
+  border:1px dashed var(--bd);
+  border-radius:8px;
+  color:var(--mut);
+  font-size:13px
+}
+@media(max-width:640px){
+  .top{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 44px 44px;
+    padding:10px;
+    gap:7px
+  }
+  .top .logo{
+    grid-column:1;
+    grid-row:1
+  }
+  .top input{
+    grid-column:1/-1;
+    grid-row:2;
+    width:100%;
+    font-size:16px;
+    min-height:42px
+  }
+  .top button{
+    width:44px;
+    height:44px;
+    min-height:44px
+  }
+  nav{
+    gap:5px;
+    padding:0 8px 8px
+  }
+  nav button{
+    min-height:42px;
+    padding:8px 12px
+  }
+  main{
+    width:100%;
+    padding:10px
+  }
+  .card{
+    padding:11px
+  }
+  .row{
+    align-items:stretch
+  }
+  .row button{
+    min-height:42px
+  }
+  .map-toolbar{
+    align-items:stretch
+  }
+  .map-toolbar .row{
+    width:100%
+  }
+  .map-toolbar .row button{
+    flex:1
+  }
+  .globe-shell{
+    height:56svh;
+    min-height:320px;
+    max-height:560px
+  }
+  .globe-status{
+    max-width:calc(100% - 24px);
+    font-size:10px
+  }
+  .map-events{
+    grid-template-columns:1fr
+  }
+  #rule-form{
+    display:grid;
+    grid-template-columns:minmax(0,1fr);
+    width:100%
+  }
+  #rule-form input,#rule-form button{
+    width:100%;
+    min-height:44px
+  }
+  .rule-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px
+  }
+  .rule-remove{
+    min-height:40px;
+    padding:6px 10px
+  }
+  button,input{
+    touch-action:manipulation
+  }
+}
+@media(max-width:360px){
+  .top{
+    grid-template-columns:minmax(0,1fr) 40px 40px
+  }
+  .top button{
+    width:40px;
+    height:40px
+  }
+  .map-toolbar .row{
+    display:grid;
+    grid-template-columns:1fr 1fr
+  }
+  .map-toolbar .row button:last-child{
+    grid-column:1/-1
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    scroll-behavior:auto!important
+  }
+}
+@keyframes portrait-arrive{
+  from{
+    opacity:0;
+    transform:translateY(28px) scale(.78);
+    filter:brightness(.35) blur(8px)
+  }
+  to{
+    opacity:1;
+    transform:translateY(0) scale(1);
+    filter:brightness(1) blur(0)
+  }
+}
+@keyframes portrait-float{
+  0%,100%{
+    transform:translateY(0)
+  }
+  50%{
+    transform:translateY(-7px)
+  }
+}
+@keyframes intro-fade{
+  from{
+    opacity:0;
+    transform:translateY(8px)
+  }
+  to{
+    opacity:1;
+    transform:translateY(0)
+  }
+}
+@keyframes intro-load{
+  from{
+    width:0
+  }
+  to{
+    width:100%
+  }
+}
+@keyframes halo-spin{
+  to{
+    transform:rotate(360deg)
+  }
+}
+@keyframes intro-failsafe{
+  to{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none
+  }
+}
 </style>
 </head>
-
 <body>
-<header>
-  <div class="top">
-    <span class="logo">PULSE</span>
-    <input id="q" type="search" placeholder="Search title or summary, press Enter">
-    <button class="b g" id="th" aria-label="Change color theme" title="Change color theme">◐</button>
-    <button class="b g" id="snd" aria-label="Toggle ambient sound" title="Sound off">♫</button>
-  </div>
-  <nav id="nav"></nav>
-</header>
-
+<header><div class="top"><span class="logo">PULSE</span><input id="q" type="search" placeholder="Search title or summary, press Enter"><button class="b g" id="th" aria-label="Change color theme" title="Change color theme">◐</button><button class="b g" id="snd" aria-label="Toggle ambient sound" title="Sound off">♫</button></div><nav id="nav"></nav></header>
 <main id="m"></main>
+<div id="intro" class="intro-screen" aria-label="PULSE startup animation"><div class="intro-halo"></div><img src="pulse-intro.png" alt="PULSE hooded figure" class="intro-portrait"><div class="intro-title">PULSE</div><div class="intro-caption">Technology intelligence · coming online</div><div class="intro-progress"><i></i></div><button id="intro-skip" type="button">Skip intro</button></div>
+<script src="config.js">
 
-<div id="intro" class="intro-screen" aria-label="PULSE startup animation">
-  <div class="intro-halo"></div>
-  <img src="pulse-intro.png" alt="PULSE hooded figure" class="intro-portrait">
-  <div class="intro-title">PULSE</div>
-  <div class="intro-caption">Technology intelligence · coming online</div>
-  <div class="intro-progress"><i></i></div>
-  <button id="intro-skip" type="button">Skip intro</button>
-</div>
-
-<script src="config.js"></script>
+</script>
 <script>
 var S=[["overview","Overview"],["breaking","Breaking News"],["social","Social Pulse"],["early","Early Signals"],["ai","AI Intelligence"],["cyber","Cyber Radar"],["tech","Tech Radar"],["map","Global Map"],["company","Companies"],["local","Local"],["sources","Source Monitor"],["notif","Notifications"]];
-var DESC={breaking:"Latest reporting from monitored news, company, tech and AI sources.",social:"Community discussion. Popularity is not proof of accuracy.",early:"Recent community discussions gaining points. EARLY SIGNALS are unconfirmed, never breaking news.",ai:"AI releases and research from monitored sources.",cyber:"Defensive only: official advisories, CVEs and known exploited vulnerabilities.",tech:"Technology reporting from monitored sources.",company:"Official company announcements from monitored sources.",local:"Events from sources registered for India and other regions."};
-var Q={breaking:"category=in.(news,company,tech,ai)",social:"category=eq.social",early:"category=eq.social",ai:"category=eq.ai",cyber:"category=eq.cyber",tech:"category=eq.tech",company:"category=eq.company",local:"region=like.IN*"};
-var SEL="select=id,title,url,summary,label,platform,severity,score,published_at,detected_at,meta,sources(name)";
-var C=window.PULSE||{},OK=!!(C.url&&C.key),cur=(location.hash||"#overview").slice(1),T=0,term="";
-var LS="pulse.rules";
-function rules(){try{return JSON.parse(localStorage.getItem(LS))||[]}catch(e){return[]}}
-function setRules(r){try{localStorage.setItem(LS,JSON.stringify(r))}catch(e){}}
-function $(i){return document.getElementById(i)}
-function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
-function url(u){return /^https?:\/\//i.test(u)?esc(u):"#"}
-function api(p,count){
-  var h={apikey:C.key};
-  if(/^eyJ/.test(C.key))h.Authorization="Bearer "+C.key;
-  if(count)h.Prefer="count=exact";
-  return fetch(C.url+"/rest/v1/"+p,{headers:h}).then(function(r){
-    if(!r.ok)throw new Error("HTTP "+r.status);
-    var cr=r.headers.get("content-range");
-    return r.json().then(function(j){return count?+String(cr).split("/")[1]:j})
-  })
+var DESC={
+  breaking:"Latest reporting from monitored news, company, tech and AI sources.",social:"Community discussion. Popularity is not proof of accuracy.",early:"Recent community discussions gaining points. EARLY SIGNALS are unconfirmed, never breaking news.",ai:"AI releases and research from monitored sources.",cyber:"Defensive only: official advisories, CVEs and known exploited vulnerabilities.",tech:"Technology reporting from monitored sources.",company:"Official company announcements from monitored sources.",local:"Events from sources registered for India and other regions."
 }
+;
+var Q={
+  breaking:"category=in.(news,company,tech,ai)",social:"category=eq.social",early:"category=eq.social",ai:"category=eq.ai",cyber:"category=eq.cyber",tech:"category=eq.tech",company:"category=eq.company",local:"region=like.IN*"
+}
+;
+var SEL="select=id,title,url,summary,label,platform,severity,score,published_at,detected_at,meta,sources(name)";
+var C=window.PULSE||{
+}
+,OK=!!(C.url&&C.key),cur=(location.hash||"#overview").slice(1),T=0,term="";
+var LS="pulse.rules";
+function rules(){
+  try{
+    return JSON.parse(localStorage.getItem(LS))||[]
+  }
+  catch(e){
+    return[]
+  }
+}
+function setRules(r){
+  try{
+    localStorage.setItem(LS,JSON.stringify(r));
+    return true
+  }
+  catch(e){
+    return false
+  }
+}
+function $(i){
+  return document.getElementById(i)
+}
+function esc(s){
+  return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function url(u){return /^https?:\/\//i.test(u)?esc(u):"#"}
+function api(p,count){var h={apikey:C.key};if(/^eyJ/.test(C.key))h.Authorization="Bearer "+C.key;if(count)h.Prefer="count=exact";
+return fetch(C.url+"/rest/v1/"+p,{headers:h}).then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);var cr=r.headers.get("content-range");return r.json().then(function(j){return count?+String(cr).split("/")[1]:j})})}
 function dur(ms){ms=Math.max(0,ms);return ms<6e4?Math.round(ms/1e3)+"s":ms<36e5?Math.round(ms/6e4)+"m":ms<864e5?Math.round(ms/36e5)+"h":Math.round(ms/864e5)+"d"}
 function ago(t){return t?dur(Date.now()-Date.parse(t))+" ago":"never"}
 function srch(){var q=term.replace(/[,()*]/g," ").trim();return q?"&or=(title.ilike.*"+encodeURIComponent(q)+"*,summary.ilike.*"+encodeURIComponent(q)+"*)":""}
-function card(e){
-  var m=e.meta||{},s="";
-  if(e.severity)s+='<span class="tag off">'+esc(e.severity)+(m.cvss!=null?" "+esc(m.cvss):"")+"</span>";
-  if(m.known_exploited)s+='<span class="tag off">KNOWN EXPLOITED</span>';
-  if(e.label)s+='<span class="tag">'+esc(e.label)+"</span>";
-  var lat=e.published_at?" · detected "+dur(Date.parse(e.detected_at)-Date.parse(e.published_at))+" after publication":"";
-  var v="";
-  if(e.platform&&e.score!=null&&e.published_at)v='<br><small>≈'+(e.score/Math.max((Date.now()-Date.parse(e.published_at))/36e5,.25)).toFixed(1)+" points/hour (rough estimate) · trend state: INSUFFICIENT DATA (no baseline yet)</small>";
-  var d=m.discussion?' · <a href="'+url(m.discussion)+'" target="_blank" rel="noopener">Discussion</a>':"";
-  return '<div class="card">'+s+'<br><a class="t" href="'+url(e.url)+'" target="_blank" rel="noopener">'+esc(e.title)+'</a><br><small>'+esc(e.sources&&e.sources.name)+" · "+(e.published_at?"published "+ago(e.published_at):"publication time unknown")+lat+d+"</small>"+(e.summary?"<p>"+esc(e.summary.slice(0,280))+"</p>":"")+v+"</div>"
-}
+function card(e){var m=e.meta||{},s="";if(e.severity)s+='<span class="tag off">'+esc(e.severity)+(m.cvss!=null?" "+esc(m.cvss):"")+"</span>";
+if(m.known_exploited)s+='<span class="tag off">KNOWN EXPLOITED</span>';if(e.label)s+='<span class="tag">'+esc(e.label)+"</span>";
+var lat=e.published_at?" · detected "+dur(Date.parse(e.detected_at)-Date.parse(e.published_at))+" after publication":"";
+var v="";if(e.platform&&e.score!=null&&e.published_at)v='<br><small>≈'+(e.score/Math.max((Date.now()-Date.parse(e.published_at))/36e5,.25)).toFixed(1)+" points/hour (rough estimate) · trend state: INSUFFICIENT DATA (no baseline yet)</small>";
+var d=m.discussion?' · <a href="'+url(m.discussion)+'" target="_blank" rel="noopener">Discussion</a>':"";
+return '<div class="card">'+s+'<br><a class="t" href="'+url(e.url)+'" target="_blank" rel="noopener">'+esc(e.title)+'</a><br><small>'+esc(e.sources&&e.sources.name)+" · "+(e.published_at?"published "+ago(e.published_at):"publication time unknown")+lat+d+"</small>"+(e.summary?"<p>"+esc(e.summary.slice(0,280))+"</p>":"")+v+"</div>"}
 function emp(t){return '<div class="empty">'+(t||"No events yet. Run the worker once (see README), then refresh.")+"</div>"}
 function head(id){var n=S.filter(function(x){return x[0]==id})[0];return "<h2>"+n[1]+'</h2><p class="sub">'+(DESC[id]||"")+"</p>"}
-function stat(s){
-  var iv=s.interval_min*6e4*3;
-  if(!s.last_run_at)return["AWAITING CONFIGURATION","wait"];
-  if(s.status=="rate_limited")return["RATE LIMITED","warn"];
-  if(s.status=="offline")return["OFFLINE","off"];
-  if(s.status=="degraded")return["DEGRADED","warn"];
-  if(Date.now()-Date.parse(s.last_success_at)>iv)return["DELAYED","warn"];
-  return["OPERATIONAL","ok"]
-}
-function list(id){
-  var o=id=="social"||id=="early"?"score.desc.nullslast":"published_at.desc.nullslast";
-  var f=id=="early"?"&published_at=gte."+new Date(Date.now()-216e5).toISOString():"";
-  return api("events?"+SEL+"&"+Q[id]+f+srch()+"&order="+o+"&limit=50").then(function(r){
-    return head(id)+(r.length?r.map(card).join(""):emp(id=="early"?"No recent discussions yet. Early signals come from social sources only.":0))
-  })
-}
-function ov(){
-  var d=new Date(Date.now()-864e5).toISOString();
-  return Promise.all([
-    api("events?select=id&limit=1",1),
-    api("events?select=id&limit=1&detected_at=gte."+d,1),
-    api("sources?select=*"),
-    api("events?"+SEL+srch()+"&order=published_at.desc.nullslast&limit=8"),
-    api("events?"+SEL+"&severity=eq.CRITICAL&order=published_at.desc.nullslast&limit=4")
-  ]).then(function(a){
-    var ok=a[2].filter(function(s){return stat(s)[0]=="OPERATIONAL"}).length;
-    var bad=a[2].filter(function(s){var x=stat(s)[0];return x=="OFFLINE"||x=="DEGRADED"}).length;
-    return '<h2>Global Overview</h2><p class="sub">All figures are counted from the database.</p><div class="grid"><div class="card stat"><b>'+a[0]+'</b><span>Stored events</span></div><div class="card stat"><b>'+a[1]+'</b><span>Detected in 24h</span></div><div class="card stat"><b>'+ok+"/"+a[2].length+'</b><span>Sources operational</span></div><div class="card stat"><b>'+bad+'</b><span>Degraded or offline</span></div></div><div class="card">AI provider <span class="tag wait">NOT CONFIGURED</span> <small>Original publisher text is shown. No AI analysis is performed in this version.</small></div>'+(a[4].length?"<h2>Critical vulnerabilities</h2>"+a[4].map(card).join(""):"")+"<h2>Latest events</h2>"+(a[3].length?a[3].map(card).join(""):emp())
-  })
-}
-function src(){
-  return api("sources?select=*&order=name.asc").then(function(r){
-    var t=r.map(function(s){
-      var x=stat(s);
-      return "<tr><td><b>"+esc(s.name)+"</b><br><small>"+esc(s.type)+" · "+esc(s.category)+" · "+esc(s.region)+" · every "+s.interval_min+"m</small></td><td><span class='tag "+x[1]+"'>"+x[0]+"</span>"+(s.enabled?"":"<span class='tag'>DISABLED</span>")+"</td><td>"+ago(s.last_success_at)+"</td><td>"+(s.last_latency_ms!=null?s.last_latency_ms+" ms":"—")+"</td><td>"+s.items_last_run+"</td><td><small>"+esc(s.last_error||"")+"</small></td></tr>"
-    }).join("");
-    return head2("Source Monitor","Status comes from real worker fetches. To add, edit or disable sources, use the Supabase Table Editor.")+'<div class="card scroll"><table><tr><th>Source</th><th>Status</th><th>Last success</th><th>Fetch time</th><th>Items</th><th>Last error</th></tr>'+t+"</table></div>"
-  })
-}
+function stat(s){var iv=s.interval_min*6e4*3;if(!s.last_run_at)return["AWAITING CONFIGURATION","wait"];if(s.status=="rate_limited")return["RATE LIMITED","warn"];if(s.status=="offline")return["OFFLINE","off"];if(s.status=="degraded")return["DEGRADED","warn"];if(Date.now()-Date.parse(s.last_success_at)>iv)return["DELAYED","warn"];return["OPERATIONAL","ok"]}
+function list(id){var o=id=="social"||id=="early"?"score.desc.nullslast":"published_at.desc.nullslast";var f=id=="early"?"&published_at=gte."+new Date(Date.now()-216e5).toISOString():"";
+return api("events?"+SEL+"&"+Q[id]+f+srch()+"&order="+o+"&limit=50").then(function(r){return head(id)+(r.length?r.map(card).join(""):emp(id=="early"?"No recent discussions yet. Early signals come from social sources only.":0))})}
+function ov(){var d=new Date(Date.now()-864e5).toISOString();return Promise.all([api("events?select=id&limit=1",1),api("events?select=id&limit=1&detected_at=gte."+d,1),api("sources?select=*"),api("events?"+SEL+srch()+"&order=published_at.desc.nullslast&limit=8"),api("events?"+SEL+"&severity=eq.CRITICAL&order=published_at.desc.nullslast&limit=4")]).then(function(a){var ok=a[2].filter(function(s){return stat(s)[0]=="OPERATIONAL"}).length,bad=a[2].filter(function(s){var x=stat(s)[0];return x=="OFFLINE"||x=="DEGRADED"}).length;
+return '<h2>Global Overview</h2><p class="sub">All figures are counted from the database.</p><div class="grid"><div class="card stat"><b>'+a[0]+'</b><span>Stored events</span></div><div class="card stat"><b>'+a[1]+'</b><span>Detected in 24h</span></div><div class="card stat"><b>'+ok+"/"+a[2].length+'</b><span>Sources operational</span></div><div class="card stat"><b>'+bad+'</b><span>Degraded or offline</span></div></div><div class="card">AI provider <span class="tag wait">NOT CONFIGURED</span> <small>Original publisher text is shown. No AI analysis is performed in this version.</small></div>'+(a[4].length?"<h2>Critical vulnerabilities</h2>"+a[4].map(card).join(""):"")+"<h2>Latest events</h2>"+(a[3].length?a[3].map(card).join(""):emp())})}
+function src(){return api("sources?select=*&order=name.asc").then(function(r){var t=r.map(function(s){var x=stat(s);return "<tr><td><b>"+esc(s.name)+"</b><br><small>"+esc(s.type)+" · "+esc(s.category)+" · "+esc(s.region)+" · every "+s.interval_min+"m</small></td><td><span class='tag "+x[1]+"'>"+x[0]+"</span>"+(s.enabled?"":"<span class='tag'>DISABLED</span>")+"</td><td>"+ago(s.last_success_at)+"</td><td>"+(s.last_latency_ms!=null?s.last_latency_ms+" ms":"—")+"</td><td>"+s.items_last_run+"</td><td><small>"+esc(s.last_error||"")+"</small></td></tr>"}).join("");
+return head2("Source Monitor","Status comes from real worker fetches. To add, edit or disable sources, use the Supabase Table Editor.")+'<div class="card scroll"><table><tr><th>Source</th><th>Status</th><th>Last success</th><th>Fetch time</th><th>Items</th><th>Last error</th></tr>'+t+"</table></div>"})}
 function head2(a,b){return "<h2>"+a+'</h2><p class="sub">'+b+"</p>"}
-
-/* Interactive Cesium globe and real source-backed map layers */
 var cesiumLoad=null,pulseViewer=null,pulseEntities=[],quakeEntities=[],pulseMapTimer=null,quakesEnabled=true,quakeCount=0,pulsePointCount=0;
-function loadCesium(){
-  if(window.Cesium)return Promise.resolve();
-  if(cesiumLoad)return cesiumLoad;
-  var base="https://cesium.com/downloads/cesiumjs/releases/1.146/Build/Cesium/";
-  window.CESIUM_BASE_URL=base;
-  var css=document.createElement("link");
-  css.rel="stylesheet";
-  css.href=base+"Widgets/widgets.css";
-  document.head.appendChild(css);
-  cesiumLoad=new Promise(function(resolve,reject){
-    var s=document.createElement("script");
-    s.src=base+"Cesium.js";
-    s.onload=resolve;
-    s.onerror=function(){
-      cesiumLoad=null;
-      reject(new Error("Could not load the globe library. Check your internet connection and reload the map."))
-    };
-    document.head.appendChild(s)
-  });
-  return cesiumLoad
-}
-function getMapPoints(){
-  return api("events?select=id,title,url,summary,published_at,detected_at,meta,sources(name)&order=detected_at.desc&limit=100").then(function(ev){
-    return ev.map(function(e){
-      var m=e.meta||{},la=m.latitude!=null?m.latitude:m.lat,lo=m.longitude!=null?m.longitude:m.lon;
-      var lat=la==null||la===""?NaN:Number(la),lon=lo==null||lo===""?NaN:Number(lo);
-      return{e:e,lat:lat,lon:lon}
-    }).filter(function(p){return Number.isFinite(p.lat)&&Number.isFinite(p.lon)&&Math.abs(p.lat)<=90&&Math.abs(p.lon)<=180})
-  })
-}
-function plotMapPoints(pts){
-  if(!pulseViewer)return;
-  pulsePointCount=pts.length;
-  pulseEntities.forEach(function(x){pulseViewer.entities.remove(x)});
-  pulseEntities=[];
-  pts.forEach(function(p){
-    var en=pulseViewer.entities.add({
-      id:"pulse-event-"+p.e.id,
-      position:Cesium.Cartesian3.fromDegrees(p.lon,p.lat,2500),
-      point:{pixelSize:11,color:Cesium.Color.fromCssColorString("#39d8ff"),outlineColor:Cesium.Color.WHITE,outlineWidth:2,disableDepthTestDistance:Number.POSITIVE_INFINITY},
-      label:{text:(p.e.title||"PULSE event").slice(0,54),font:"12px system-ui",fillColor:Cesium.Color.WHITE,outlineColor:Cesium.Color.BLACK,outlineWidth:3,style:Cesium.LabelStyle.FILL_AND_OUTLINE,show:false,disableDepthTestDistance:Number.POSITIVE_INFINITY},
-      description:'<strong>'+esc(p.e.title)+'</strong><br><small>'+esc(p.e.sources&&p.e.sources.name||"PULSE source")+'</small><br>'+esc((p.e.summary||"").slice(0,260))+(p.e.url?'<br><a href="'+url(p.e.url)+'" target="_blank" rel="noopener">Open original report</a>':"")
-    });
-    pulseEntities.push(en)
-  });
-  var list=$("map-events");
-  if(list)list.innerHTML=pts.length?pts.slice(0,12).map(function(p){return card(p.e)}).join(""):'<div class="map-empty">No event in the latest 100 has a usable source-provided latitude and longitude. The globe is ready; markers appear when a monitored source supplies coordinates.</div>';
-  updateGlobeStatus()
-}
-function updateGlobeStatus(){
-  var status=$("globe-status");
-  if(status)status.textContent=pulsePointCount+" located PULSE report"+(pulsePointCount===1?"":"s")+" · "+(quakesEnabled?quakeCount+" USGS earthquakes (24h)":"earthquake layer off")+" · updated "+new Date().toLocaleTimeString()
-}
-function loadQuakes(){
-  return fetch("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson").then(function(r){
-    if(!r.ok)throw new Error("USGS feed HTTP "+r.status);
-    return r.json()
-  }).then(function(j){
-    var features=j.features||[];
-    quakeCount=features.length;
-    if(pulseViewer){
-      quakeEntities.forEach(function(x){pulseViewer.entities.remove(x)});
-      quakeEntities=[];
-      if(quakesEnabled)features.forEach(function(f){
-        var c=f.geometry&&f.geometry.coordinates;
-        if(!c||!Number.isFinite(c[0])||!Number.isFinite(c[1]))return;
-        var pr=f.properties||{},mag=Number(pr.mag)||0;
-        var en=pulseViewer.entities.add({
-          id:"usgs-quake-"+f.id,
-          position:Cesium.Cartesian3.fromDegrees(c[0],c[1],Math.max(500,c[2]||0)),
-          point:{pixelSize:Math.max(6,Math.min(19,6+mag*2)),color:Cesium.Color.fromCssColorString("#ffad42").withAlpha(.9),outlineColor:Cesium.Color.WHITE,outlineWidth:1,disableDepthTestDistance:Number.POSITIVE_INFINITY},
-          description:'<strong>M'+esc(mag.toFixed(1))+' earthquake</strong><br>'+esc(pr.place||"Location not reported")+'<br><small>'+new Date(pr.time||Date.now()).toLocaleString()+" · USGS</small>"+(pr.url?'<br><a href="'+url(pr.url)+'" target="_blank" rel="noopener">Open USGS event</a>':"")
-        });
-        quakeEntities.push(en)
-      })
-    }
-    updateGlobeStatus();
-    return features
-  })
-}
-function startGlobe(){
-  var box=$("pulse-globe");
-  if(!box)return;
-  loadCesium().then(function(){
-    if(!$("pulse-globe"))return;
-    if(!pulseViewer){
-      pulseViewer=new Cesium.Viewer("pulse-globe",{
-        baseLayer:new Cesium.ImageryLayer(new Cesium.OpenStreetMapImageryProvider({url:"https://tile.openstreetmap.org/"})),
-        baseLayerPicker:false,geocoder:false,homeButton:false,sceneModePicker:false,navigationHelpButton:false,
-        animation:false,timeline:false,fullscreenButton:false,infoBox:true,selectionIndicator:true,scene3DOnly:true,shouldAnimate:false
-      });
-      pulseViewer.scene.globe.enableLighting=true;
-      pulseViewer.scene.globe.showGroundAtmosphere=true;
-      pulseViewer.camera.setView({destination:Cesium.Cartesian3.fromDegrees(10,18,23000000)});
-      pulseViewer.screenSpaceEventHandler.setInputAction(function(){
-        pulseEntities.forEach(function(x){if(x.label)x.label.show=false});
-        var selected=pulseViewer.selectedEntity;
-        if(selected&&selected.label)selected.label.show=true
-      },Cesium.ScreenSpaceEventType.LEFT_CLICK)
-    }
-    return Promise.all([getMapPoints().then(plotMapPoints),loadQuakes()])
-  }).catch(function(e){
-    var box=$("globe-status");
-    if(box)box.textContent=e.message
-  })
-}
-function mp(){
-  return getMapPoints().then(function(pts){
-    return head2("Global Map","Interactive 3D Earth for PULSE technology intelligence. News markers use source-provided coordinates; the optional earthquake layer uses the USGS live feed.")+
-      '<div class="map-toolbar"><small>Drag to orbit · scroll to zoom · click a marker for its report</small><div class="row"><button class="b g" id="quake-toggle" type="button">USGS earthquakes: '+(quakesEnabled?"ON":"OFF")+'</button><button class="b g" id="globe-home" type="button">Reset globe</button><button class="b g" id="globe-refresh" type="button">Refresh data</button></div></div>'+
-      '<div class="globe-shell"><div id="pulse-globe" aria-label="Interactive 3D Earth globe"></div><div id="globe-status" class="globe-status">Loading 3D globe and live data…</div></div>'+
-      '<div class="map-credits">Map tiles © OpenStreetMap contributors · Earth rendered with CesiumJS · Earthquakes: USGS GeoJSON, past 24 hours. PULSE news markers require coordinates from the source.</div>'+
-      '<h2>Located reports</h2><p class="sub">'+pts.length+' coordinate-backed PULSE event'+(pts.length===1?"":"s")+' in the latest 100 events. Data refreshes every minute while this page is open.</p>'+
-      '<div id="map-events" class="map-events">'+(pts.length?pts.slice(0,12).map(function(p){return card(p.e)}).join(""):'<div class="map-empty">No PULSE event in the latest 100 has a usable source-provided latitude and longitude. The globe is ready; markers appear when a monitored source supplies coordinates.</div>')+'</div>'
-  })
-}
-
+function loadCesium(){if(window.Cesium)return Promise.resolve();if(cesiumLoad)return cesiumLoad;var base="https://cesium.com/downloads/cesiumjs/releases/1.146/Build/Cesium/";window.CESIUM_BASE_URL=base;var css=document.createElement("link");css.rel="stylesheet";css.href=base+"Widgets/widgets.css";document.head.appendChild(css);cesiumLoad=new Promise(function(resolve,reject){var s=document.createElement("script");s.src=base+"Cesium.js";s.onload=resolve;s.onerror=function(){cesiumLoad=null;reject(new Error("Could not load the globe library. Check your internet connection and reload the map."))};document.head.appendChild(s)});return cesiumLoad}
+function getMapPoints(){return api("events?select=id,title,url,summary,published_at,detected_at,meta,sources(name)&order=detected_at.desc&limit=100").then(function(ev){return ev.map(function(e){var m=e.meta||{},la=m.latitude!=null?m.latitude:m.lat,lo=m.longitude!=null?m.longitude:m.lon,lat=la==null||la===""?NaN:Number(la),lon=lo==null||lo===""?NaN:Number(lo);return{e:e,lat:lat,lon:lon}}).filter(function(p){return Number.isFinite(p.lat)&&Number.isFinite(p.lon)&&Math.abs(p.lat)<=90&&Math.abs(p.lon)<=180})})}
+function plotMapPoints(pts){if(!pulseViewer)return;pulsePointCount=pts.length;pulseEntities.forEach(function(x){pulseViewer.entities.remove(x)});pulseEntities=[];pts.forEach(function(p){var en=pulseViewer.entities.add({id:"pulse-event-"+p.e.id,position:Cesium.Cartesian3.fromDegrees(p.lon,p.lat,2500),point:{pixelSize:11,color:Cesium.Color.fromCssColorString("#39d8ff"),outlineColor:Cesium.Color.WHITE,outlineWidth:2,disableDepthTestDistance:Number.POSITIVE_INFINITY},label:{text:(p.e.title||"PULSE event").slice(0,54),font:"12px system-ui",fillColor:Cesium.Color.WHITE,outlineColor:Cesium.Color.BLACK,outlineWidth:3,style:Cesium.LabelStyle.FILL_AND_OUTLINE,show:false,disableDepthTestDistance:Number.POSITIVE_INFINITY},description:'<strong>'+esc(p.e.title)+'</strong><br><small>'+esc(p.e.sources&&p.e.sources.name||"PULSE source")+'</small><br>'+esc((p.e.summary||"").slice(0,260))+(p.e.url?'<br><a href="'+url(p.e.url)+'" target="_blank" rel="noopener">Open original report</a>':"")});pulseEntities.push(en)});var list=$("map-events");if(list)list.innerHTML=pts.length?pts.slice(0,12).map(function(p){return card(p.e)}).join(""):'<div class="map-empty">No event in the latest 100 has a usable source-provided latitude and longitude. The globe is ready; markers appear when a monitored source supplies coordinates.</div>';updateGlobeStatus()}
+function updateGlobeStatus(){var status=$("globe-status");if(status)status.textContent=pulsePointCount+" located PULSE report"+(pulsePointCount===1?"":"s")+" · "+(quakesEnabled?quakeCount+" USGS earthquakes (24h)":"earthquake layer off")+" · updated "+new Date().toLocaleTimeString()}
+function loadQuakes(){return fetch("https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_day.geojson").then(function(r){if(!r.ok)throw new Error("USGS feed HTTP "+r.status);return r.json()}).then(function(j){var features=j.features||[];quakeCount=features.length;if(pulseViewer){quakeEntities.forEach(function(x){pulseViewer.entities.remove(x)});quakeEntities=[];if(quakesEnabled)features.forEach(function(f){var c=f.geometry&&f.geometry.coordinates;if(!c||!Number.isFinite(c[0])||!Number.isFinite(c[1]))return;var pr=f.properties||{},mag=Number(pr.mag)||0,en=pulseViewer.entities.add({id:"usgs-quake-"+f.id,position:Cesium.Cartesian3.fromDegrees(c[0],c[1],Math.max(500,c[2]||0)),point:{pixelSize:Math.max(6,Math.min(19,6+mag*2)),color:Cesium.Color.fromCssColorString("#ffad42").withAlpha(.9),outlineColor:Cesium.Color.WHITE,outlineWidth:1,disableDepthTestDistance:Number.POSITIVE_INFINITY},description:'<strong>M'+esc(mag.toFixed(1))+' earthquake</strong><br>'+esc(pr.place||"Location not reported")+'<br><small>'+new Date(pr.time||Date.now()).toLocaleString()+" · USGS</small>"+(pr.url?'<br><a href="'+url(pr.url)+'" target="_blank" rel="noopener">Open USGS event</a>':"")} );quakeEntities.push(en)})}updateGlobeStatus();return features})}
+function startGlobe(){var box=$("pulse-globe");if(!box)return;loadCesium().then(function(){if(!$("pulse-globe"))return;if(!pulseViewer){pulseViewer=new Cesium.Viewer("pulse-globe",{baseLayer:new Cesium.ImageryLayer(new Cesium.OpenStreetMapImageryProvider({url:"https://tile.openstreetmap.org/"})),baseLayerPicker:false,geocoder:false,homeButton:false,sceneModePicker:false,navigationHelpButton:false,animation:false,timeline:false,fullscreenButton:false,infoBox:true,selectionIndicator:true,scene3DOnly:true,shouldAnimate:false});pulseViewer.scene.globe.enableLighting=true;pulseViewer.scene.globe.showGroundAtmosphere=true;pulseViewer.camera.setView({destination:Cesium.Cartesian3.fromDegrees(10,18,23000000)});pulseViewer.screenSpaceEventHandler.setInputAction(function(){pulseEntities.forEach(function(x){if(x.label)x.label.show=false});var selected=pulseViewer.selectedEntity;if(selected&&selected.label)selected.label.show=true},Cesium.ScreenSpaceEventType.LEFT_CLICK)}return Promise.all([getMapPoints().then(plotMapPoints),loadQuakes()])}).catch(function(e){var box=$("globe-status");if(box)box.textContent=e.message})}
+function mp(){return getMapPoints().then(function(pts){return head2("Global Map","Interactive 3D Earth for PULSE technology intelligence. News markers use source-provided coordinates; the optional earthquake layer uses the USGS live feed.")+'<div class="map-toolbar"><small>Drag to orbit · scroll to zoom · click a marker for its report</small><div class="row"><button class="b g" id="quake-toggle" type="button">USGS earthquakes: '+(quakesEnabled?"ON":"OFF")+'</button><button class="b g" id="globe-home" type="button">Reset globe</button><button class="b g" id="globe-refresh" type="button">Refresh data</button></div></div><div class="globe-shell"><div id="pulse-globe" aria-label="Interactive 3D Earth globe"></div><div id="globe-status" class="globe-status">Loading 3D globe and live data…</div></div><div class="map-credits">Map tiles © OpenStreetMap contributors · Earth rendered with CesiumJS · Earthquakes: USGS GeoJSON, past 24 hours. PULSE news markers require coordinates from the source.</div><h2>Located reports</h2><p class="sub">'+pts.length+' coordinate-backed PULSE event'+(pts.length===1?"":"s")+' in the latest 100 events. Data refreshes every minute while this page is open.</p><div id="map-events" class="map-events">'+(pts.length?pts.slice(0,12).map(function(p){return card(p.e)}).join(""):'<div class="map-empty">No PULSE event in the latest 100 has a usable source-provided latitude and longitude. The globe is ready; markers appear when a monitored source supplies coordinates.</div>')+'</div>'})}
+function notificationPermissionText(){if(!window.Notification)return"This browser does not support desktop notifications.";if(Notification.permission==="denied")return'Notifications are blocked for this site. In Firefox, open Settings → Privacy & Security → Permissions → Notifications → Settings, change pulsex-phi.vercel.app to Allow, save, then reload. <a href="https://support.mozilla.org/en-US/kb/push-notifications-firefox" target="_blank" rel="noopener">Firefox help</a>.';if(Notification.permission==="granted")return"Permission: allowed. New matching events can alert while PULSE is open.";return"Permission: not set. Select Enable desktop alerts and allow the browser prompt."}
 function nt(){
   var R=rules();
   return api("events?"+SEL+"&order=published_at.desc.nullslast&limit=100").then(function(ev){
@@ -341,202 +709,66 @@ function nt(){
         if((e.title+" "+(e.summary||"")).toLowerCase().indexOf(r.toLowerCase())>-1&&hits.indexOf(e)<0)hits.push(e)
       })
     });
-    return head2("Notifications","Rules are saved in this browser. Desktop alerts work while this page is open.")+
-      '<div class="card"><b>Delivery channels</b><br><small>Browser alerts: opt in below. Email and Telegram: <span class="tag wait">NOT CONFIGURED</span></small><div class="row"><button class="b" id="allow-alerts" type="button">Enable desktop alerts</button><small id="alert-permission">'+(window.Notification?"Permission: "+Notification.permission:"Desktop alerts are not supported in this browser.")+'</small></div></div>'+
-      '<div class="card"><div class="row"><input id="rk" placeholder="Keyword, e.g. NVIDIA"><button class="b" onclick="addR()">Add rule</button></div>'+
-      (R.length?R.map(function(r,i){return '<span class="tag">'+esc(r)+' <a href="#" onclick="delR('+i+');return false">✕</a></span>'}).join(""):"<small>No rules yet.</small>")+
-      "</div>"+(R.length?(hits.length?hits.map(card).join(""):emp("No recent events match your rules.")):"")
+    var alertLabel=!window.Notification?"Alerts unsupported":Notification.permission==="denied"?"How to allow alerts":Notification.permission==="granted"?"Send test alert":"Enable desktop alerts";
+    var rows=R.length?R.map(function(r,i){
+      return '<div class="rule-item"><span class="tag">Watch: '+esc(r)+'</span><button class="b g rule-remove" type="button" data-remove-rule="'+i+'" aria-label="Remove keyword '+esc(r)+'">Remove</button></div>'
+    }).join(""):"<small>No keyword rules yet.</small>";
+    var matches=R.length?(hits.length?'<p class="sub">'+hits.length+' recent matching event'+(hits.length===1?"":"s")+'</p>'+hits.map(card).join(""):emp("No recent events match these keywords. New matching events will be checked while the site is open.")):"";
+    var intro=head2("Notifications","A keyword is a word or phrase. PULSE checks new event titles and summaries for that text, without case sensitivity. Rules are saved only in this browser.");
+    var delivery='<div class="card"><b>Delivery channels</b><br><small>Desktop notifications: browser permission required. Email and Telegram: <span class="tag wait">NOT CONFIGURED</span></small><div class="row"><button class="b" id="allow-alerts" type="button">'+alertLabel+'</button><small id="alert-permission" aria-live="polite">'+notificationPermissionText()+"</small></div><small>Alerts are checked while PULSE is open. Keep this tab open for new-event alerts.</small></div>";
+    var rulesCard='<div class="card"><b>Keyword rules</b><p class="sub">For example, add <b>NVIDIA</b> to find new headlines or summaries containing “NVIDIA”. Add a rule to see matching events below.</p><form class="row" id="rule-form"><input id="rk" type="text" autocomplete="off" placeholder="Type a keyword, e.g. NVIDIA" aria-label="Keyword to watch"><button class="b" type="submit">Add keyword</button></form><small id="rule-status" aria-live="polite"></small><div class="rule-list">'+rows+"</div></div>";
+    return intro+delivery+rulesCard+matches
   })
 }
-function addR(){var k=$("rk").value.trim();if(!k)return;var R=rules();R.push(k);setRules(R);go()}
-function delR(i){var R=rules();R.splice(i,1);setRules(R);go()}
-function go(){
-  if(pulseMapTimer){clearInterval(pulseMapTimer);pulseMapTimer=null}
-  if(pulseViewer){pulseViewer.destroy();pulseViewer=null;pulseEntities=[];quakeEntities=[]}
-  $("nav").innerHTML=S.map(function(s){
-    return '<button class="'+(s[0]==cur?"on":"")+'" onclick="cur=\''+s[0]+'\';location.hash=cur;go()">'+s[1]+"</button>"
-  }).join("");
-  var m=$("m");
-  if(!OK){
-    m.innerHTML=head2("Setup needed","Database connection <span class='tag wait'>AWAITING CONFIGURATION</span>")+emp("Open config.js and set your Supabase URL and anon (publishable) key. See README.");
-    return
-  }
-  var t=++T;
-  m.innerHTML='<p class="sub">Loading…</p>';
-  var p=cur=="overview"?ov():cur=="sources"?src():cur=="notif"?nt():cur=="map"?mp():list(cur);
-  p.then(function(h){
-    if(t==T){
-      m.innerHTML=h;
-      if(cur=="map"){
-        startGlobe();
-        $("globe-home").onclick=function(){
-          if(pulseViewer)pulseViewer.camera.flyTo({destination:Cesium.Cartesian3.fromDegrees(10,18,23000000),duration:1.5})
-        };
-        $("globe-refresh").onclick=function(){
-          Promise.all([getMapPoints().then(plotMapPoints),loadQuakes()]).catch(function(e){
-            var s=$("globe-status");
-            if(s)s.textContent="Refresh failed: "+e.message
-          })
-        };
-        $("quake-toggle").onclick=function(){
-          quakesEnabled=!quakesEnabled;
-          this.textContent="USGS earthquakes: "+(quakesEnabled?"ON":"OFF");
-          loadQuakes().catch(function(e){
-            var s=$("globe-status");
-            if(s)s.textContent="USGS feed unavailable: "+e.message
-          })
-        };
-        pulseMapTimer=setInterval(function(){
-          if(cur=="map"&&document.visibilityState=="visible"){
-            Promise.all([getMapPoints().then(plotMapPoints),loadQuakes()]).catch(function(){})
-          }
-        },60000)
-      }
-    }
-  }).catch(function(e){
-    if(t==T)m.innerHTML=head2("Connection problem","Database <span class='tag off'>OFFLINE</span>")+emp("Could not read the database ("+esc(e.message)+"). Check config.js, that schema.sql was run, and that the project is not paused.")
-  })
-}
-
+function addR(){var input=$("rk"),status=$("rule-status"),k=input?input.value.trim():"";if(!k){if(status)status.textContent="Type a keyword or phrase first.";if(input)input.focus();return}var R=rules();if(R.some(function(x){return String(x).toLowerCase()===k.toLowerCase()})){if(status)status.textContent="That keyword is already on your watch list.";return}R.push(k);if(!setRules(R)){if(status)status.textContent="Could not save this rule. Allow site storage in your browser and try again.";return}go()}
+function delR(i){var R=rules();if(i<0||i>=R.length)return;R.splice(i,1);if(setRules(R))go()}
+function go(){if(pulseMapTimer){clearInterval(pulseMapTimer);pulseMapTimer=null}if(pulseViewer){pulseViewer.destroy();pulseViewer=null;pulseEntities=[];quakeEntities=[]}$("nav").innerHTML=S.map(function(s){return '<button class="'+(s[0]==cur?"on":"")+'" onclick="cur=\''+s[0]+'\';location.hash=cur;go()">'+s[1]+"</button>"}).join("");var m=$("m");
+if(!OK){m.innerHTML=head2("Setup needed","Database connection <span class='tag wait'>AWAITING CONFIGURATION</span>")+emp("Open config.js and set your Supabase URL and anon (publishable) key. See README.");return}
+var t=++T;m.innerHTML='<p class="sub">Loading…</p>';var p=cur=="overview"?ov():cur=="sources"?src():cur=="notif"?nt():cur=="map"?mp():list(cur);
+p.then(function(h){if(t==T){m.innerHTML=h;if(cur=="map"){startGlobe();$("globe-home").onclick=function(){if(pulseViewer)pulseViewer.camera.flyTo({destination:Cesium.Cartesian3.fromDegrees(10,18,23000000),duration:1.5})};$("globe-refresh").onclick=function(){Promise.all([getMapPoints().then(plotMapPoints),loadQuakes()]).catch(function(e){var s=$("globe-status");if(s)s.textContent="Refresh failed: "+e.message})};$("quake-toggle").onclick=function(){quakesEnabled=!quakesEnabled;this.textContent="USGS earthquakes: "+(quakesEnabled?"ON":"OFF");loadQuakes().catch(function(e){var s=$("globe-status");if(s)s.textContent="USGS feed unavailable: "+e.message})};pulseMapTimer=setInterval(function(){if(cur=="map"&&document.visibilityState=="visible")Promise.all([getMapPoints().then(plotMapPoints),loadQuakes()]).catch(function(){})},60000)}}}).catch(function(e){if(t==T)m.innerHTML=head2("Connection problem","Database <span class='tag off'>OFFLINE</span>")+emp("Could not read the database ("+esc(e.message)+"). Check config.js, that schema.sql was run, and that the project is not paused.")})}
 $("q").addEventListener("keydown",function(e){if(e.key=="Enter"){term=this.value;go()}});
-$("th").onclick=function(){
-  var r=document.documentElement,opts=["system","light","dark","violet","ocean"],curt=r.getAttribute("data-theme")||"system",n=(opts.indexOf(curt)+1)%opts.length;
-  if(opts[n]==="system")r.removeAttribute("data-theme");else r.setAttribute("data-theme",opts[n]);
-  this.title="Theme: "+opts[n];
-  this.setAttribute("aria-label",this.title)
-};
-
-/* Optional original synthesized PULSE theme */
+$("th").onclick=function(){var r=document.documentElement,opts=["system","light","dark","violet","ocean"],curt=r.getAttribute("data-theme")||"system",n=(opts.indexOf(curt)+1)%opts.length;if(opts[n]==="system")r.removeAttribute("data-theme");else r.setAttribute("data-theme",opts[n]);this.title="Theme: "+opts[n];this.setAttribute("aria-label",this.title)};
 var audioCtx=null,audioOsc=[],musicTimer=null,musicStep=0;
-function stopPulseTheme(){
-  if(musicTimer){clearInterval(musicTimer);musicTimer=null}
-  audioOsc.forEach(function(o){try{o.stop()}catch(e){}});
-  audioOsc=[];
-  if(audioCtx){audioCtx.close().catch(function(){});audioCtx=null}
-  musicStep=0
-}
-function playPulseTheme(){
-  var AC=window.AudioContext||window.webkitAudioContext;
-  if(!AC)throw Error("Audio is not supported in this browser");
-  audioCtx=new AC();
-  var ctx=audioCtx,master=ctx.createGain();
-  master.gain.value=.42;
-  master.connect(ctx.destination);
-  var filter=ctx.createBiquadFilter();
-  filter.type="lowpass";
-  filter.frequency.value=1500;
-  filter.connect(master);
-  var pad=[ctx.createOscillator(),ctx.createOscillator(),ctx.createOscillator()],padGain=ctx.createGain();
-  padGain.gain.value=.075;
-  pad.forEach(function(o,i){
-    o.type=i===1?"sine":"triangle";
-    o.frequency.value=[146.83,174.61,220][i];
-    o.detune.value=i===2?4:-3;
-    o.connect(padGain)
-  });
-  padGain.connect(filter);
-  pad.forEach(function(o){o.start();audioOsc.push(o)});
-  var motif=[5,4,3,4,2,3,4,6,5,4,3,7,6,4,3,2],scale=[0,2,5,7,9,12,14,17,19],root=50,stepMs=150;
-  function hit(step){
-    var now=ctx.currentTime,bar=Math.floor(step/16)%2,base=bar?46:root,midi=base+scale[motif[step%16]%scale.length],freq=440*Math.pow(2,(midi-69)/12),o=ctx.createOscillator(),g=ctx.createGain();
-    o.type="sine";
-    o.frequency.setValueAtTime(freq,now);
-    o.connect(g);
-    g.connect(filter);
-    g.gain.setValueAtTime(.0001,now);
-    g.gain.exponentialRampToValueAtTime(.11,now+.012);
-    g.gain.exponentialRampToValueAtTime(.0001,now+.34);
-    o.start(now);
-    o.stop(now+.36);
-    if(step%4===0){
-      var bass=ctx.createOscillator(),bg=ctx.createGain();
-      bass.type="sine";
-      bass.frequency.setValueAtTime(82,now);
-      bass.frequency.exponentialRampToValueAtTime(47,now+.16);
-      bg.gain.setValueAtTime(.0001,now);
-      bg.gain.exponentialRampToValueAtTime(.13,now+.008);
-      bg.gain.exponentialRampToValueAtTime(.0001,now+.22);
-      bass.connect(bg);
-      bg.connect(master);
-      bass.start(now);
-      bass.stop(now+.23)
-    }
-    if(step%16===0){
-      var chord=bar?[116.54,146.83,174.61]:[146.83,174.61,220];
-      pad.forEach(function(p,i){p.frequency.setTargetAtTime(chord[i],now,.45)})
-    }
-  }
-  hit(0);
-  musicTimer=setInterval(function(){musicStep=(musicStep+1)%32;hit(musicStep)},stepMs)
-}
-$("snd").title="Play PULSE theme: Signal Bloom by Shijin";
-$("snd").onclick=function(){
-  if(audioCtx){
-    stopPulseTheme();
-    this.title="Play PULSE theme: Signal Bloom by Shijin";
-    this.setAttribute("aria-label","Play PULSE theme: Signal Bloom by Shijin");
-    return
-  }
-  try{
-    playPulseTheme();
-    this.title="Playing Signal Bloom by Shijin · click to stop";
-    this.setAttribute("aria-label","Stop PULSE theme")
-  }catch(e){
-    stopPulseTheme();
-    this.title=e.message;
-    this.setAttribute("aria-label",e.message)
-  }
-};
-
-/* Browser notification permission button */
-document.addEventListener("click",function(e){
-  if(e.target&&e.target.id==="allow-alerts"){
-    if(!window.Notification){$("alert-permission").textContent="Desktop alerts are not supported.";return}
-    Notification.requestPermission().then(function(p){$("alert-permission").textContent="Permission: "+p})
-  }
-});
-
-/* Intro: skip immediately, auto-close after 3.2s, CSS fallback after 4.2s */
-var intro=$("intro"),introClosed=false;
-function closeIntro(){
-  if(introClosed||!intro)return;
-  introClosed=true;
-  intro.classList.add("done");
-  try{sessionStorage.setItem("pulse-intro-seen","1")}catch(e){}
-}
-$("intro-skip").addEventListener("click",closeIntro);
-try{
-  if(sessionStorage.getItem("pulse-intro-seen")||matchMedia("(prefers-reduced-motion: reduce)").matches)closeIntro();
-  else setTimeout(closeIntro,3200)
-}catch(e){setTimeout(closeIntro,3200)}
-
+function stopPulseTheme(){if(musicTimer){clearInterval(musicTimer);musicTimer=null}audioOsc.forEach(function(o){try{o.stop()}catch(e){}});audioOsc=[];if(audioCtx){audioCtx.close().catch(function(){});audioCtx=null}musicStep=0}
+function playPulseTheme(){var AC=window.AudioContext||window.webkitAudioContext;if(!AC)throw Error("Audio is not supported in this browser");audioCtx=new AC();var ctx=audioCtx,master=ctx.createGain();master.gain.value=.42;master.connect(ctx.destination);var filter=ctx.createBiquadFilter();filter.type="lowpass";filter.frequency.value=1500;filter.connect(master);
+// Soft D-minor / B-flat-major pad: a warm bed under a repeating signal-like motif.
+var pad=[ctx.createOscillator(),ctx.createOscillator(),ctx.createOscillator()],padGain=ctx.createGain();padGain.gain.value=.075;pad.forEach(function(o,i){o.type=i===1?"sine":"triangle";o.frequency.value=[146.83,174.61,220][i];o.detune.value=i===2?4:-3;o.connect(padGain)});padGain.connect(filter);pad.forEach(function(o){o.start();audioOsc.push(o)});
+var motif=[5,4,3,4,2,3,4,6,5,4,3,7,6,4,3,2],scale=[0,2,5,7,9,12,14,17,19],root=50,stepMs=150;
+function hit(step){var now=ctx.currentTime,bar=Math.floor(step/16)%2,base=bar?46:root,midi=base+scale[motif[step%16]%scale.length],freq=440*Math.pow(2,(midi-69)/12),o=ctx.createOscillator(),g=ctx.createGain();o.type="sine";o.frequency.setValueAtTime(freq,now);o.connect(g);g.connect(filter);g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(.11,now+.012);g.gain.exponentialRampToValueAtTime(.0001,now+.34);o.start(now);o.stop(now+.36);
+if(step%4===0){var bass=ctx.createOscillator(),bg=ctx.createGain();bass.type="sine";bass.frequency.setValueAtTime(82,now);bass.frequency.exponentialRampToValueAtTime(47,now+.16);bg.gain.setValueAtTime(.0001,now);bg.gain.exponentialRampToValueAtTime(.13,now+.008);bg.gain.exponentialRampToValueAtTime(.0001,now+.22);bass.connect(bg);bg.connect(master);bass.start(now);bass.stop(now+.23)}
+if(step%16===0){var chord=bar?[116.54,146.83,174.61]:[146.83,174.61,220];pad.forEach(function(p,i){p.frequency.setTargetAtTime(chord[i],now,.45)})}}
+hit(0);musicTimer=setInterval(function(){musicStep=(musicStep+1)%32;hit(musicStep)},stepMs)}
+$("snd").title="Play PULSE theme: Signal Bloom by Shijin";$("snd").onclick=function(){if(audioCtx){stopPulseTheme();this.title="Play PULSE theme: Signal Bloom by Shijin";this.setAttribute("aria-label","Play PULSE theme: Signal Bloom by Shijin");return}try{playPulseTheme();this.title="Playing Signal Bloom by Shijin · click to stop";this.setAttribute("aria-label","Stop PULSE theme")}catch(e){stopPulseTheme();this.title=e.message;this.setAttribute("aria-label",e.message)}};
+document.addEventListener("submit",function(e){if(e.target&&e.target.id==="rule-form"){e.preventDefault();addR()}});
+document.addEventListener("click",function(e){var target=e.target&&e.target.closest?e.target.closest("button"):null;if(!target)return;var remove=target.getAttribute("data-remove-rule");if(remove!==null){delR(Number(remove));return}if(target.id!=="allow-alerts")return;var status=$("alert-permission");if(!window.Notification){status.textContent=notificationPermissionText();return}if(Notification.permission==="denied"){status.innerHTML=notificationPermissionText();return}if(Notification.permission==="granted"){try{new Notification("PULSE alerts are enabled",{body:"Test notification received. Keyword alerts are ready."});status.textContent="Test sent. New matching events can alert while PULSE is open."}catch(err){status.textContent="The browser could not display a notification. Check system notification settings."}return}Notification.requestPermission().then(function(p){status.innerHTML=notificationPermissionText();var button=$("allow-alerts");if(button)button.textContent=p==="granted"?"Send test alert":p==="denied"?"How to allow alerts":"Enable desktop alerts";if(p==="granted"){try{new Notification("PULSE alerts are enabled",{body:"Test notification received. Keyword alerts are ready."})}catch(err){status.textContent="Permission is allowed, but system notifications are unavailable."}}}).catch(function(){status.textContent="The browser could not request permission. Check its site settings."})});
+var intro=$("intro"),introClosed=false;function closeIntro(){if(introClosed||!intro)return;introClosed=true;intro.classList.add("done");try{sessionStorage.setItem("pulse-intro-seen","1")}catch(e){}}$("intro-skip").addEventListener("click",closeIntro);try{if(sessionStorage.getItem("pulse-intro-seen")||matchMedia("(prefers-reduced-motion: reduce)").matches)closeIntro();else setTimeout(closeIntro,3200)}catch(e){setTimeout(closeIntro,3200)}
 window.addEventListener("hashchange",function(){cur=location.hash.slice(1)||"overview";go()});
-
-/* In-page keyword alert checking */
 var last="",seenEventIds=null;
 function tick(){
-  if(!OK||document.visibilityState!="visible")return;
+  if(!OK)return;
   Promise.all([
     api("events?select=id,title,summary,detected_at&order=detected_at.desc&limit=100"),
     api("sources?select=last_run_at&order=last_run_at.desc.nullsfirst&limit=1")
   ]).then(function(a){
-    var events=a[0],latest=events[0],k=(latest?latest.id+latest.detected_at:"")+"|"+(a[1][0]?a[1][0].last_run_at:"");
-    if(seenEventIds===null)seenEventIds=new Set(events.map(function(e){return String(e.id)}));
-    else{
+    var events=a[0],latest=events[0];
+    var k=(latest?latest.id+latest.detected_at:"")+"|"+(a[1][0]?a[1][0].last_run_at:"");
+    if(seenEventIds===null){
+      seenEventIds=new Set(events.map(function(e){return String(e.id)}));
+    }else{
       var fresh=events.filter(function(e){return!seenEventIds.has(String(e.id))});
       fresh.forEach(function(e){
         seenEventIds.add(String(e.id));
-        if(window.Notification&&Notification.permission==="granted"&&rules().some(function(w){return(e.title+" "+(e.summary||"")).toLowerCase().indexOf(w.toLowerCase())>=0}))
-          new Notification("PULSE keyword alert",{body:e.title,tag:String(e.id)})
+        var matches=rules().some(function(w){return(e.title+" "+(e.summary||"")).toLowerCase().indexOf(w.toLowerCase())>=0});
+        if(window.Notification&&Notification.permission==="granted"&&matches){
+          try{new Notification("PULSE keyword alert",{body:e.title,tag:String(e.id)})}catch(err){}
+        }
       })
     }
-    if(last&&k!=last&&cur!="notif")go();
+    if(last&&k!=last)go();
     last=k
   }).catch(function(){})
 }
-go();
-tick();
-setInterval(tick,10000);
+go();tick();setInterval(tick,10000);
 </script>
 </body>
 </html>
