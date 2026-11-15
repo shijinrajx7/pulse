@@ -8,6 +8,7 @@ Upload the project files and keep the folders `api/` and `assets/`. Do not uploa
 
 - `index.html`
 - `api/poster.js`
+- `api/poster-image.js`
 - `api/poster-usage.sql`
 - `api/assistant.js`
 - `api/push.js`
@@ -24,7 +25,7 @@ In Vercel, import or reconnect the GitHub repository and deploy it. Vercel uses 
 
 ## Story poster sign-in and limits
 
-The Story Posters section uses Supabase email accounts and allows up to 10 successful poster generations per account. Run `api/poster-usage.sql` once in the Supabase SQL Editor to create the private quota table and server-only quota functions. The server uses the existing `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`, and `NVIDIA_API_KEY` Vercel environment variables. Add `PULSE_ADMIN_PASSWORD`, `PULSE_ADMIN_HOUSE_NAME`, and a long random `PULSE_ADMIN_SESSION_SECRET` as **Sensitive** production environment variables in Vercel, then redeploy. Never add these values to `config.js` or GitHub. Admin access is checked by the server and uses a short-lived session. The poster image is rendered in the browser as a 1080 × 1920 PNG in cream, forest green, and warm orange; an uploaded image stays on that device.
+The Story Posters section uses Supabase email accounts and allows up to 10 successful poster generations per account. Run `api/poster-usage.sql` once in the Supabase SQL Editor to create the private quota table and server-only quota functions. The server uses the existing `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`, and `NVIDIA_API_KEY` Vercel environment variables. Add `PULSE_ADMIN_PASSWORD`, `PULSE_ADMIN_HOUSE_NAME`, and a long random `PULSE_ADMIN_SESSION_SECRET` as **Sensitive** production environment variables in Vercel, then redeploy. Never add these values to `config.js` or GitHub. Admin access is checked by the server and uses a short-lived session. The poster studio includes 24 layouts with editable colors. It searches for a real image attached to the report or publisher article, shows the source link and preview, and only includes it after the user confirms permission. Users can alternatively upload their own permitted image; it stays in that browser. Email sign-in requires Supabase TOTP MFA: first sign-in enrolls an authenticator app, then each login requires its six-digit code. The poster API accepts only the resulting AAL2 session. Upload `api/poster-image.js` as well as `api/poster.js` and `index.html` when updating GitHub.
 
 ## Set up Supabase
 
