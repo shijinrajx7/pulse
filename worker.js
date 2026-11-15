@@ -134,16 +134,24 @@ function tag(x, n) {
   return m ? clean(m[1]) : "";
 }
 function parseFeed(xml) {
-  return xml.split(/<(?:item|entry)[\s>]/i).slice(1, 26).map((c) => {
+  return xml.split(/<(?:item|entry)[\\s>]/i).slice(1, 26).map((c) => {
     const link = tag(c, "link") || (c.match(/<link[^>]*?href=["']([^"']+)["']/i) || [])[1] || "";
     const d = Date.parse(tag(c, "pubDate") || tag(c, "published") || tag(c, "updated") || tag(c, "dc:date"));
     // Preserve only coordinates explicitly supplied by the publisher's feed.
-    const point = tag(c, "georss:point").trim().split(/[\s,]+/);
+    const point = tag(c, "georss:point").trim().split(/[\\s,]+/);
     const lat = Number(tag(c, "geo:lat") || tag(c, "georss:lat") || point[0]);
     const lon = Number(tag(c, "geo:long") || tag(c, "georss:long") || point[1]);
     const meta = Number.isFinite(lat) && Number.isFinite(lon) && Math.abs(lat) <= 90 && Math.abs(lon) <= 180
       ? { latitude: lat, longitude: lon }
       : {};
+    // Keep a publisher-provided image from the feed; never infer a photo from its article URL.
+    const imageMatch = c.match(/<(?:media:thumbnail|media:content|enclosure)[^>]*\\burl=["']([^"']+)["']/i)
+      || c.match(/<img[^>]*\\bsrc=["']([^"']+)["']/i)
+      || c.match(/&lt;img[^&]*?\\bsrc=["']([^"']+)["']/i);
+    if (imageMatch) {
+      const imageUrl = decodeEntities(imageMatch[1].trim());
+      try { if (new URL(imageUrl).protocol === "https:") meta.image_url = imageUrl.slice(0, 1600); } catch {}
+    }
     return { title: tag(c, "title"), url: link.trim(), summary: tag(c, "description") || tag(c, "summary") || tag(c, "content"),
       published: isNaN(d) ? null : new Date(d).toISOString(), meta };
   });
