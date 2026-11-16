@@ -156,6 +156,7 @@
     var section = document.createElement("section");
     section.className = "pulse-social-login";
     section.setAttribute("aria-label", "Other sign-in providers");
+    section.hidden = !!(byId("poster-admin-form") && !byId("poster-admin-form").hidden);
 
     var divider = document.createElement("div");
     divider.className = "pulse-social-divider";
@@ -187,6 +188,15 @@
     section.appendChild(note);
 
     emailForm.insertAdjacentElement("afterend", section);
+
+    function syncProviderVisibility() {
+      section.hidden = !!(byId("poster-admin-form") && !byId("poster-admin-form").hidden);
+    }
+    document.addEventListener("click", function (event) {
+      if (event.target && (event.target.closest("#poster-user-tab") || event.target.closest("#poster-admin-tab"))) {
+        window.setTimeout(syncProviderVisibility, 0);
+      }
+    });
 
     section.addEventListener("click", function (event) {
       var button = event.target.closest("[data-pulse-provider]");
