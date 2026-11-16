@@ -1121,5 +1121,7 @@ function importance(e){var meta=e&&e.meta||{},sev=String(e&&e.severity||"").toUp
 function shouldNotify(e){var rank=importanceRank(e);return alertMode()==="critical"?rank>=4:rank>=3}
 go();tick();setInterval(tick,10000);
 </script>
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.0/dist/umd/supabase.min.js"></script>
+<script defer src="/auth-enhancements.js"></script>
 </body>
 </html>
