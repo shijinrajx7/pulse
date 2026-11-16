@@ -6,11 +6,6 @@
   "use strict";
 
   var supabaseClient = null;
-  var PROVIDER_INFO = {
-    github: { label: "Continue with GitHub", mark: "GH", className: "github" },
-    gmail: { label: "Continue with Gmail", mark: "M", className: "gmail" }
-  };
-
   function byId(id) {
     return document.getElementById(id);
   }
@@ -121,17 +116,12 @@
     }
     var buttonList = document.querySelectorAll("[data-pulse-provider]");
     buttonList.forEach(function (button) { button.disabled = true; });
-    status("Connecting to " + (provider === "github" ? "GitHub" : "Google") + "…");
+    status("Connecting to GitHub…");
 
     var options = {
       redirectTo: window.location.origin + window.location.pathname + "#posters"
     };
-    if (provider === "google") {
-      options.scopes = "openid email profile";
-      options.queryParams = { prompt: "select_account" };
-    } else {
-      options.scopes = "read:user user:email";
-    }
+    options.scopes = "read:user user:email";
 
     auth.auth.signInWithOAuth({ provider: provider, options: options }).then(function (result) {
       if (result.error) throw result.error;
@@ -165,12 +155,11 @@
     var grid = document.createElement("div");
     grid.className = "pulse-provider-grid";
     grid.appendChild(providerButton("github", "Continue with GitHub", "GH", "github"));
-    grid.appendChild(providerButton("gmail", "Continue with Gmail", "M", "gmail"));
     section.appendChild(grid);
 
     var note = document.createElement("p");
     note.className = "pulse-provider-note";
-    note.textContent = "Gmail uses Google account authentication. Both email/password and GitHub sign-in continue through PULSE two-step verification with an authenticator app.";
+    note.textContent = "Email and GitHub sign-ins both require PULSE two-step verification with an authenticator app before the poster studio opens.";
     section.appendChild(note);
 
     emailForm.insertAdjacentElement("afterend", section);
@@ -188,8 +177,7 @@
       var button = event.target.closest("[data-pulse-provider]");
       if (!button || button.disabled) return;
       var provider = button.getAttribute("data-pulse-provider");
-      if (provider === "gmail") provider = "google";
-      if (provider === "google" || provider === "github") startOAuth(provider);
+      if (provider === "github") startOAuth(provider);
     });
   }
 
@@ -218,13 +206,18 @@
     style.textContent = [
       ".pulse-social-login{display:grid;gap:10px;margin-top:15px;padding-top:13px;border-top:1px solid #47564a}",
       ".pulse-social-divider{display:flex;align-items:center;justify-content:center;color:#aeb7aa;font-size:10px;font-weight:700;letter-spacing:.16em}",
-      ".pulse-provider-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}",
+      ".pulse-provider-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}",
+      "#poster-auth .poster-form[hidden],#poster-auth [hidden]{display:none!important}",
+      "#poster-auth .poster-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}",
+      "#poster-auth .poster-tab{width:100%;min-width:0}",
+      "#poster-auth .poster-form:not([hidden]){display:grid;grid-template-columns:minmax(0,1fr);width:100%}",
+      "#poster-auth .poster-form[hidden]{display:none!important}",
       ".pulse-provider{display:flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:9px 10px;border:1px solid #526253;border-radius:9px;background:#121c16;color:#f3f0e3;font:600 13px system-ui,sans-serif;cursor:pointer;transition:border-color .18s,background .18s,transform .18s}",
       ".pulse-provider:hover:not(:disabled){border-color:#d9a05d;background:#1c2a20;transform:translateY(-1px)}",
       ".pulse-provider:disabled{opacity:.42;cursor:not-allowed}",
       ".pulse-provider-mark{display:inline-grid;place-items:center;min-width:23px;height:23px;padding:0 4px;border-radius:6px;background:#27362a;color:#f2c17e;font-size:11px;font-weight:800}",
       ".pulse-provider-github .pulse-provider-mark{background:#e8e8e4;color:#161b17}",
-      ".pulse-provider-gmail .pulse-provider-mark{background:#3b2921;color:#ffb17c}",
+
       ".pulse-provider-grid-muted{opacity:.8}",
       ".pulse-provider-note{margin:0;color:#aeb7aa;font-size:11px;line-height:1.5}",
       ".pulse-provider:focus-visible{outline:2px solid #e2a34c;outline-offset:2px}",
