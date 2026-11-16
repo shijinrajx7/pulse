@@ -7,7 +7,6 @@
 
   var supabaseClient = null;
   var PROVIDER_INFO = {
-    google: { label: "Continue with Google", mark: "G", className: "google" },
     github: { label: "Continue with GitHub", mark: "GH", className: "github" },
     gmail: { label: "Continue with Gmail", mark: "M", className: "gmail" }
   };
@@ -165,26 +164,13 @@
 
     var grid = document.createElement("div");
     grid.className = "pulse-provider-grid";
-    grid.appendChild(providerButton("google", "Google", "G", "google"));
-    grid.appendChild(providerButton("github", "GitHub", "GH", "github"));
-    grid.appendChild(providerButton("gmail", "Gmail", "M", "gmail"));
+    grid.appendChild(providerButton("github", "Continue with GitHub", "GH", "github"));
+    grid.appendChild(providerButton("gmail", "Continue with Gmail", "M", "gmail"));
     section.appendChild(grid);
-
-    var unavailable = document.createElement("div");
-    unavailable.className = "pulse-provider-grid pulse-provider-grid-muted";
-    var chatgpt = providerButton("unavailable", "ChatGPT", "AI", "unavailable");
-    var claude = providerButton("unavailable", "Claude", "AI", "unavailable");
-    chatgpt.disabled = true;
-    claude.disabled = true;
-    chatgpt.title = "ChatGPT does not currently provide a general-purpose Supabase social-login provider.";
-    claude.title = "Claude does not currently provide a general-purpose Supabase social-login provider.";
-    unavailable.appendChild(chatgpt);
-    unavailable.appendChild(claude);
-    section.appendChild(unavailable);
 
     var note = document.createElement("p");
     note.className = "pulse-provider-note";
-    note.textContent = "Google and Gmail use the same Google account sign-in. ChatGPT and Claude sign-in are not currently available as standard Supabase providers.";
+    note.textContent = "Gmail uses Google account authentication. Both email/password and GitHub sign-in continue through PULSE two-step verification with an authenticator app.";
     section.appendChild(note);
 
     emailForm.insertAdjacentElement("afterend", section);
