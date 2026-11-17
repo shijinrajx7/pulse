@@ -353,3 +353,41 @@ header :where(a,button,label),nav :where(a,button){color:var(--tx)}
   #m .pulse-story-actions{grid-column:auto!important;flex-direction:row!important}
   #m .pulse-story-actions button{flex:1 1 120px!important}
 }
+
+
+
+/* PULSE header theme controls: compact sun/moon toggle + palette popover. */
+.pulse-theme-tools{position:relative;display:flex;align-items:center;gap:5px;flex:none}
+.theme-icon-button,.theme-palette-button{display:grid;place-items:center;width:38px;height:38px;min-width:38px;padding:0!important;border:1px solid var(--bd)!important;border-radius:0!important;background:transparent!important;color:var(--tx)!important;cursor:pointer;transition:background .18s,border-color .18s,color .18s}
+.theme-icon-button:hover,.theme-palette-button:hover{background:var(--paper)!important;border-color:var(--tx)!important;color:var(--tx)!important}
+.theme-icon-button svg,.theme-palette-button svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}
+.theme-menu{position:absolute;z-index:50;top:calc(100% + 9px);right:0;width:228px;padding:6px;background:var(--card);border:1px solid var(--bd);box-shadow:0 16px 44px #0005}
+.theme-menu[hidden]{display:none!important}
+.theme-menu button{display:grid;grid-template-columns:22px minmax(0,1fr) auto;align-items:center;gap:9px;width:100%;min-height:40px;padding:7px 9px!important;border:1px solid transparent!important;border-radius:0!important;background:transparent!important;color:var(--tx)!important;text-align:left;font:500 12px "DM Sans",sans-serif;cursor:pointer}
+.theme-menu button:hover,.theme-menu button.active{background:var(--paper)!important;border-color:var(--bd)!important}
+.theme-menu button small{color:var(--mut);font:9px "DM Mono",monospace;text-transform:uppercase}
+.theme-swatch{width:18px;height:18px;border:1px solid #777;display:block}
+.swatch-paper{background:linear-gradient(135deg,#F4F2EC 50%,#D6FF35 50%)}
+.swatch-night{background:linear-gradient(135deg,#171816 50%,#D6FF35 50%)}
+.swatch-forest{background:linear-gradient(135deg,#17221B 50%,#D6FF35 50%)}
+.swatch-sunset{background:linear-gradient(135deg,#F4F0E8 50%,#FF5938 50%)}
+.swatch-crimson{background:linear-gradient(135deg,#211917 50%,#FF765C 50%)}
+/* Keep action controls readable in every palette; avoid browser-default white buttons. */
+#snd,.assistant-health,.assistant-close,.assistant-composer button,.assistant-actions button,.assistant-suggestions button,
+#enable-push,#push-test,#push-refresh-history,#push-clear-history,.pulse-story-actions button,.poster-action,.poster-tab,.poster-eye{
+ color:var(--tx);
+}
+#snd,.assistant-health,.assistant-close,.assistant-actions button,.assistant-suggestions button,
+#enable-push,#push-test,#push-refresh-history,#push-clear-history,.pulse-story-actions button{
+ background:var(--card)!important;border-color:var(--bd)!important;
+}
+#snd:hover,.assistant-health:hover,.assistant-close:hover,.assistant-actions button:hover,.assistant-suggestions button:hover,
+#enable-push:hover,#push-test:hover,#push-refresh-history:hover,#push-clear-history:hover,.pulse-story-actions button:hover{
+ background:var(--paper)!important;color:var(--tx)!important;border-color:var(--tx)!important;
+}
+#theme-toggle:focus-visible,#theme-palette:focus-visible,.theme-menu button:focus-visible{outline:2px solid var(--orange);outline-offset:2px}
+@media(max-width:640px){
+ .pulse-theme-tools{display:contents}
+ .theme-menu{position:fixed;top:112px;right:10px}
+}
+
