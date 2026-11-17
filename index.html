@@ -4,6 +4,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#171816">
 
 <title>PULSE – Technology Intelligence</title>
 
@@ -243,30 +244,8 @@ a{
 .poster-form[hidden]{display:none!important}.poster-auth{display:grid;gap:12px}.poster-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px}.poster-tab{min-height:42px;font-weight:700;transition:background .18s,border-color .18s}.poster-tab:not(.active){background:#101812;color:#bfc8bd}.poster-tab.active{box-shadow:0 0 0 2px #d58a4830}.poster-form{animation:poster-auth-in .18s ease-out}@keyframes poster-auth-in{from{opacity:.5;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}@media(prefers-reduced-motion:reduce){.poster-form{animation:none}}
 </style>
 <style>
-/* PULSE visual controls */ :root[data-theme="violet"]{
-  --bg:#100d1c;
-  --card:#19142b;
-  --tx:#f3efff;
-  --mut:#a39abf;
-  --bd:#332a4b;
-  --ac:#ad8cff;
-  --ok:#67d5a5;
-  --warn:#f0bd65;
-  --bad:#ff8292;
-  color-scheme:dark
-}
-:root[data-theme="ocean"]{
-  --bg:#071720;
-  --card:#0e2430;
-  --tx:#e8f6ff;
-  --mut:#8caeba;
-  --bd:#204150;
-  --ac:#39c7e8;
-  --ok:#63d6ad;
-  --warn:#f0bd65;
-  --bad:#ff8292;
-  color-scheme:dark
-}
+/* PULSE visual controls */ 
+
 .top{
   gap:8px
 }
@@ -286,7 +265,7 @@ a{
   align-items:center;
   justify-content:center;
   overflow:hidden;
-  background:radial-gradient(ellipse at 50% 44%,#103143 0,#071016 42%,#03070b 100%);
+  background:radial-gradient(ellipse at 50% 44%,#103143 0,#171816 42%,#171816 100%);
   color:#effbff;
   opacity:1;
   visibility:visible;
@@ -305,9 +284,9 @@ a{
   position:absolute;
   width:min(75vw,540px);
   aspect-ratio:1;
-  border:1px solid #48d8fb44;
+  border:1px solid #D6FF3544;
   border-radius:50%;
-  box-shadow:0 0 0 22px #48d8fb0d,0 0 0 58px #48d8fb08,0 0 90px #03b8ff20;
+  box-shadow:0 0 0 22px #D6FF350d,0 0 0 58px #D6FF3508,0 0 90px #03b8ff20;
   animation:halo-spin 12s linear infinite
 }
 .intro-portrait{
@@ -316,8 +295,8 @@ a{
   height:clamp(170px,27vw,290px);
   object-fit:cover;
   border-radius:28px;
-  border:1px solid #52d9ff88;
-  box-shadow:0 0 55px #09bafc55;
+  border:1px solid #D6FF3588;
+  box-shadow:0 0 55px #D6FF3555;
   animation:portrait-arrive 1.15s cubic-bezier(.16,1,.3,1) both,portrait-float 4s 1.2s ease-in-out infinite
 }
 .intro-title{
@@ -325,12 +304,12 @@ a{
   margin-top:22px;
   font:800 clamp(22px,4vw,34px)/1 system-ui,sans-serif;
   letter-spacing:.3em;
-  text-shadow:0 0 28px #31cfffaa;
+  text-shadow:0 0 28px #D6FF35aa;
   animation:intro-fade .65s .35s both
 }
 .intro-caption{
   position:relative;
-  color:#91bac9;
+  color:#AAA99F;
   font-size:12px;
   letter-spacing:.08em;
   margin-top:9px;
@@ -340,34 +319,34 @@ a{
   position:relative;
   width:150px;
   height:2px;
-  background:#18313b;
+  background:#41433C;
   margin-top:23px;
   overflow:hidden
 }
 .intro-progress i{
   display:block;
   height:100%;
-  background:#42d9ff;
-  box-shadow:0 0 12px #42d9ff;
+  background:#D6FF35;
+  box-shadow:0 0 12px #D6FF35;
   animation:intro-load 2.2s ease-out both
 }
 .intro-screen button{
   position:relative;
   margin-top:18px;
-  border:1px solid #4c7b8b88;
+  border:1px solid #77776F88;
   border-radius:999px;
-  background:#06121ab8;
-  color:#c7efff;
+  background:#20221Eb8;
+  color:#F4F2EC;
   padding:8px 16px;
   font:12px system-ui;
   cursor:pointer
 }
 .intro-screen button:hover{
-  background:#11303d;
+  background:#34382D;
   color:#fff
 }
 .map-visual{
-  background:#0a151d;
+  background:#171816;
   border:1px solid var(--bd);
   border-radius:9px;
   overflow:hidden;
@@ -390,10 +369,10 @@ a{
   opacity:.32
 }
 .map-marker{
-  fill:#42d9ff;
+  fill:#D6FF35;
   stroke:#e5fbff;
   stroke-width:2;
-  filter:drop-shadow(0 0 6px #42d9ff)
+  filter:drop-shadow(0 0 6px #D6FF35)
 }
 .map-marker:hover{
   r:8
@@ -422,7 +401,7 @@ a{
   border:1px solid var(--bd);
   border-radius:10px;
   overflow:hidden;
-  background:#07131d;
+  background:#171816;
   position:relative
 }
 .globe-shell #pulse-globe{
@@ -435,10 +414,10 @@ a{
   top:12px;
   z-index:2;
   padding:6px 9px;
-  border:1px solid #346071;
+  border:1px solid #77776F;
   border-radius:7px;
-  background:#07131ddd;
-  color:#c7efff;
+  background:#171816dd;
+  color:#F4F2EC;
   font-size:11px;
   pointer-events:none
 }
@@ -646,7 +625,7 @@ a{
 .assistant-suggestions button{font-size:11px;border:1px solid var(--bd);border-radius:999px;padding:6px 9px;background:transparent;color:var(--mut);cursor:pointer}
 #pulse-notices{position:fixed;top:142px;right:18px;z-index:19;display:grid;gap:8px;width:min(360px,calc(100vw - 30px));pointer-events:none}
 .pulse-toast{pointer-events:auto;padding:11px 13px;border:1px solid var(--bd);border-left:4px solid var(--ac);border-radius:10px;background:color-mix(in srgb,var(--card) 96%,var(--bg));color:var(--tx);box-shadow:0 12px 34px #0006;font-size:12px;animation:panel-enter .25s ease-out both}
-.pulse-toast strong{display:block;margin-bottom:2px}.pulse-toast[data-level="critical"]{border-left-color:#ff375f}.pulse-toast[data-level="high"]{border-left-color:#ff8a32}.pulse-toast[data-level="moderate"]{border-left-color:#ffd34d}.pulse-toast[data-level="low"]{border-left-color:#39c7e8}
+.pulse-toast strong{display:block;margin-bottom:2px}.pulse-toast[data-level="critical"]{border-left-color:#ff375f}.pulse-toast[data-level="high"]{border-left-color:#ff8a32}.pulse-toast[data-level="moderate"]{border-left-color:#ffd34d}.pulse-toast[data-level="low"]{border-left-color:#D6FF35}
 @media(max-width:640px){
   .top{grid-template-columns:minmax(0,1fr) 88px 40px 40px}
   .top .lang-control{grid-column:2;grid-row:1;width:88px;min-height:40px}
@@ -665,7 +644,7 @@ a{
   --tx:#e9f3fb;
   --mut:#90a5b5;
   --bd:#203343;
-  --ac:#45d9ff;
+  --ac:#D6FF35;
   --ok:#54ddb0;
   --warn:#f1bd64;
   --bad:#ff7188;
@@ -698,30 +677,8 @@ a{
   --bad:#c43b51;
   color-scheme:light
 }
-:root[data-theme="violet"]{
-  --bg:#100d1c;
-  --card:#19142b;
-  --tx:#f3efff;
-  --mut:#a39abf;
-  --bd:#332a4b;
-  --ac:#b18cff;
-  --ok:#67d5a5;
-  --warn:#f0bd65;
-  --bad:#ff8292;
-  color-scheme:dark
-}
-:root[data-theme="ocean"]{
-  --bg:#061820;
-  --card:#0b2530;
-  --tx:#e8f6ff;
-  --mut:#8caeba;
-  --bd:#204150;
-  --ac:#39c7e8;
-  --ok:#63d6ad;
-  --warn:#f0bd65;
-  --bad:#ff8292;
-  color-scheme:dark
-}
+
+
 :root[data-theme="forest"]{
   --bg:#081710;--card:#112319;--tx:#eaf6ed;--mut:#9bb8a2;--bd:#294735;--ac:#75e0a0;--ok:#78dfaa;--warn:#e8c66d;--bad:#ff8292;color-scheme:dark
 }
@@ -834,21 +791,21 @@ button.b:hover{filter:brightness(1.08);transform:translateY(-1px)}
 button.g{box-shadow:none;background:color-mix(in srgb,var(--card) 78%,transparent)}
 .empty,.map-empty{border-radius:12px;background:color-mix(in srgb,var(--card) 62%,transparent);line-height:1.65}
 .globe-shell{border-radius:14px;border-color:color-mix(in srgb,var(--ac) 25%,var(--bd));box-shadow:0 18px 55px #0003,0 0 34px color-mix(in srgb,var(--ac) 7%,transparent);isolation:isolate}
-.globe-shell::before{content:"";position:absolute;z-index:-1;width:min(48vw,460px);aspect-ratio:1;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 32% 28%,#65ecff 0,#147d9b 13%,#073448 45%,#04111f 72%);box-shadow:inset -28px -15px 50px #01070f,0 0 70px #11bfe533;opacity:.78}
-.globe-shell::after{content:"";position:absolute;z-index:-1;width:min(48vw,460px);aspect-ratio:1;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:repeating-linear-gradient(0deg,transparent 0 35px,#a9f3ff1c 36px 37px,transparent 38px 72px),repeating-linear-gradient(90deg,transparent 0 35px,#a9f3ff12 36px 37px,transparent 38px 72px);mask-image:radial-gradient(circle,#000 0 68%,transparent 70%);opacity:.35;pointer-events:none}
+.globe-shell::before{content:"";position:absolute;z-index:-1;width:min(48vw,460px);aspect-ratio:1;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 32% 28%,#D6FF35 0,#34382D 13%,#20221E 45%,#171816 72%);box-shadow:inset -28px -15px 50px #01070f,0 0 70px #11bfe533;opacity:.78}
+.globe-shell::after{content:"";position:absolute;z-index:-1;width:min(48vw,460px);aspect-ratio:1;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;background:repeating-linear-gradient(0deg,transparent 0 35px,#D6FF351c 36px 37px,transparent 38px 72px),repeating-linear-gradient(90deg,transparent 0 35px,#D6FF3512 36px 37px,transparent 38px 72px);mask-image:radial-gradient(circle,#000 0 68%,transparent 70%);opacity:.35;pointer-events:none}
 .globe-shell #pulse-globe{position:relative;z-index:0}
 .globe-status{border-radius:9px;backdrop-filter:blur(12px);box-shadow:0 6px 22px #0003}
 .map-toolbar small{letter-spacing:.02em}
 .map-credits{line-height:1.6}
-.intro-screen{background:radial-gradient(ellipse at 50% 44%,#102f3d 0,#071016 42%,#03070b 100%)}
-.intro-halo{border-color:#48d8fb55;box-shadow:0 0 0 22px #48d8fb0e,0 0 0 58px #48d8fb09,0 0 100px #03b8ff24}
-.intro-portrait{border-radius:24px;box-shadow:0 0 0 8px #42d9ff0a,0 0 64px #09bafc55,0 24px 70px #0008}
+.intro-screen{background:radial-gradient(ellipse at 50% 44%,#102f3d 0,#171816 42%,#171816 100%)}
+.intro-halo{border-color:#D6FF3555;box-shadow:0 0 0 22px #D6FF350e,0 0 0 58px #D6FF3509,0 0 100px #03b8ff24}
+.intro-portrait{border-radius:24px;box-shadow:0 0 0 8px #D6FF350a,0 0 64px #D6FF3555,0 24px 70px #0008}
 .intro-title{letter-spacing:.34em}
 .intro-caption{text-transform:uppercase;font-size:10px;letter-spacing:.19em}
-.intro-progress{border-radius:999px;background:#18313b}
+.intro-progress{border-radius:999px;background:#41433C}
 .intro-progress i{border-radius:inherit}
 .intro-screen button{transition:background .2s,border-color .2s,transform .2s}
-.intro-screen button:hover{transform:translateY(-2px);border-color:#42d9ff}
+.intro-screen button:hover{transform:translateY(-2px);border-color:#D6FF35}
 @keyframes panel-enter{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
 .lang-control{width:auto;min-width:58px;min-height:38px;padding:0 7px;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:9px}
 .track-control{width:138px;min-width:0;min-height:38px;padding:0 8px;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:9px;font-size:12px}
@@ -896,6 +853,10 @@ button.g{box-shadow:none;background:color-mix(in srgb,var(--card) 78%,transparen
   .card,nav button,button.b,.intro-screen button{transition:none!important}
 }
 </style>
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#171816">
+<link rel="icon" href="/assets/pulse-pwa.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/design.css">
 </head>
 <body>
 <header><div class="top"><span class="logo"><svg class="pulse-mark" viewBox="0 0 34 22" aria-hidden="true"><path d="M1 12h8l4-9 6 17 5-12 3 4h6"/></svg><span>PULSE</span></span><input id="q" type="search" placeholder="Search title or summary, press Enter"><select id="language" class="lang-control" aria-label="Choose language" title="Language"><option value="en">EN</option><option value="hi">हिन्दी</option><option value="ml">മലയാളം</option></select><button class="b g" id="th" aria-label="Change color theme" title="Change color theme">◐</button><select id="pulse-track" class="track-control" aria-label="Choose PULSE soundtrack" title="Choose PULSE soundtrack"><option value="signal">Signal Bloom</option><option value="night">Night Shift</option><option value="focus">Deep Focus</option></select><button class="b g" id="snd" aria-label="Play PULSE soundtrack" title="Play or stop PULSE original soundtrack">♫</button></div><nav id="nav"></nav></header>
@@ -904,7 +865,7 @@ button.g{box-shadow:none;background:color-mix(in srgb,var(--card) 78%,transparen
 <div id="pulse-notices" aria-live="polite" aria-relevant="additions"></div>
 <button id="assistant-launcher" class="assistant-launcher" type="button">✦ PULSE Copilot</button>
 <section id="assistant-panel" class="assistant-panel" aria-label="PULSE AI assistant" aria-hidden="true"><div class="assistant-head"><div><strong>✦ PULSE Copilot</strong><small id="assistant-index">Connect a model in Vercel to get started</small></div><button id="assistant-close" class="assistant-close" type="button" aria-label="Close assistant">×</button></div><div id="assistant-messages" class="assistant-messages" aria-live="polite"><div class="assistant-msg assistant">I can search PULSE reports, explain an individual story, save matching headlines, open a section, or change the theme. I only act inside PULSE.</div></div><div><div class="assistant-suggestions"><button type="button" data-assist="Find recent news about NVIDIA">Search NVIDIA</button><button type="button" data-assist="Open the global map">Open map</button><button type="button" data-assist="Save headlines about AI to a text file">Save AI headlines</button></div><form id="assistant-form" class="assistant-composer"><input id="assistant-input" type="text" maxlength="500" placeholder="Ask PULSE to search or do a task…" autocomplete="off" aria-label="Message PULSE Copilot"><button class="b" type="submit">Send</button></form></div></section>
-<div id="intro" class="intro-screen" aria-label="PULSE startup animation"><div class="intro-halo"></div><img src="pulse-intro.png" alt="PULSE hooded figure" class="intro-portrait"><div class="intro-title">PULSE</div><div class="intro-caption">Technology intelligence · coming online</div><div class="intro-progress"><i></i></div><button id="intro-skip" type="button" onclick="try{sessionStorage.setItem('pulse-intro-seen','1')}catch(e){};document.getElementById('intro').classList.add('done')">Skip intro</button></div>
+<div id="intro" class="intro-screen" aria-label="PULSE startup animation"><div class="intro-halo"></div><div class="intro-title">PULSE<span style="color:#D6FF35">.</span></div><div class="intro-caption">Technology intelligence / System online</div><div class="intro-progress"><i></i></div><button id="intro-skip" type="button" onclick="try{sessionStorage.setItem('pulse-intro-seen','1')}catch(e){};document.getElementById('intro').classList.add('done')">Enter PULSE ↗</button></div>
 <script src="config.js">
 
 </script>
@@ -940,25 +901,47 @@ return fetch(C.url+"/rest/v1/"+p,{headers:h}).then(function(r){if(!r.ok)throw ne
 function dur(ms){ms=Math.max(0,ms);return ms<6e4?Math.round(ms/1e3)+"s":ms<36e5?Math.round(ms/6e4)+"m":ms<864e5?Math.round(ms/36e5)+"h":Math.round(ms/864e5)+"d"}
 function ago(t){return t?dur(Date.now()-Date.parse(t))+" ago":"never"}
 function srch(){var q=term.replace(/[,()*]/g," ").trim();return q?"&or=(title.ilike.*"+encodeURIComponent(q)+"*,summary.ilike.*"+encodeURIComponent(q)+"*)":""}
-function card(e){PULSE_EVENT_CACHE[String(e.id)]=e;var m=e.meta||{},title=plain(e.title),summary=plain(e.summary),s="";if(e.severity)s+='<span class="tag off">'+esc(e.severity)+(m.cvss!=null?" "+esc(m.cvss):"")+"</span>";
-if(m.known_exploited)s+='<span class="tag off">KNOWN EXPLOITED</span>';if(e.label)s+='<span class="tag">'+esc(e.label)+"</span>";
-var lat=e.published_at?" · detected "+dur(Date.parse(e.detected_at)-Date.parse(e.published_at))+" after publication":"";
-var v="";if(e.platform&&e.score!=null&&e.published_at)v='<br><small>≈'+(e.score/Math.max((Date.now()-Date.parse(e.published_at))/36e5,.25)).toFixed(1)+" points/hour (rough estimate) · trend state: INSUFFICIENT DATA (no baseline yet)</small>";
-var d=m.discussion?' · <a href="'+url(m.discussion)+'" target="_blank" rel="noopener">Discussion</a>':"";
-return '<div class="card">'+s+'<br><a class="t" href="'+url(e.url)+'" target="_blank" rel="noopener">'+esc(title)+'</a><br><small>'+esc(e.sources&&e.sources.name)+" · "+(e.published_at?"published "+ago(e.published_at):"publication time unknown")+lat+d+"</small>"+(summary?"<p>"+esc(summary.slice(0,280))+"</p>":"")+v+'<br><button class="b g event-ai" type="button" data-analyze-event="'+esc(e.id)+'">✦ Analyze with PULSE AI</button> <button class="b g event-poster" type="button" data-generate-poster="'+esc(e.id)+'">▧ Generate poster</button></div>'}
+function card(e){
+ PULSE_EVENT_CACHE[String(e.id)]=e;
+ var meta=e.meta||{},title=plain(e.title),summary=plain(e.summary),tags="";
+ if(e.severity)tags+='<span class="tag off">'+esc(e.severity)+(meta.cvss!=null?" "+esc(meta.cvss):"")+"</span>";
+ if(meta.known_exploited)tags+='<span class="tag off">KNOWN EXPLOITED</span>';
+ if(e.label)tags+='<span class="tag">'+esc(e.label)+"</span>";
+ var source=e.sources&&e.sources.name||"PULSE monitored source";
+ var when=e.published_at?"Published "+ago(e.published_at):"Publication time unknown";
+ var delay=e.published_at?" · detected "+dur(Date.parse(e.detected_at)-Date.parse(e.published_at))+" after publication":"";
+ var discussion=meta.discussion?' · <a href="'+url(meta.discussion)+'" target="_blank" rel="noopener">Discussion</a>':"";
+ var trend=e.platform&&e.score!=null&&e.published_at?'<div class="pulse-story-trend">≈'+(e.score/Math.max((Date.now()-Date.parse(e.published_at))/36e5,.25)).toFixed(1)+' points/hour · trend estimate</div>':"";
+ return '<article class="card pulse-story-card"><div class="pulse-story-meta"><div class="pulse-story-tags">'+tags+'</div><span>'+esc(String(e.category||"NEWS").toUpperCase())+'</span><span>'+esc(source)+'</span><span>'+esc(when)+esc(delay)+'</span></div><div class="pulse-story-copy"><a class="t pulse-story-title" href="'+url(e.url)+'" target="_blank" rel="noopener"><h3>'+esc(title)+'</h3></a>'+(summary?'<p class="pulse-story-summary">'+esc(summary.slice(0,420))+'</p>':"")+trend+'</div><div class="pulse-story-actions"><button class="b g event-ai" type="button" data-analyze-event="'+esc(e.id)+'">✦ Analyse report</button><button class="b g event-poster" type="button" data-generate-poster="'+esc(e.id)+'">▧ Make poster</button>'+(discussion?'<small>'+discussion+'</small>':"")+'</div></article>'
+}
 function emp(t){return '<div class="empty">'+(t||"No events yet. Run the worker once (see README), then refresh.")+"</div>"}
 function head(id){var n=S.filter(function(x){return x[0]==id})[0];return "<h2>"+n[1]+'</h2><p class="sub">'+(DESC[id]||"")+"</p>"}
 function stat(s){var iv=s.interval_min*6e4*3;if(!s.last_run_at)return["AWAITING CONFIGURATION","wait"];if(s.status=="rate_limited")return["RATE LIMITED","warn"];if(s.status=="offline")return["OFFLINE","off"];if(s.status=="degraded")return["DEGRADED","warn"];if(Date.now()-Date.parse(s.last_success_at)>iv)return["DELAYED","warn"];return["OPERATIONAL","ok"]}
 function list(id){var o=id=="social"||id=="early"?"score.desc.nullslast":"published_at.desc.nullslast";var f=id=="early"?"&published_at=gte."+new Date(Date.now()-216e5).toISOString():"";
 return api("events?"+SEL+"&"+Q[id]+f+srch()+"&order="+o+"&limit=50").then(function(r){return head(id)+(r.length?r.map(card).join(""):emp(id=="early"?"No recent discussions yet. Early signals come from social sources only.":0))})}
-function ov(){var d=new Date(Date.now()-864e5).toISOString();return Promise.all([api("events?select=id&limit=1",1),api("events?select=id&limit=1&detected_at=gte."+d,1),api("sources?select=*"),api("events?"+SEL+srch()+"&order=published_at.desc.nullslast&limit=8"),api("events?"+SEL+"&severity=eq.CRITICAL&order=published_at.desc.nullslast&limit=4")]).then(function(a){var ok=a[2].filter(function(s){return stat(s)[0]=="OPERATIONAL"}).length,bad=a[2].filter(function(s){var x=stat(s)[0];return x=="OFFLINE"||x=="DEGRADED"}).length;
-return '<h2>Global Overview</h2><p class="sub">All figures are counted from the database.</p><div class="grid"><div class="card stat"><b>'+a[0]+'</b><span>Stored events</span></div><div class="card stat"><b>'+a[1]+'</b><span>Detected in 24h</span></div><div class="card stat"><b>'+ok+"/"+a[2].length+'</b><span>Sources operational</span></div><div class="card stat"><b>'+bad+'</b><span>Degraded or offline</span></div></div><div class="card">PULSE AI <span class="tag">REPORT ANALYST</span> <small>Use “Analyze with PULSE AI” on any report. Analysis requires the NVIDIA provider key in Vercel.</small></div>'+(a[4].length?"<h2>Critical vulnerabilities</h2>"+a[4].map(card).join(""):"")+"<h2>Latest events</h2>"+(a[3].length?a[3].map(card).join(""):emp())})}
+function ov(){
+ var day=new Date(Date.now()-864e5).toISOString();
+ return Promise.all([
+  api("events?select=id&limit=1",1),
+  api("events?select=id&limit=1&detected_at=gte."+day,1),
+  api("sources?select=*"),
+  api("events?"+SEL+srch()+"&order=published_at.desc.nullslast&limit=8"),
+  api("events?"+SEL+"&severity=eq.CRITICAL&order=published_at.desc.nullslast&limit=4")
+ ]).then(function(a){
+  var active=a[2].filter(function(s){return stat(s)[0]==="OPERATIONAL"}).length;
+  var delayed=a[2].filter(function(s){var v=stat(s)[0];return v==="OFFLINE"||v==="DEGRADED"}).length;
+  var story='<section class="pulse-hero"><div class="pulse-hero-copy"><div class="pulse-kicker"><span class="pulse-live-dot"></span> LIVE INTELLIGENCE / 001</div><h1>Signal.<br><em>Without noise.</em></h1><p class="pulse-hero-lede">A considered view of technology, security and emerging change. Follow the developments that matter, with source context attached.</p><div class="pulse-hero-actions"><button class="pulse-cta" type="button" onclick="cur=\'breaking\';location.hash=cur;go()">Explore the latest <span aria-hidden="true">↗</span></button><button class="pulse-cta secondary" type="button" onclick="cur=\'notif\';location.hash=cur;go()">Set up alerts</button></div><div class="pulse-story-meta" style="margin-top:28px">PULSE / TECHNOLOGY INTELLIGENCE &nbsp;·&nbsp; UPDATED FROM MONITORED SOURCES</div></div><div class="pulse-hero-visual"><svg viewBox="0 0 520 360" role="img" aria-label="Abstract editorial signal map showing connected news signals"><g class="gridline"><path d="M0 40H520M0 100H520M0 160H520M0 220H520M0 280H520M0 340H520M40 0V360M100 0V360M160 0V360M220 0V360M280 0V360M340 0V360M400 0V360M460 0V360"/></g><path class="signal-line" d="M32 246 110 246 154 156 204 274 258 198 304 198 352 90 394 90 438 146 490 146"/><path class="signal-accent" d="M32 246 110 246 154 156 204 274"/><path class="signal-line" d="M110 246 110 312M204 274 204 324M304 198 304 50M394 90 394 34M438 146 438 270"/><circle class="node" cx="110" cy="246" r="7"/><circle class="node" cx="154" cy="156" r="7"/><circle class="node" cx="204" cy="274" r="7"/><circle class="node" cx="304" cy="198" r="7"/><circle class="node" cx="352" cy="90" r="7"/><circle class="node" cx="438" cy="146" r="7"/><text class="visual-label" x="22" y="25">SIGNAL NETWORK / 24H</text><text class="visual-label" x="26" y="268">OBSERVED</text><text class="visual-label" x="320" y="183">CORRELATED</text><text class="visual-label" x="404" y="78">VERIFIED</text><text class="visual-label" x="350" y="330">PULSE INTELLIGENCE SYSTEM</text><path d="M32 292H490" stroke="var(--bd)" stroke-width="1"/><text class="visual-label" x="32" y="310">01 / SOURCES</text><text class="visual-label" x="190" y="310">02 / SIGNALS</text><text class="visual-label" x="354" y="310">03 / CONTEXT</text></svg><span class="pulse-hero-caption">FIG. 01 — A LIVE VIEW OF THE INFORMATION FLOW</span></div></section>';
+  var metrics='<section class="pulse-metrics" aria-label="PULSE service metrics"><div class="pulse-metric"><span>Indexed reports</span><strong>'+a[0]+'</strong><small>All stored events</small></div><div class="pulse-metric"><span>New / 24 hours</span><strong>'+a[1]+'</strong><small>Recently detected</small></div><div class="pulse-metric"><span>Active sources</span><strong>'+active+'<small> / '+a[2].length+'</small></strong><small>Operational now</small></div><div class="pulse-metric"><span>Needs attention</span><strong>'+delayed+'</strong><small>Degraded or offline</small></div></section>';
+  var note='<section class="pulse-editorial-row"><aside class="pulse-ai-note"><span class="pulse-kicker">PULSE / ANALYSIS DESK</span><h3>Context is the signal.</h3><p>Explore source-led reports, inspect emerging patterns and ask PULSE Copilot to explain an individual development.</p><span class="pulse-ai-mark">INTELLIGENCE, WITH PROVENANCE</span></aside><div><div class="pulse-block-heading"><h2>Latest intelligence</h2><span>01 — RECENT REPORTS</span></div>'+(a[3].length?a[3].map(card).join(""):emp())+'</div></section>';
+  return story+metrics+note+(a[4].length?'<section><div class="pulse-block-heading"><h2>Critical vulnerabilities</h2><span>SECURITY / VERIFIED SEVERITY</span></div>'+a[4].map(card).join("")+'</section>':"");
+ });
+}
 function src(){return api("sources?select=*&order=name.asc").then(function(r){var t=r.map(function(s){var x=stat(s);return "<tr><td><b>"+esc(s.name)+"</b><br><small>"+esc(s.type)+" · "+esc(s.category)+" · "+esc(s.region)+" · every "+s.interval_min+"m</small></td><td><span class='tag "+x[1]+"'>"+x[0]+"</span>"+(s.enabled?"":"<span class='tag'>DISABLED</span>")+"</td><td>"+ago(s.last_success_at)+"</td><td>"+(s.last_latency_ms!=null?s.last_latency_ms+" ms":"—")+"</td><td>"+s.items_last_run+"</td><td><small>"+esc(s.last_error||"")+"</small></td></tr>"}).join("");
 return head2("Source Monitor","Status comes from real worker fetches. To add, edit or disable sources, use the Supabase Table Editor.")+'<div class="card scroll"><table><tr><th>Source</th><th>Status</th><th>Last success</th><th>Fetch time</th><th>Items</th><th>Last error</th></tr>'+t+"</table></div>"})}
 function head2(a,b){return "<h2>"+a+'</h2><p class="sub">'+b+"</p>"}
 var cesiumLoad=null,pulseViewer=null,pulseEntities=[],quakeEntities=[],volcanoEntities=[],pulseMapTimer=null,globeResizeObserver=null,quakesEnabled=true,volcanoesEnabled=true,quakeCount=0,volcanoCount=0,pulsePointCount=0;
 function loadCesium(){if(window.Cesium)return Promise.resolve();if(cesiumLoad)return cesiumLoad;var base="https://cesium.com/downloads/cesiumjs/releases/1.146/Build/Cesium/";window.CESIUM_BASE_URL=base;var css=document.createElement("link");css.rel="stylesheet";css.href=base+"Widgets/widgets.css";document.head.appendChild(css);cesiumLoad=new Promise(function(resolve,reject){var s=document.createElement("script");s.src=base+"Cesium.js";s.onload=resolve;s.onerror=function(){cesiumLoad=null;reject(new Error("Could not load the globe library. Check your internet connection and reload the map."))};document.head.appendChild(s)});return cesiumLoad}
-function detailBox(html){return '<div style="box-sizing:border-box;min-height:100%;padding:12px;background:#0c1621;color:#e7f2ff;font:14px/1.55 system-ui,-apple-system,Segoe UI,sans-serif">'+html+"</div>"}
+function detailBox(html){return '<div style="box-sizing:border-box;min-height:100%;padding:12px;background:#20221E;color:#F4F2EC;font:14px/1.55 system-ui,-apple-system,Segoe UI,sans-serif">'+html+"</div>"}
 function getMapPoints(){return api("events?select=id,title,url,summary,published_at,detected_at,meta,sources(name)&order=detected_at.desc&limit=100").then(function(ev){return ev.map(function(e){var m=e.meta||{},la=m.latitude!=null?m.latitude:m.lat,lo=m.longitude!=null?m.longitude:m.lon,lat=la==null||la===""?NaN:Number(la),lon=lo==null||lo===""?NaN:Number(lo);return{e:e,lat:lat,lon:lon}}).filter(function(p){return Number.isFinite(p.lat)&&Number.isFinite(p.lon)&&Math.abs(p.lat)<=90&&Math.abs(p.lon)<=180})})}
 function plotMapPoints(pts){if(!pulseViewer)return;pulsePointCount=pts.length;pulseEntities.forEach(function(x){pulseViewer.entities.remove(x)});pulseEntities=[];pts.forEach(function(p){var en=pulseViewer.entities.add({id:"pulse-event-"+p.e.id,position:Cesium.Cartesian3.fromDegrees(p.lon,p.lat,2500),point:{pixelSize:11,color:Cesium.Color.fromCssColorString("#39d8ff"),outlineColor:Cesium.Color.WHITE,outlineWidth:2,disableDepthTestDistance:Number.POSITIVE_INFINITY},label:{text:(p.e.title||"PULSE event").slice(0,54),font:"12px system-ui",fillColor:Cesium.Color.WHITE,outlineColor:Cesium.Color.BLACK,outlineWidth:3,style:Cesium.LabelStyle.FILL_AND_OUTLINE,show:false,disableDepthTestDistance:Number.POSITIVE_INFINITY},description:detailBox('<strong>'+esc(p.e.title)+'</strong><br><small>'+esc(p.e.sources&&p.e.sources.name||"PULSE source")+'</small><br>'+esc((p.e.summary||"").slice(0,260))+(p.e.url?'<br><a style="color:#075eb5" href="'+url(p.e.url)+'" target="_blank" rel="noopener">Open original report</a>':""))});pulseEntities.push(en)});var list=$("map-events");if(list)list.innerHTML=pts.length?pts.slice(0,12).map(function(p){return card(p.e)}).join(""):'<div class="map-empty">No event in the latest 100 has a usable source-provided latitude and longitude. The globe is ready; markers appear when a monitored source supplies coordinates.</div>';updateGlobeStatus()}
 function getVolcanoes(){var end=new Date(),start=new Date(Date.now()-30*864e5),fmt=function(d){return d.toISOString().slice(0,10)},endpoint="https://www.gdacs.org/gdacsapi/api/events/geteventlist/SEARCH?eventlist=VO&fromdate="+fmt(start)+"&todate="+fmt(end)+"&alertlevel=red%3Borange%3Bgreen";return fetch(endpoint).then(function(r){if(!r.ok)throw new Error("GDACS volcano feed HTTP "+r.status);return r.json()}).then(function(data){return data.features||[]})}
@@ -1091,22 +1074,181 @@ function drawStoryPoster(copy,event){
 }
 function alertMode(){try{return localStorage.getItem("pulse.alertMode")||"high"}catch(e){return"high"}}
 function alertSoundOn(){try{return localStorage.getItem("pulse.alertSound")==="on"}catch(e){return false}}
-function notificationPermissionText(){if(!window.isSecureContext)return"Open PULSE at https://pulsex-phi.vercel.app to enable browser alerts. Browser permission prompts do not work from a local file.";if(!("Notification" in window))return"This browser does not support desktop notifications. Use PULSE in a supported browser on HTTPS.";if(Notification.permission==="denied")return'PULSE alerts are blocked in this browser. In Firefox, open Settings → Privacy & Security → Permissions → Notifications → Settings, allow pulsex-phi.vercel.app (or remove its blocked entry), save, then reload. <a href="https://support.mozilla.org/en-US/kb/push-notifications-firefox" target="_blank" rel="noopener">Firefox help</a>.';if(Notification.permission==="granted")return"Browser permission is allowed. Send a test alert to check delivery.";return"Press Enable desktop alerts, then choose Allow in the browser prompt."}
-function requestPulsePermission(){var status=$("alert-permission"),button=$("allow-alerts");if(!status)return;if(!window.isSecureContext||!("Notification" in window)){status.textContent=notificationPermissionText();return}if(Notification.permission==="denied"){status.innerHTML=notificationPermissionText();if(button)button.textContent="How to allow alerts";return}function showTest(){try{new Notification("PULSE · IMPORTANT ALERT",{body:"Desktop alerts are working. Only critical and high-impact events will alert.",tag:"pulse-test",icon:"/assets/pulse-alert-critical.svg",image:"/assets/pulse-alert-critical.svg"});status.textContent="Test alert sent. PULSE checks for important events while this site is open."}catch(e){status.textContent="The browser or device blocked this notification. Check system notification settings."}}if(Notification.permission==="granted"){showTest();return}status.textContent="Waiting for your browser choice…";Notification.requestPermission().then(function(permission){status.innerHTML=notificationPermissionText();if(button)button.textContent=permission==="granted"?"Send test alert":permission==="denied"?"How to allow alerts":"Enable desktop alerts";if(permission==="granted")showTest()}).catch(function(){status.textContent="The browser could not request permission. Check this site's notification setting and reload."})}
-var openedPushEvent="";
-function pushKeyBytes(value){var raw=atob(String(value).replace(/-/g,"+").replace(/_/g,"/")),out=new Uint8Array(raw.length);for(var i=0;i<raw.length;i++)out[i]=raw.charCodeAt(i);return out}
-function bindPushControls(){var button=$("enable-push"),status=$("push-status");if(!button||!status)return;if(!window.isSecureContext||!("Notification" in window)||!navigator.serviceWorker||!window.PushManager){button.disabled=true;status.textContent="Closed-tab alerts need a supported browser on the live HTTPS PULSE site.";return}button.onclick=function(){button.disabled=true;status.textContent="Connecting to PULSE push…";var permissionRequest=Notification.requestPermission();fetch("/api/push").then(function(r){return r.json().then(function(d){if(!r.ok)throw Error(d.error||"Push setup is incomplete.");return d})}).then(function(config){if(!config.publicKey||!config.configured)throw Error("Push keys are not configured on the PULSE server yet.");return permissionRequest.then(function(permission){if(permission!=="granted")throw Error(permission==="denied"?"Notifications are blocked for PULSE in your browser settings.":"Notification permission was not granted.");return navigator.serviceWorker.register("/service-worker.js").then(function(reg){return reg.pushManager.getSubscription().then(function(existing){return existing||reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:pushKeyBytes(config.publicKey)})})})}).then(function(subscription){return fetch("/api/push",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"subscribe",subscription:subscription.toJSON()})}).then(function(r){return r.json().then(function(d){if(!r.ok)throw Error(d.error||"Could not save this device.");return d})})})}).then(function(){status.textContent="Enabled. Important PULSE alerts can now arrive while the site is closed.";button.textContent="Disable closed-tab alerts";button.disabled=false;button.onclick=disablePush}).catch(function(error){status.textContent=error.message||"Could not enable push alerts.";button.disabled=false})};
-navigator.serviceWorker.register("/service-worker.js").then(function(reg){return reg.pushManager.getSubscription()}).then(function(subscription){if(subscription){button.textContent="Disable closed-tab alerts";status.textContent="Enabled. Important PULSE alerts can arrive while the site is closed.";button.onclick=disablePush}}).catch(function(){})}
-function disablePush(){var button=$("enable-push"),status=$("push-status");button.disabled=true;navigator.serviceWorker.ready.then(function(reg){return reg.pushManager.getSubscription()}).then(function(subscription){if(!subscription)return;var endpoint=subscription.endpoint;return subscription.unsubscribe().then(function(){return fetch("/api/push",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"unsubscribe",endpoint:endpoint})})})}).then(function(){button.textContent="Enable closed-tab alerts";button.disabled=false;status.textContent="Closed-tab alerts are off on this device.";button.onclick=null;bindPushControls()}).catch(function(){button.disabled=false;status.textContent="Could not disable push alerts."})}
+function notificationPermissionText(){
+ if(!window.isSecureContext)return"Push alerts require the live HTTPS PULSE website.";
+ if(!("Notification"in window)||!navigator.serviceWorker||!window.PushManager)return"This browser does not support background Web Push.";
+ if(Notification.permission==="denied")return"Notifications are blocked in browser settings. Re-enable them for pulsex-phi.vercel.app, then reload.";
+ if(Notification.permission==="granted")return"Browser permission is granted. Enable this device below to register background delivery.";
+ return"Your browser will ask for permission only after you choose Enable notifications.";
+}
+var openedPushEvent="",pushPrefs=null,pushOwnerMemory="";
+function pushDefaults(){
+ return{priorities:{breaking:true,important:true,general:true,low:false},categories:[],sounds:{breaking:true,important:true,general:true,low:false},quietStart:"",quietEnd:"",timezone:(Intl.DateTimeFormat().resolvedOptions().timeZone||"Asia/Kolkata"),allowBreakingDuringQuiet:true,lowMode:"group"};
+}
+function pushReadPrefs(){
+ try{return Object.assign(pushDefaults(),JSON.parse(localStorage.getItem("pulse.push.preferences")||"{}"),{priorities:Object.assign(pushDefaults().priorities,JSON.parse(localStorage.getItem("pulse.push.preferences")||"{}").priorities||{}),sounds:Object.assign(pushDefaults().sounds,JSON.parse(localStorage.getItem("pulse.push.preferences")||"{}").sounds||{})})}
+ catch(e){return pushDefaults()}
+}
+function pushOwnerToken(){
+ try{
+  var saved=localStorage.getItem("pulse.push.owner");
+  if(saved&&/^[A-Za-z0-9_-]{32,160}$/.test(saved))return saved;
+  var bytes=new Uint8Array(32);crypto.getRandomValues(bytes);
+  var token=btoa(String.fromCharCode.apply(null,bytes)).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+  localStorage.setItem("pulse.push.owner",token);return token;
+ }catch(e){
+  if(!pushOwnerMemory){var b=new Uint8Array(32);crypto.getRandomValues(b);pushOwnerMemory=btoa(String.fromCharCode.apply(null,b)).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
+  return pushOwnerMemory;
+ }
+}
+function pushKeyBytes(value){
+ var raw=atob(String(value).replace(/-/g,"+").replace(/_/g,"/")+"===".slice((String(value).length+3)%4)),out=new Uint8Array(raw.length);
+ for(var i=0;i<raw.length;i++)out[i]=raw.charCodeAt(i);
+ return out;
+}
+function pushApi(body){
+ return fetch("/api/push",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)}).then(function(r){return r.json().then(function(data){if(!r.ok)throw Error(data.error||"Notification request failed.");return data})});
+}
+function pushSetStatus(message){
+ var node=$("push-status");if(node)node.textContent=message;
+}
+function pushApplyPrefs(prefs){
+ pushPrefs=Object.assign(pushDefaults(),prefs||{});
+ pushPrefs.priorities=Object.assign(pushDefaults().priorities,prefs&&prefs.priorities||{});
+ pushPrefs.sounds=Object.assign(pushDefaults().sounds,prefs&&prefs.sounds||{});
+ ["breaking","important","general","low"].forEach(function(level){
+  var p=$("push-priority-"+level),s=$("push-sound-"+level);
+  if(p)p.checked=!!pushPrefs.priorities[level];
+  if(s)s.checked=!!pushPrefs.sounds[level];
+ });
+ ["news","ai","tech","company","cyber","social"].forEach(function(category){
+  var node=$("push-category-"+category);if(node)node.checked=Array.isArray(pushPrefs.categories)&&pushPrefs.categories.includes(category);
+ });
+ var start=$("push-quiet-start"),end=$("push-quiet-end"),zone=$("push-timezone"),breaking=$("push-breaking-quiet"),low=$("push-low-mode");
+ if(start)start.value=pushPrefs.quietStart||"";if(end)end.value=pushPrefs.quietEnd||"";
+ if(zone)zone.value=pushPrefs.timezone||"Asia/Kolkata";if(breaking)breaking.checked=pushPrefs.allowBreakingDuringQuiet!==false;
+ if(low)low.value=pushPrefs.lowMode||"group";
+}
+function pushCollectPrefs(){
+ var next=pushDefaults();
+ ["breaking","important","general","low"].forEach(function(level){
+  var p=$("push-priority-"+level),s=$("push-sound-"+level);
+  next.priorities[level]=!!(p&&p.checked);next.sounds[level]=!!(s&&s.checked);
+ });
+ next.categories=["news","ai","tech","company","cyber","social"].filter(function(category){var node=$("push-category-"+category);return node&&node.checked});
+ next.quietStart=$("push-quiet-start")?$("push-quiet-start").value:"";
+ next.quietEnd=$("push-quiet-end")?$("push-quiet-end").value:"";
+ next.timezone=$("push-timezone")?$("push-timezone").value:pushDefaults().timezone;
+ next.allowBreakingDuringQuiet=!!($("push-breaking-quiet")&&$("push-breaking-quiet").checked);
+ next.lowMode=$("push-low-mode")?$("push-low-mode").value:"group";
+ return next;
+}
+function pushSavePrefs(){
+ pushPrefs=pushCollectPrefs();
+ try{localStorage.setItem("pulse.push.preferences",JSON.stringify(pushPrefs))}catch(e){}
+ navigator.serviceWorker&&navigator.serviceWorker.ready.then(function(reg){return reg.pushManager.getSubscription()}).then(function(subscription){
+  if(!subscription)return;
+  return pushApi({action:"preferences",ownerToken:pushOwnerToken(),endpoint:subscription.endpoint,preferences:pushPrefs});
+ }).then(function(){pushSetStatus("Your preferences are saved for this device.")}).catch(function(error){pushSetStatus(error.message||"Could not sync notification preferences.")});
+}
+function pushHistoryLoad(){
+ var host=$("push-history");if(!host)return;
+ navigator.serviceWorker.ready.then(function(reg){return reg.pushManager.getSubscription()}).then(function(subscription){
+  if(!subscription){host.innerHTML='<div class="empty">Enable push on this device to build a synced notification history.</div>';return}
+  return pushApi({action:"history",ownerToken:pushOwnerToken(),endpoint:subscription.endpoint}).then(function(data){
+   var items=data.items||[];
+   if(!items.length){host.innerHTML='<div class="empty">No background notifications have been recorded yet.</div>';return}
+   host.innerHTML=items.map(function(item){
+    var event=item.event||{},unread=!item.read_at;
+    return '<article class="pulse-history-item"><div class="pulse-history-meta"><span class="pulse-priority pulse-priority-'+esc(item.priority)+'">'+esc(item.priority)+'</span><span>'+esc(new Date(item.created_at).toLocaleString())+'</span><span>'+(unread?"UNREAD":"READ")+'</span></div><a href="'+url(event.url||"/")+'" target="_blank" rel="noopener" data-push-read="'+esc(item.id)+'"><strong>'+esc(event.title||"PULSE notification")+'</strong></a><small>'+esc(item.status||"queued")+(item.delivered_at?" · accepted "+ago(item.delivered_at):"")+'</small></article>';
+   }).join("");
+   host.querySelectorAll("[data-push-read]").forEach(function(link){link.addEventListener("click",function(){pushApi({action:"mark-read",ownerToken:pushOwnerToken(),endpoint:subscription.endpoint,deliveryIds:[link.getAttribute("data-push-read")] }).catch(function(){})})});
+  });
+ }).catch(function(error){host.innerHTML='<div class="empty">'+esc(error.message||"Could not load notification history.")+'</div>'});
+}
+function pushBindPreferenceInputs(){
+ var ids=["push-priority-breaking","push-priority-important","push-priority-general","push-priority-low","push-sound-breaking","push-sound-important","push-sound-general","push-sound-low","push-category-news","push-category-ai","push-category-tech","push-category-company","push-category-cyber","push-category-social","push-quiet-start","push-quiet-end","push-timezone","push-breaking-quiet","push-low-mode"];
+ ids.forEach(function(id){var node=$(id);if(node)node.addEventListener("change",pushSavePrefs)});
+ var refresh=$("push-refresh-history");if(refresh)refresh.onclick=pushHistoryLoad;
+ var clear=$("push-clear-history");if(clear)clear.onclick=function(){
+  navigator.serviceWorker.ready.then(function(reg){return reg.pushManager.getSubscription()}).then(function(sub){if(!sub)throw Error("Enable this device first.");return pushApi({action:"clear-history",ownerToken:pushOwnerToken(),endpoint:sub.endpoint})}).then(function(){pushHistoryLoad();pushSetStatus("Notification history cleared for this device.")}).catch(function(e){pushSetStatus(e.message||"Could not clear notification history.")});
+ };
+ var test=$("push-test");if(test)test.onclick=function(){
+  test.disabled=true;
+  navigator.serviceWorker.ready.then(function(reg){return reg.pushManager.getSubscription()}).then(function(sub){if(!sub)throw Error("Enable notifications on this device first.");return pushApi({action:"test",ownerToken:pushOwnerToken(),endpoint:sub.endpoint})}).then(function(){pushSetStatus("Test push submitted to the browser push service. Delivery and sound depend on your device settings.")}).catch(function(e){pushSetStatus(e.message||"Test notification failed.")}).finally(function(){test.disabled=false});
+ };
+}
+function bindPushControls(){
+ var button=$("enable-push"),status=$("push-status");
+ if(!button||!status)return;
+ pushApplyPrefs(pushReadPrefs());pushBindPreferenceInputs();
+ if(!window.isSecureContext||!("Notification"in window)||!navigator.serviceWorker||!window.PushManager){
+  button.disabled=true;status.textContent="Background push is not supported in this browser or context. Use the live HTTPS PULSE site in a supported browser.";return;
+ }
+ button.onclick=function(){
+  button.disabled=true;pushSetStatus("Checking permission and registering this browser…");
+  var permission=Notification.permission==="granted"?Promise.resolve("granted"):Notification.requestPermission();
+  permission.then(function(choice){
+   if(choice!=="granted")throw Error(choice==="denied"?"Notifications are blocked in browser settings. Allow PULSE notifications there and try again.":"Notification permission was not granted.");
+   return navigator.serviceWorker.register("/service-worker.js").then(function(reg){
+    return reg.pushManager.getSubscription().then(function(existing){
+     if(existing)return existing;
+     return fetch("/api/push").then(function(r){return r.json().then(function(d){if(!r.ok)throw Error(d.error||"Push configuration is unavailable.");return d})}).then(function(config){
+      if(!config.publicKey||!config.configured)throw Error("Push server is not configured yet. Add VAPID keys to Supabase first.");
+      return reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:pushKeyBytes(config.publicKey)});
+     });
+    });
+   });
+  }).then(function(subscription){
+   return pushApi({action:"subscribe",ownerToken:pushOwnerToken(),subscription:subscription.toJSON(),preferences:pushPrefs||pushReadPrefs()}).then(function(){return subscription});
+  }).then(function(){
+   button.textContent="Disable this device";button.disabled=false;button.onclick=disablePush;
+   pushSetStatus("This device is registered. Push can arrive while PULSE is closed when the browser and operating system support background delivery.");
+   pushHistoryLoad();
+  }).catch(function(error){pushSetStatus(error.message||"Could not enable background notifications.");button.disabled=false});
+ };
+ navigator.serviceWorker.register("/service-worker.js").then(function(reg){return reg.pushManager.getSubscription()}).then(function(subscription){
+  if(subscription){
+   button.textContent="Disable this device";button.onclick=disablePush;
+   pushApi({action:"subscribe",ownerToken:pushOwnerToken(),subscription:subscription.toJSON(),preferences:pushPrefs||pushReadPrefs()}).then(function(){
+    pushSetStatus("This device is registered for background notifications.");
+    pushHistoryLoad();
+   }).catch(function(error){pushSetStatus(error.message||"This device subscription needs attention.")});
+  }else{button.textContent="Enable notifications";pushSetStatus(notificationPermissionText())}
+ }).catch(function(){pushSetStatus(notificationPermissionText())});
+}
+function disablePush(){
+ var button=$("enable-push");if(button)button.disabled=true;
+ navigator.serviceWorker.ready.then(function(reg){return reg.pushManager.getSubscription()}).then(function(subscription){
+  if(!subscription)return;
+  return pushApi({action:"unsubscribe",ownerToken:pushOwnerToken(),endpoint:subscription.endpoint}).then(function(){return subscription.unsubscribe()});
+ }).then(function(){
+  if(button){button.textContent="Enable notifications";button.disabled=false;button.onclick=bindPushControls}
+  pushSetStatus("Push notifications are disabled on this device. Browser permission can be managed in browser settings.");
+ }).catch(function(error){if(button)button.disabled=false;pushSetStatus(error.message||"Could not disable notifications.")});
+}
+
 function openPushEventLink(main){var params=new URLSearchParams(location.search),eventId=params.get("pulseEvent");if(!eventId||openedPushEvent===eventId)return;api("events?id=eq."+encodeURIComponent(eventId)+"&"+SEL+"&limit=1").then(function(items){if(!items.length)return;openedPushEvent=eventId;var wrap=document.createElement("section");wrap.className="notification-target";wrap.innerHTML="<h2>Opened from your PULSE alert</h2>"+card(items[0]);main.insertBefore(wrap,main.firstChild);wrap.scrollIntoView({behavior:"smooth",block:"start"})}).catch(function(){})}
-function nt(){return api("events?"+SEL+"&order=detected_at.desc&limit=100").then(function(ev){var hits=ev.filter(function(e){return importanceRank(e)>=3}).slice(0,20),alertLabel=!window.isSecureContext||!("Notification" in window)?"Open secure PULSE site":Notification.permission==="denied"?"How to allow alerts":Notification.permission==="granted"?"Send test alert":"Enable desktop alerts",intro=head2("Important alerts","PULSE alerts only for critical or high-impact security issues, active exploitation, major outages, and serious incidents. Alerts are checked while this site is open.");var delivery='<div class="card alert-settings"><b>Alert settings</b><label>Alert threshold <select id="alert-mode"><option value="critical" '+(alertMode()==="critical"?"selected":"")+'>Critical only</option><option value="high" '+(alertMode()!=="critical"?"selected":"")+'>Critical and high impact</option></select></label><label><input id="alert-sound" class="alert-sound" type="checkbox" '+(alertSoundOn()?"checked":"")+'> Play a short sound for important alerts</label><div><button class="b" id="allow-alerts" type="button" onclick="requestPulsePermission()">'+alertLabel+'</button><p id="alert-permission" class="sub" aria-live="polite">'+notificationPermissionText()+'</p></div><small>Sound plays in the open PULSE tab after you enable it. Desktop popup appearance and sound are controlled by your browser and device.</small><div class="push-settings"><b>Alerts while PULSE is closed</b><button class="b" id="enable-push" type="button">Enable closed-tab alerts</button><p id="push-status" class="sub" aria-live="polite">Allow push once on this device to receive important alerts while PULSE is closed.</p></div></div>';return intro+delivery+"<h2>Recent important events</h2>"+(hits.length?hits.map(card).join(""):emp("No recent high-impact events."))})}
+function nt(){
+ var label=notificationPermissionText();
+ return api("events?"+SEL+"&order=detected_at.desc&limit=100").then(function(events){
+  var hits=events.filter(function(e){return importanceRank(e)>=3}).slice(0,8);
+  var settings='<section class="pulse-notification-hero"><div><span class="pulse-kicker">PULSE / DELIVERY SETTINGS</span><h2>Stay close to the signal.</h2><p>Choose what reaches this device. Push is delivered by your browser’s Web Push service; the operating system controls the final popup and sound.</p></div><div class="pulse-notification-hero-side"><span class="pulse-live-dot"></span><strong>BACKGROUND DELIVERY</strong><small>Service worker / Web Push / VAPID</small></div></section>';
+  var device='<section class="pulse-notification-device"><div class="pulse-block-heading"><h2>This device</h2><span>01 — PERMISSION & SUBSCRIPTION</span></div><p class="sub" id="push-permission">'+esc(label)+'</p><div class="pulse-hero-actions"><button class="pulse-cta" id="enable-push" type="button">Enable notifications</button><button class="pulse-cta secondary" id="push-test" type="button">Send test alert</button></div><p id="push-status" class="sub" aria-live="polite">Permission is requested only after you press Enable notifications.</p></section>';
+  var priorities='<section class="pulse-settings-section"><div class="pulse-block-heading"><h2>Priority & topics</h2><span>02 — WHAT MATTERS</span></div><div class="pulse-settings-grid"><div><h3>Priority levels</h3><label class="pulse-setting-row"><span><b>Breaking news</b><small>Urgent developments, delivered immediately</small></span><input type="checkbox" id="push-priority-breaking" checked></label><label class="pulse-setting-row"><span><b>Important news</b><small>Significant developments and advisories</small></span><input type="checkbox" id="push-priority-important" checked></label><label class="pulse-setting-row"><span><b>General news</b><small>Regular reports and updates</small></span><input type="checkbox" id="push-priority-general" checked></label><label class="pulse-setting-row"><span><b>Low priority</b><small>Minor updates and quieter signals</small></span><input type="checkbox" id="push-priority-low"></label></div><div><h3>Topics</h3><p class="sub">Leave all topics unchecked to receive every category.</p><div class="pulse-topic-grid">'+["news","ai","tech","company","cyber","social"].map(function(c){return '<label class="pulse-topic"><input type="checkbox" id="push-category-'+c+'"><span>'+c.toUpperCase()+'</span></label>'}).join("")+'</div><label class="pulse-setting-row"><span><b>Low-priority delivery</b><small>Group updates from each source scan, send separately, or mute</small></span><select id="push-low-mode"><option value="group">Grouped</option><option value="immediate">Separate alerts</option><option value="off">Muted</option></select></label></div></div></section>';
+  var sounds='<section class="pulse-settings-section"><div class="pulse-block-heading"><h2>Sound & quiet hours</h2><span>03 — YOUR ATTENTION</span></div><div class="pulse-settings-grid"><div><h3>Allow notification sound</h3><p class="sub">The browser and operating system choose the actual sound. These controls request silent delivery where supported.</p>'+["breaking","important","general","low"].map(function(c){return '<label class="pulse-setting-row"><span><b>'+c.charAt(0).toUpperCase()+c.slice(1)+'</b><small>'+ (c==="breaking"?"Urgent alert":c==="important"?"Priority alert":c==="general"?"Standard alert":"Quiet alert")+'</small></span><input type="checkbox" id="push-sound-'+c+'" '+(c==="low"?"":"checked")+'></label>'}).join("")+'</div><div><h3>Quiet hours</h3><p class="sub">Non-breaking alerts pause during this local time window. Breaking alerts can still pass if you leave the override enabled.</p><label class="pulse-setting-row"><span><b>Start</b><small>Quiet period begins</small></span><input type="time" id="push-quiet-start"></label><label class="pulse-setting-row"><span><b>End</b><small>Quiet period ends</small></span><input type="time" id="push-quiet-end"></label><label class="pulse-setting-row"><span><b>Time zone</b><small>Used to calculate quiet hours</small></span><input id="push-timezone" type="text" maxlength="80" value="'+esc(Intl.DateTimeFormat().resolvedOptions().timeZone||"Asia/Kolkata")+'"></label><label class="pulse-setting-row"><span><b>Allow breaking alerts during quiet hours</b><small>Urgent alerts can override the quiet period</small></span><input type="checkbox" id="push-breaking-quiet" checked></label></div></div></section>';
+  var history='<section class="pulse-settings-section"><div class="pulse-block-heading"><h2>Notification history</h2><span>04 — DEVICE ACTIVITY</span></div><div class="row"><button class="b g" type="button" id="push-refresh-history">Refresh history</button><button class="b g" type="button" id="push-clear-history">Clear this device’s history</button></div><div id="push-history"><div class="empty">Loading notification history…</div></div></section>';
+  var recent='<section class="pulse-settings-section"><div class="pulse-block-heading"><h2>High-impact reports</h2><span>05 — RECENT SIGNALS</span></div>'+(hits.length?hits.map(card).join(""):emp("No high-impact reports at the moment."))+'</section>';
+  return settings+device+priorities+sounds+history+recent;
+ });
+}
 function go(){if(pulseMapTimer){clearInterval(pulseMapTimer);pulseMapTimer=null}if(globeResizeObserver){globeResizeObserver.disconnect();globeResizeObserver=null}if(pulseViewer){pulseViewer.destroy();pulseViewer=null;pulseEntities=[];quakeEntities=[];volcanoEntities=[]}$("nav").innerHTML=S.map(function(s){return '<button class="'+(s[0]==cur?"on":"")+'" onclick="cur=\''+s[0]+'\';location.hash=cur;go()">'+tr(s[1])+"</button>"}).join("");var m=$("m");
 if(cur==="posters"){m.innerHTML=posterPage();localizeUi(m);bindPoster();return}
 if(!OK){m.innerHTML=head2("Setup needed","Database connection <span class='tag wait'>AWAITING CONFIGURATION</span>")+emp("Open config.js and set your Supabase URL and anon (publishable) key. See README.");return}
 var t=++T;m.innerHTML='<p class="sub">Loading…</p>';var p=cur=="overview"?ov():cur=="sources"?src():cur=="notif"?nt():cur=="map"?mp():list(cur);
 p.then(function(h){if(t==T){m.innerHTML=h;localizeUi(m);if(cur==="posters")bindPoster();if(cur==="notif")bindPushControls();openPushEventLink(m);if(window.anime&&!matchMedia("(prefers-reduced-motion: reduce)").matches){try{window.anime.animate(m.querySelectorAll(".card"),{opacity:[0,1],translateY:[10,0],delay:window.anime.stagger(28),duration:360,ease:"out(3)"})}catch(e){}}if(cur=="map"){startGlobe();$("globe-home").onclick=function(){if(pulseViewer)pulseViewer.camera.flyTo({destination:Cesium.Cartesian3.fromDegrees(10,18,23000000),duration:1.5})};$("globe-refresh").onclick=function(){if(!pulseViewer)startGlobe();Promise.all([getMapPoints().then(plotMapPoints),loadQuakes(),getVolcanoes().then(plotVolcanoes)]).catch(function(e){var status=$("globe-status");if(status)status.textContent="Refresh failed: "+e.message})};$("quake-toggle").onclick=function(){quakesEnabled=!quakesEnabled;this.textContent="USGS earthquakes: "+(quakesEnabled?"ON":"OFF");loadQuakes().catch(function(e){var s=$("globe-status");if(s)s.textContent="USGS feed unavailable: "+e.message})};$("volcano-toggle").onclick=function(){volcanoesEnabled=!volcanoesEnabled;this.textContent="GDACS volcanoes: "+(volcanoesEnabled?"ON":"OFF");getVolcanoes().then(plotVolcanoes).catch(function(e){var status=$("globe-status");if(status)status.textContent="Volcano feed unavailable: "+e.message})};pulseMapTimer=setInterval(function(){if(cur=="map"&&document.visibilityState=="visible"){getMapPoints().then(plotMapPoints).catch(function(){});loadQuakes().catch(function(){});getVolcanoes().then(plotVolcanoes).catch(function(){})}},60000)}}}).catch(function(e){if(t==T)m.innerHTML=head2("Connection problem","Database <span class='tag off'>OFFLINE</span>")+emp("Could not read the database ("+esc(e.message)+"). Check config.js, that schema.sql was run, and that the project is not paused.")})}
 $("q").addEventListener("keydown",function(e){if(e.key=="Enter"){term=this.value;go()}});
-$("th").onclick=function(){var r=document.documentElement,opts=["system","light","dark","violet","ocean","forest","sunset","crimson"],curt=r.getAttribute("data-theme")||"system",n=(opts.indexOf(curt)+1)%opts.length;if(opts[n]==="system")r.removeAttribute("data-theme");else r.setAttribute("data-theme",opts[n]);this.title="Theme: "+opts[n];this.setAttribute("aria-label",this.title)};
+$("th").onclick=function(){var r=document.documentElement,opts=["system","light","dark","forest","sunset","crimson"],curt=r.getAttribute("data-theme")||"system",n=(opts.indexOf(curt)+1)%opts.length;if(opts[n]==="system")r.removeAttribute("data-theme");else r.setAttribute("data-theme",opts[n]);this.title="Theme: "+opts[n];this.setAttribute("aria-label",this.title)};
 var audioCtx=null,audioOsc=[],musicTimer=null,musicStep=0;
 function stopPulseTheme(){if(musicTimer){clearInterval(musicTimer);musicTimer=null}audioOsc.forEach(function(o){try{o.stop()}catch(e){}});audioOsc=[];if(audioCtx){audioCtx.close().catch(function(){});audioCtx=null}musicStep=0}
 function playPulseTheme(trackId){var AC=window.AudioContext||window.webkitAudioContext;if(!AC)throw Error("Audio is not supported in this browser");var tracks={signal:{name:"Signal Bloom",root:50,scale:[0,2,5,7,9,12,14,17,19],motif:[5,4,3,4,2,3,4,6,5,4,3,7,6,4,3,2],pad:[146.83,174.61,220],step:150,filter:1500},night:{name:"Night Shift",root:53,scale:[0,3,5,7,10,12,15,17],motif:[3,5,4,2,6,4,3,1,5,6,4,2,7,5,3,2],pad:[130.81,155.56,196],step:190,filter:1050},focus:{name:"Deep Focus",root:57,scale:[0,2,4,7,9,12,14,16],motif:[0,2,4,2,5,4,2,1,0,3,5,3,6,5,3,1],pad:[164.81,196,246.94],step:230,filter:1250}},tune=tracks[trackId]||tracks.signal;audioCtx=new AC();var ctx=audioCtx,master=ctx.createGain();master.gain.value=.48;master.connect(ctx.destination);var filter=ctx.createBiquadFilter();filter.type="lowpass";filter.frequency.value=tune.filter;filter.connect(master);
@@ -1123,12 +1265,12 @@ document.addEventListener("change",function(e){if(e.target&&e.target.id==="alert
 document.addEventListener("click",function(e){var target=e.target&&e.target.closest?e.target.closest("button"):null;if(!target)return;var posterId=target.getAttribute("data-generate-poster");if(posterId){posterPendingEvent=PULSE_EVENT_CACHE[String(posterId)]||null;cur="posters";location.hash="posters";go();return}var eventId=target.getAttribute("data-analyze-event");if(eventId){var event=PULSE_EVENT_CACHE[String(eventId)];if(event)analyzePulseEvent(event)}});
 var languageSelect=$("language");if(languageSelect){languageSelect.value=PULSE_LANG;languageSelect.addEventListener("change",function(){PULSE_LANG=this.value;document.documentElement.lang=PULSE_LANG;try{localStorage.setItem("pulse.language",PULSE_LANG)}catch(e){}go()})}
 try{var savedTheme=localStorage.getItem("pulse.theme");if(savedTheme&&savedTheme!=="system")document.documentElement.setAttribute("data-theme",savedTheme)}catch(e){}
-$("th").onclick=function(){var r=document.documentElement,opts=["system","light","dark","violet","ocean","forest","sunset","crimson"],curt=r.getAttribute("data-theme")||"system",n=(opts.indexOf(curt)+1)%opts.length;if(opts[n]==="system")r.removeAttribute("data-theme");else r.setAttribute("data-theme",opts[n]);try{localStorage.setItem("pulse.theme",opts[n])}catch(e){}this.title="Theme: "+opts[n];this.setAttribute("aria-label",this.title)};
+$("th").onclick=function(){var r=document.documentElement,opts=["system","light","dark","forest","sunset","crimson"],curt=r.getAttribute("data-theme")||"system",n=(opts.indexOf(curt)+1)%opts.length;if(opts[n]==="system")r.removeAttribute("data-theme");else r.setAttribute("data-theme",opts[n]);try{localStorage.setItem("pulse.theme",opts[n])}catch(e){}this.title="Theme: "+opts[n];this.setAttribute("aria-label",this.title)};
 function setAssistantOpen(open){var panel=$("assistant-panel");if(!panel)return;panel.classList.toggle("open",open);panel.setAttribute("aria-hidden",open?"false":"true");if(open)setTimeout(function(){var input=$("assistant-input");if(input)input.focus()},60)}
 function assistantBubble(text,who){var bubble=document.createElement("div");bubble.className="assistant-msg "+who;bubble.textContent=text;$("assistant-messages").appendChild(bubble);bubble.scrollIntoView({block:"nearest"});return bubble}
 function analyzePulseEvent(event){if(location.protocol==="file:"){setAssistantOpen(true);assistantBubble("Open the deployed PULSE site to analyze reports with its server AI.","assistant");return}setAssistantOpen(true);var title=plain(event.title||"PULSE report"),send=$("assistant-form").querySelector("button"),source=event.sources&&event.sources.name||event.source||"PULSE source";assistantBubble("Analyze this report: "+title,"user");send.disabled=true;send.textContent="…";$("assistant-index").textContent="Analyzing the selected report…";fetch("/api/assistant",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({task:"analyze_event",language:PULSE_LANG,event:{title:title,summary:plain(event.summary||""),source:source,url:event.url,published_at:event.published_at,severity:event.severity,meta:event.meta||{}}})}).then(function(response){return response.json().then(function(data){if(!response.ok)throw new Error(data.error||"PULSE AI analysis failed.");return data})}).then(function(data){assistantBubble(data.text||"No analysis was returned.","assistant");$("assistant-index").textContent="Selected report analyzed · "+(data.model||"PULSE AI")}).catch(function(error){assistantBubble(error.message||"PULSE could not reach the AI service.","assistant");$("assistant-index").textContent="Check the Vercel API key and deployment"}).finally(function(){send.disabled=false;send.textContent=tr("Send")})}
 function saveHeadlineText(file){var blob=new Blob([file.text||""],{type:"text/plain;charset=utf-8"}),filename=(file.filename||"pulse-headlines.txt").replace(/[^a-z0-9._-]/gi,"-");if(window.showDirectoryPicker){window.showDirectoryPicker().then(function(parent){return parent.getDirectoryHandle("PULSE",{create:true})}).then(function(folder){return folder.getFileHandle(filename,{create:true})}).then(function(handle){return handle.createWritable()}).then(function(writer){return writer.write(blob).then(function(){return writer.close()})}).then(function(){assistantBubble("Saved in the PULSE folder inside the location you selected.","assistant")}).catch(function(err){if(err&&err.name!=="AbortError")assistantBubble("Could not save the file. Check the folder permission and try again.","assistant")});return}if(window.showSaveFilePicker){window.showSaveFilePicker({suggestedName:filename,types:[{description:"Text file",accept:{"text/plain":[".txt"]}}]}).then(function(handle){return handle.createWritable()}).then(function(writer){return writer.write(blob).then(function(){return writer.close()})}).catch(function(err){if(err&&err.name!=="AbortError")assistantBubble("Could not save the file. Try again.","assistant")});return}var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},1000)}
-function applyAssistantActions(actions){(actions||[]).forEach(function(action){if(action.clientAction){var a=action.clientAction;if(a.type==="navigate"&&S.some(function(s){return s[0]===a.value})){cur=a.value;location.hash=cur;go()}else if(a.type==="theme"&&["system","light","dark","violet","ocean","forest","sunset","crimson"].indexOf(a.value)>=0){if(a.value==="system")document.documentElement.removeAttribute("data-theme");else document.documentElement.setAttribute("data-theme",a.value);try{localStorage.setItem("pulse.theme",a.value)}catch(e){}}}if(action.kind==="headline_export"){var bubble=assistantBubble("Ready: "+(action.count||0)+" matching headline(s). Choose a location to save the text file.","assistant"),button=document.createElement("button");button.className="b assistant-save";button.type="button";button.textContent="Save headlines as .txt";button.addEventListener("click",function(){saveHeadlineText(action)});bubble.appendChild(document.createElement("br"));bubble.appendChild(button)}})}
+function applyAssistantActions(actions){(actions||[]).forEach(function(action){if(action.clientAction){var a=action.clientAction;if(a.type==="navigate"&&S.some(function(s){return s[0]===a.value})){cur=a.value;location.hash=cur;go()}else if(a.type==="theme"&&["system","light","dark","forest","sunset","crimson"].indexOf(a.value)>=0){if(a.value==="system")document.documentElement.removeAttribute("data-theme");else document.documentElement.setAttribute("data-theme",a.value);try{localStorage.setItem("pulse.theme",a.value)}catch(e){}}}if(action.kind==="headline_export"){var bubble=assistantBubble("Ready: "+(action.count||0)+" matching headline(s). Choose a location to save the text file.","assistant"),button=document.createElement("button");button.className="b assistant-save";button.type="button";button.textContent="Save headlines as .txt";button.addEventListener("click",function(){saveHeadlineText(action)});bubble.appendChild(document.createElement("br"));bubble.appendChild(button)}})}
 var assistantHistory=[];function sendAssistant(text){text=String(text||"").trim();if(!text)return;if(location.protocol==="file:"){assistantBubble(text,"user");assistantBubble("PULSE AI needs its Vercel server function, so it cannot run from a file opened directly on your device. Open the deployed HTTPS site to use it.","assistant");return}assistantBubble(text,"user");assistantHistory.push({role:"user",content:text});var send=$("assistant-form").querySelector("button");send.disabled=true;send.textContent="…";$("assistant-index").textContent="Searching PULSE reports…";api("events?"+SEL+"&order=detected_at.desc&limit=600").then(function(events){return fetch("/api/assistant",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:assistantHistory.slice(-10),events:events,language:PULSE_LANG})})}).then(function(response){return response.json().then(function(data){if(!response.ok)throw new Error(data.error||"PULSE AI request failed.");return data})}).then(function(data){assistantHistory.push({role:"assistant",content:data.text||""});assistantBubble(data.text||"I completed the PULSE request.","assistant");applyAssistantActions(data.actions);$("assistant-index").textContent=(data.indexed||0)+" recent reports indexed · "+(data.model||"PULSE AI")}).catch(function(error){assistantBubble(error.message||"PULSE could not reach the AI service.","assistant");$("assistant-index").textContent="Check the Vercel API key and deployment"}).finally(function(){send.disabled=false;send.textContent=tr("Send")})}
 $("assistant-launcher").addEventListener("click",function(){setAssistantOpen(true)});$("assistant-close").addEventListener("click",function(){setAssistantOpen(false)});$("assistant-form").addEventListener("submit",function(e){e.preventDefault();var input=$("assistant-input"),text=input.value;input.value="";sendAssistant(text)});document.querySelectorAll("[data-assist]").forEach(function(button){button.addEventListener("click",function(){sendAssistant(button.getAttribute("data-assist"))})});
 if(window.anime&&!matchMedia("(prefers-reduced-motion: reduce)").matches){try{window.anime.animate(".pulse-mark path",{strokeDashoffset:[58,-58],opacity:[.5,1],duration:1900,ease:"inOutSine",loop:true})}catch(e){}}
@@ -1151,7 +1293,7 @@ function tick(){
     }else{
       var fresh=events.filter(function(e){return!seenEventIds.has(String(e.id))});
       fresh.forEach(function(e){seenEventIds.add(String(e.id))});
-      if(fresh.length){var important=fresh.filter(shouldNotify).sort(function(a,b){return importanceRank(b)-importanceRank(a)});important.slice(0,3).forEach(function(e){var toast=document.createElement("div"),level=importance(e);toast.className="pulse-toast";toast.setAttribute("data-level",level);toast.setAttribute("role","status");toast.textContent="🚨 "+(level==="critical"?"CRITICAL ALERT":"IMPORTANT ALERT")+" · "+plain(e.title||"PULSE update");$("pulse-notices").appendChild(toast);setTimeout(function(){toast.remove()},9000)});if(important.length){playAlertSound();if(window.Notification&&Notification.permission==="granted"){var top=important[0],source=top.sources&&top.sources.name?" · "+top.sources.name:"";try{new Notification("PULSE · "+(importance(top)==="critical"?"CRITICAL":"IMPORTANT"),{body:plain(top.title||"Important intelligence update")+source,tag:"pulse-"+top.id})}catch(err){}}}if(cur==="map")getMapPoints().then(plotMapPoints).catch(function(){});else go()}
+      if(fresh.length){var important=fresh.filter(shouldNotify).sort(function(a,b){return importanceRank(b)-importanceRank(a)});important.slice(0,3).forEach(function(e){var toast=document.createElement("div"),level=importance(e);toast.className="pulse-toast";toast.setAttribute("data-level",level);toast.setAttribute("role","status");toast.textContent="🚨 "+(level==="critical"?"CRITICAL ALERT":"IMPORTANT ALERT")+" · "+plain(e.title||"PULSE update");$("pulse-notices").appendChild(toast);setTimeout(function(){toast.remove()},9000)});if(important.length){playAlertSound();}if(cur==="map")getMapPoints().then(plotMapPoints).catch(function(){});else go()}
     }
     last=k
   }).catch(function(){})

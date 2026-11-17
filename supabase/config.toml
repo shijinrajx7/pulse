@@ -1,0 +1,5 @@
+[functions.push-client]
+verify_jwt = false
+
+[functions.push-dispatch]
+verify_jwt = true
