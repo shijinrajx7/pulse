@@ -896,6 +896,7 @@ button.g{box-shadow:none;background:color-mix(in srgb,var(--card) 78%,transparen
   .card,nav button,button.b,.intro-screen button{transition:none!important}
 }
 </style>
+<link rel="stylesheet" href="/design.css">
 </head>
 <body>
 <header><div class="top"><span class="logo"><svg class="pulse-mark" viewBox="0 0 34 22" aria-hidden="true"><path d="M1 12h8l4-9 6 17 5-12 3 4h6"/></svg><span>PULSE</span></span><input id="q" type="search" placeholder="Search title or summary, press Enter"><select id="language" class="lang-control" aria-label="Choose language" title="Language"><option value="en">EN</option><option value="hi">हिन्दी</option><option value="ml">മലയാളം</option></select><button class="b g" id="th" aria-label="Change color theme" title="Change color theme">◐</button><select id="pulse-track" class="track-control" aria-label="Choose PULSE soundtrack" title="Choose PULSE soundtrack"><option value="signal">Signal Bloom</option><option value="night">Night Shift</option><option value="focus">Deep Focus</option></select><button class="b g" id="snd" aria-label="Play PULSE soundtrack" title="Play or stop PULSE original soundtrack">♫</button></div><nav id="nav"></nav></header>
@@ -940,14 +941,25 @@ return fetch(C.url+"/rest/v1/"+p,{headers:h}).then(function(r){if(!r.ok)throw ne
 function dur(ms){ms=Math.max(0,ms);return ms<6e4?Math.round(ms/1e3)+"s":ms<36e5?Math.round(ms/6e4)+"m":ms<864e5?Math.round(ms/36e5)+"h":Math.round(ms/864e5)+"d"}
 function ago(t){return t?dur(Date.now()-Date.parse(t))+" ago":"never"}
 function srch(){var q=term.replace(/[,()*]/g," ").trim();return q?"&or=(title.ilike.*"+encodeURIComponent(q)+"*,summary.ilike.*"+encodeURIComponent(q)+"*)":""}
-function card(e){PULSE_EVENT_CACHE[String(e.id)]=e;var m=e.meta||{},title=plain(e.title),summary=plain(e.summary),s="";if(e.severity)s+='<span class="tag off">'+esc(e.severity)+(m.cvss!=null?" "+esc(m.cvss):"")+"</span>";
-if(m.known_exploited)s+='<span class="tag off">KNOWN EXPLOITED</span>';if(e.label)s+='<span class="tag">'+esc(e.label)+"</span>";
-var lat=e.published_at?" · detected "+dur(Date.parse(e.detected_at)-Date.parse(e.published_at))+" after publication":"";
-var v="";if(e.platform&&e.score!=null&&e.published_at)v='<br><small>≈'+(e.score/Math.max((Date.now()-Date.parse(e.published_at))/36e5,.25)).toFixed(1)+" points/hour (rough estimate) · trend state: INSUFFICIENT DATA (no baseline yet)</small>";
-var d=m.discussion?' · <a href="'+url(m.discussion)+'" target="_blank" rel="noopener">Discussion</a>':"";
-return '<div class="card">'+s+'<br><a class="t" href="'+url(e.url)+'" target="_blank" rel="noopener">'+esc(title)+'</a><br><small>'+esc(e.sources&&e.sources.name)+" · "+(e.published_at?"published "+ago(e.published_at):"publication time unknown")+lat+d+"</small>"+(summary?"<p>"+esc(summary.slice(0,280))+"</p>":"")+v+'<br><button class="b g event-ai" type="button" data-analyze-event="'+esc(e.id)+'">✦ Analyze with PULSE AI</button> <button class="b g event-poster" type="button" data-generate-poster="'+esc(e.id)+'">▧ Generate poster</button></div>'}
+function card(e){
+ PULSE_EVENT_CACHE[String(e.id)]=e;
+ var m=e.meta||{},title=plain(e.title),summary=plain(e.summary),tags="";
+ if(e.severity)tags+='<span class="tag off">'+esc(e.severity)+(m.cvss!=null?" "+esc(m.cvss):"")+"</span>";
+ if(m.known_exploited)tags+='<span class="tag off">KNOWN EXPLOITED</span>';
+ if(e.label)tags+='<span class="tag">'+esc(e.label)+"</span>";
+ var source=esc(e.sources&&e.sources.name||"PULSE monitored source");
+ var published=e.published_at?"PUBLISHED "+ago(e.published_at).toUpperCase():"PUBLICATION TIME UNKNOWN";
+ var lat=e.published_at?" · detected "+dur(Date.parse(e.detected_at)-Date.parse(e.published_at))+" after publication":"";
+ var discussion=m.discussion?' · <a href="'+url(m.discussion)+'" target="_blank" rel="noopener">Discussion ↗</a>':"";
+ var trend="";
+ if(e.platform&&e.score!=null&&e.published_at)trend='<div class="pulse-story-trend">≈'+(e.score/Math.max((Date.now()-Date.parse(e.published_at))/36e5,.25)).toFixed(1)+" points/hour · trend baseline not yet available</div>";
+ return '<article class="card pulse-story-card"><div class="pulse-story-meta"><span class="pulse-story-tags">'+tags+'</span><span>'+source+'</span><span>'+published+lat+discussion+'</span></div><div class="pulse-story-copy"><a class="pulse-story-title" href="'+url(e.url)+'" target="_blank" rel="noopener"><h3>'+esc(title)+'</h3></a>'+(summary?'<p class="pulse-story-summary">'+esc(summary.slice(0,320))+'</p>':"")+trend+'</div><div class="pulse-story-actions"><button class="b g event-ai" type="button" data-analyze-event="'+esc(e.id)+'">Analyze with Copilot ↗</button><button class="b g event-poster" type="button" data-generate-poster="'+esc(e.id)+'">Create story poster ↗</button></div></article>';
+}
 function emp(t){return '<div class="empty">'+(t||"No events yet. Run the worker once (see README), then refresh.")+"</div>"}
-function head(id){var n=S.filter(function(x){return x[0]==id})[0];return "<h2>"+n[1]+'</h2><p class="sub">'+(DESC[id]||"")+"</p>"}
+function head(id){
+ var n=S.filter(function(x){return x[0]==id})[0]||[id,id],index=S.findIndex(function(x){return x[0]===id})+1;
+ return '<div class="pulse-section-head"><div><span class="pulse-kicker">PULSE / INTELLIGENCE DESK</span><h1>'+tr(n[1])+'</h1><p class="sub">'+(DESC[id]||"")+'</p></div><span class="pulse-section-index">SECTION / '+String(index).padStart(2,"0")+' — 13</span></div>';
+}
 function stat(s){var iv=s.interval_min*6e4*3;if(!s.last_run_at)return["AWAITING CONFIGURATION","wait"];if(s.status=="rate_limited")return["RATE LIMITED","warn"];if(s.status=="offline")return["OFFLINE","off"];if(s.status=="degraded")return["DEGRADED","warn"];if(Date.now()-Date.parse(s.last_success_at)>iv)return["DELAYED","warn"];return["OPERATIONAL","ok"]}
 function list(id){var o=id=="social"||id=="early"?"score.desc.nullslast":"published_at.desc.nullslast";var f=id=="early"?"&published_at=gte."+new Date(Date.now()-216e5).toISOString():"";
 return api("events?"+SEL+"&"+Q[id]+f+srch()+"&order="+o+"&limit=50").then(function(r){return head(id)+(r.length?r.map(card).join(""):emp(id=="early"?"No recent discussions yet. Early signals come from social sources only.":0))})}
