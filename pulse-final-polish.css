@@ -149,8 +149,9 @@ body{overflow-x:clip;line-height:1.55;letter-spacing:normal}
 }
 @media(prefers-color-scheme:light){
   :root:not([data-theme]){
-    --bg:#07070A;--card:#101015;--tx:#F2F2F2;--mut:#8B8B95;--bd:#23232B;
-    --ac:#FF2B2B;--signal:#FF2B2B;--orange:#FF2B2B;--dark:#07070A;--paper:#101015;color-scheme:dark
+    --bg:#F4F2EC;--card:#FFFFFF;--tx:#171816;--mut:#77776F;--bd:#D8D6CE;
+    --ac:#E53935;--signal:#E53935;--orange:#E53935;--dark:#171816;--paper:#EAE8E0;
+    --ok:#287A51;--warn:#A96A19;--bad:#C63C32;color-scheme:light
   }
 }
 /* Repair the old hard-coded ivory body and theme-independent component fills. */
