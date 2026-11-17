@@ -94,6 +94,8 @@ export default async function handler(req, res) {
         prompt: JSON.stringify({ report: event }),
         maxOutputTokens: 400,
         temperature: 0.15,
+        maxRetries: 0,
+        timeout: { totalMs: 22000, stepMs: 9000 },
       });
       const answer = String(result.text || "").trim();
       if (answer) return res.status(200).json({ text: answer, model: modelName });
@@ -152,12 +154,14 @@ export default async function handler(req, res) {
       stopWhen: isStepCount(4),
       maxOutputTokens: 600,
       temperature: 0.2,
+      maxRetries: 0,
+      timeout: { totalMs: 24000, stepMs: 9000 },
     });
 
     const actions = result.toolResults.map((entry) => entry.output).filter((output) => output && typeof output === "object" && (output.clientAction || output.kind === "headline_export"));
     return res.status(200).json({ text: result.text || "I completed the PULSE request.", actions, model: modelName, indexed: events.length });
   } catch (error) {
-    const detail = String(error?.message || "Unknown provider error").replace(/Bearer\\s+[^\\s]+/gi, "Bearer [redacted]").replace(/nvapi-[A-Za-z0-9_-]+/g, "[redacted]").slice(0, 220);
+    const detail = String(error?.message || "Unknown provider error").replace(/Bearer\s+[^\\s]+/gi, "Bearer [redacted]").replace(/nvapi-[A-Za-z0-9_-]+/g, "[redacted]").slice(0, 220);
     console.error("PULSE assistant failed:", detail);
     return res.status(502).json({ error: "The AI provider did not complete that request.", detail, model: modelName });
   }
