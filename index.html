@@ -1020,7 +1020,66 @@ function posterFinishMfa(){var code=$("poster-mfa-code").value.trim(),status=$("
 
 function posterRequest(action,event){return posterToken().then(function(token){return fetch("/api/poster",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+token},body:JSON.stringify({action:action,event:event})}).then(function(r){return r.json().then(function(d){if(!r.ok)throw Error(d.error||"Poster request failed.");return d})})})}
 function posterLoadQuota(){if(posterAdminToken()){$("poster-quota").textContent="Admin access · unlimited generations";return}posterRequest("quota").then(function(d){$("poster-quota").textContent="Posters used: "+d.used+" of "+d.limit+" for this account."}).catch(function(e){$("poster-quota").textContent=e.message||"Could not check your poster limit."})}
-function posterLoadEvents(){var select=$("poster-event-select");if(!select||!OK){if(select)select.innerHTML='<option value="">PULSE database is not connected</option>';return}select.innerHTML='<option value="">Loading reports…</option>';api("events?"+SEL+"&order=published_at.desc.nullslast&limit=60").then(function(events){posterEvents=events;if(posterPendingEvent&&!events.some(function(e){return String(e.id)===String(posterPendingEvent.id)}))events.unshift(posterPendingEvent);select.innerHTML='<option value="">Choose a report…</option>'+events.map(function(e){return '<option value="'+esc(e.id)+'">'+esc((e.title||"").slice(0,140))+'</option>'}).join("");if(!events.length)select.innerHTML='<option value="">No reports available yet</option>';if(posterPendingEvent){select.value=String(posterPendingEvent.id);posterResetImage();posterPendingEvent=null}}).catch(function(){select.innerHTML='<option value="">Could not load PULSE reports</option>'})}
+var posterEventLoadRequest=0;
+function posterLoadEvents(){
+ var select=$("poster-event-select");
+ if(!select)return;
+ if(!OK){select.innerHTML='<option value="">PULSE database is not connected</option>';return}
+ var requestId=++posterEventLoadRequest;
+ var retry=$("poster-reports-retry");
+ if(!retry){
+  retry=document.createElement("button");
+  retry.id="poster-reports-retry";
+  retry.type="button";
+  retry.className="poster-action secondary";
+  retry.textContent="Retry loading reports";
+  retry.hidden=true;
+  var label=select.closest("label");
+  if(label&&label.parentNode)label.parentNode.insertBefore(retry,label.nextSibling);
+  retry.addEventListener("click",posterLoadEvents);
+ }
+ retry.hidden=true;
+ select.disabled=true;
+ select.innerHTML='<option value="">Loading reports…</option>';
+ var controller=new AbortController();
+ var timeout=window.setTimeout(function(){controller.abort()},15000);
+ var query=new URLSearchParams({
+  select:"id,title,url,summary,category,published_at,detected_at,meta",
+  order:"published_at.desc.nullslast",
+  limit:"60"
+ });
+ var headers={apikey:C.key};
+ if(/^eyJ/.test(C.key))headers.Authorization="Bearer "+C.key;
+ fetch(C.url+"/rest/v1/events?"+query.toString(),{headers:headers,signal:controller.signal})
+  .then(function(response){return response.text().then(function(body){
+   var data;try{data=body?JSON.parse(body):[]}catch(e){throw Error("The reports service returned an unreadable response.")}
+   if(!response.ok)throw Error(data.message||data.details||data.hint||("Reports request failed (HTTP "+response.status+")."));
+   if(!Array.isArray(data))throw Error("The reports service returned an unexpected response.");
+   return data;
+  })})
+  .then(function(events){
+   if(requestId!==posterEventLoadRequest)return;
+   posterEvents=events;
+   if(posterPendingEvent&&!events.some(function(e){return String(e.id)===String(posterPendingEvent.id)}))events.unshift(posterPendingEvent);
+   select.innerHTML='<option value="">Choose a report…</option>'+events.map(function(e){return '<option value="'+esc(e.id)+'">'+esc((e.title||"Untitled report").slice(0,140))+'</option>'}).join("");
+   if(!events.length)select.innerHTML='<option value="">No reports available yet</option>';
+   if(posterPendingEvent){select.value=String(posterPendingEvent.id);posterResetImage();posterPendingEvent=null}
+   var status=$("poster-status");
+   if(status)status.textContent=events.length?events.length+" reports ready to use.":"No reports are available yet.";
+  })
+  .catch(function(error){
+   if(requestId!==posterEventLoadRequest)return;
+   var message=error&&error.name==="AbortError"?"The reports request timed out after 15 seconds. Check your connection and retry.":(error.message||"Could not load PULSE reports.");
+   select.innerHTML='<option value="">Reports could not be loaded</option>';
+   retry.hidden=false;
+   var status=$("poster-status");
+   if(status)status.textContent=message;
+  })
+  .finally(function(){
+   window.clearTimeout(timeout);
+   if(requestId===posterEventLoadRequest)select.disabled=false;
+  });
+}
 function posterSaveBlob(blob,filename){
  if(!blob){var node=$("poster-status");if(node)node.textContent="Could not prepare this file. Please try again.";return}
  var url=URL.createObjectURL(blob),link=document.createElement("a");
