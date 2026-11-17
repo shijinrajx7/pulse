@@ -1254,8 +1254,10 @@ function bindPushControls(){
  navigator.serviceWorker.register("/service-worker.js").then(function(reg){return reg.pushManager.getSubscription()}).then(function(subscription){
   if(subscription){
    button.textContent="Disable this device";button.onclick=disablePush;
-   pushSetStatus("A push subscription exists on this device.");
-   pushHistoryLoad();
+   pushApi({action:"subscribe",ownerToken:pushOwnerToken(),subscription:subscription.toJSON(),preferences:pushPrefs||pushReadPrefs()}).then(function(){
+    pushSetStatus("This device is registered for background notifications.");
+    pushHistoryLoad();
+   }).catch(function(error){pushSetStatus(error.message||"This device subscription needs attention.")});
   }else{button.textContent="Enable notifications";pushSetStatus(notificationPermissionText())}
  }).catch(function(){pushSetStatus(notificationPermissionText())});
 }
