@@ -1118,15 +1118,172 @@ function drawStoryPoster(copy,event){
 }
 function alertMode(){try{return localStorage.getItem("pulse.alertMode")||"high"}catch(e){return"high"}}
 function alertSoundOn(){try{return localStorage.getItem("pulse.alertSound")==="on"}catch(e){return false}}
-function notificationPermissionText(){if(!window.isSecureContext)return"Open PULSE at https://pulsex-phi.vercel.app to enable browser alerts. Browser permission prompts do not work from a local file.";if(!("Notification" in window))return"This browser does not support desktop notifications. Use PULSE in a supported browser on HTTPS.";if(Notification.permission==="denied")return'PULSE alerts are blocked in this browser. In Firefox, open Settings → Privacy & Security → Permissions → Notifications → Settings, allow pulsex-phi.vercel.app (or remove its blocked entry), save, then reload. <a href="https://support.mozilla.org/en-US/kb/push-notifications-firefox" target="_blank" rel="noopener">Firefox help</a>.';if(Notification.permission==="granted")return"Browser permission is allowed. Send a test alert to check delivery.";return"Press Enable desktop alerts, then choose Allow in the browser prompt."}
-function requestPulsePermission(){var status=$("alert-permission"),button=$("allow-alerts");if(!status)return;if(!window.isSecureContext||!("Notification" in window)){status.textContent=notificationPermissionText();return}if(Notification.permission==="denied"){status.innerHTML=notificationPermissionText();if(button)button.textContent="How to allow alerts";return}function showTest(){try{new Notification("PULSE · IMPORTANT ALERT",{body:"Desktop alerts are working. Only critical and high-impact events will alert.",tag:"pulse-test",icon:"/assets/pulse-alert-critical.svg",image:"/assets/pulse-alert-critical.svg"});status.textContent="Test alert sent. PULSE checks for important events while this site is open."}catch(e){status.textContent="The browser or device blocked this notification. Check system notification settings."}}if(Notification.permission==="granted"){showTest();return}status.textContent="Waiting for your browser choice…";Notification.requestPermission().then(function(permission){status.innerHTML=notificationPermissionText();if(button)button.textContent=permission==="granted"?"Send test alert":permission==="denied"?"How to allow alerts":"Enable desktop alerts";if(permission==="granted")showTest()}).catch(function(){status.textContent="The browser could not request permission. Check this site's notification setting and reload."})}
-var openedPushEvent="";
-function pushKeyBytes(value){var raw=atob(String(value).replace(/-/g,"+").replace(/_/g,"/")),out=new Uint8Array(raw.length);for(var i=0;i<raw.length;i++)out[i]=raw.charCodeAt(i);return out}
-function bindPushControls(){var button=$("enable-push"),status=$("push-status");if(!button||!status)return;if(!window.isSecureContext||!("Notification" in window)||!navigator.serviceWorker||!window.PushManager){button.disabled=true;status.textContent="Closed-tab alerts need a supported browser on the live HTTPS PULSE site.";return}button.onclick=function(){button.disabled=true;status.textContent="Connecting to PULSE push…";var permissionRequest=Notification.requestPermission();fetch("/api/push").then(function(r){return r.json().then(function(d){if(!r.ok)throw Error(d.error||"Push setup is incomplete.");return d})}).then(function(config){if(!config.publicKey||!config.configured)throw Error("Push keys are not configured on the PULSE server yet.");return permissionRequest.then(function(permission){if(permission!=="granted")throw Error(permission==="denied"?"Notifications are blocked for PULSE in your browser settings.":"Notification permission was not granted.");return navigator.serviceWorker.register("/service-worker.js").then(function(reg){return reg.pushManager.getSubscription().then(function(existing){return existing||reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:pushKeyBytes(config.publicKey)})})})}).then(function(subscription){return fetch("/api/push",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"subscribe",subscription:subscription.toJSON()})}).then(function(r){return r.json().then(function(d){if(!r.ok)throw Error(d.error||"Could not save this device.");return d})})})}).then(function(){status.textContent="Enabled. Important PULSE alerts can now arrive while the site is closed.";button.textContent="Disable closed-tab alerts";button.disabled=false;button.onclick=disablePush}).catch(function(error){status.textContent=error.message||"Could not enable push alerts.";button.disabled=false})};
-navigator.serviceWorker.register("/service-worker.js").then(function(reg){return reg.pushManager.getSubscription()}).then(function(subscription){if(subscription){button.textContent="Disable closed-tab alerts";status.textContent="Enabled. Important PULSE alerts can arrive while the site is closed.";button.onclick=disablePush}}).catch(function(){})}
-function disablePush(){var button=$("enable-push"),status=$("push-status");button.disabled=true;navigator.serviceWorker.ready.then(function(reg){return reg.pushManager.getSubscription()}).then(function(subscription){if(!subscription)return;var endpoint=subscription.endpoint;return subscription.unsubscribe().then(function(){return fetch("/api/push",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({action:"unsubscribe",endpoint:endpoint})})})}).then(function(){button.textContent="Enable closed-tab alerts";button.disabled=false;status.textContent="Closed-tab alerts are off on this device.";button.onclick=null;bindPushControls()}).catch(function(){button.disabled=false;status.textContent="Could not disable push alerts."})}
+function notificationPermissionText(){
+ if(!window.isSecureContext)return"Push alerts require the live HTTPS PULSE website.";
+ if(!("Notification"in window)||!navigator.serviceWorker||!window.PushManager)return"This browser does not support background Web Push.";
+ if(Notification.permission==="denied")return"Notifications are blocked in browser settings. Re-enable them for pulsex-phi.vercel.app, then reload.";
+ if(Notification.permission==="granted")return"Browser permission is granted. Enable this device below to register background delivery.";
+ return"Your browser will ask for permission only after you choose Enable notifications.";
+}
+var openedPushEvent="",pushPrefs=null,pushOwnerMemory="";
+function pushDefaults(){
+ return{priorities:{breaking:true,important:true,general:true,low:false},categories:[],sounds:{breaking:true,important:true,general:true,low:false},quietStart:"",quietEnd:"",timezone:(Intl.DateTimeFormat().resolvedOptions().timeZone||"Asia/Kolkata"),allowBreakingDuringQuiet:true,lowMode:"group"};
+}
+function pushReadPrefs(){
+ try{return Object.assign(pushDefaults(),JSON.parse(localStorage.getItem("pulse.push.preferences")||"{}"),{priorities:Object.assign(pushDefaults().priorities,JSON.parse(localStorage.getItem("pulse.push.preferences")||"{}").priorities||{}),sounds:Object.assign(pushDefaults().sounds,JSON.parse(localStorage.getItem("pulse.push.preferences")||"{}").sounds||{})})}
+ catch(e){return pushDefaults()}
+}
+function pushOwnerToken(){
+ try{
+  var saved=localStorage.getItem("pulse.push.owner");
+  if(saved&&/^[A-Za-z0-9_-]{32,160}$/.test(saved))return saved;
+  var bytes=new Uint8Array(32);crypto.getRandomValues(bytes);
+  var token=btoa(String.fromCharCode.apply(null,bytes)).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+  localStorage.setItem("pulse.push.owner",token);return token;
+ }catch(e){
+  if(!pushOwnerMemory){var b=new Uint8Array(32);crypto.getRandomValues(b);pushOwnerMemory=btoa(String.fromCharCode.apply(null,b)).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")}
+  return pushOwnerMemory;
+ }
+}
+function pushKeyBytes(value){
+ var raw=atob(String(value).replace(/-/g,"+").replace(/_/g,"/")+"===".slice((String(value).length+3)%4)),out=new Uint8Array(raw.length);
+ for(var i=0;i<raw.length;i++)out[i]=raw.charCodeAt(i);
+ return out;
+}
+function pushApi(body){
+ return fetch("/api/push",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)}).then(function(r){return r.json().then(function(data){if(!r.ok)throw Error(data.error||"Notification request failed.");return data})});
+}
+function pushSetStatus(message){
+ var node=$("push-status");if(node)node.textContent=message;
+}
+function pushApplyPrefs(prefs){
+ pushPrefs=Object.assign(pushDefaults(),prefs||{});
+ pushPrefs.priorities=Object.assign(pushDefaults().priorities,prefs&&prefs.priorities||{});
+ pushPrefs.sounds=Object.assign(pushDefaults().sounds,prefs&&prefs.sounds||{});
+ ["breaking","important","general","low"].forEach(function(level){
+  var p=$("push-priority-"+level),s=$("push-sound-"+level);
+  if(p)p.checked=!!pushPrefs.priorities[level];
+  if(s)s.checked=!!pushPrefs.sounds[level];
+ });
+ ["news","ai","tech","company","cyber","social"].forEach(function(category){
+  var node=$("push-category-"+category);if(node)node.checked=Array.isArray(pushPrefs.categories)&&pushPrefs.categories.includes(category);
+ });
+ var start=$("push-quiet-start"),end=$("push-quiet-end"),zone=$("push-timezone"),breaking=$("push-breaking-quiet"),low=$("push-low-mode");
+ if(start)start.value=pushPrefs.quietStart||"";if(end)end.value=pushPrefs.quietEnd||"";
+ if(zone)zone.value=pushPrefs.timezone||"Asia/Kolkata";if(breaking)breaking.checked=pushPrefs.allowBreakingDuringQuiet!==false;
+ if(low)low.value=pushPrefs.lowMode||"group";
+}
+function pushCollectPrefs(){
+ var next=pushDefaults();
+ ["breaking","important","general","low"].forEach(function(level){
+  var p=$("push-priority-"+level),s=$("push-sound-"+level);
+  next.priorities[level]=!!(p&&p.checked);next.sounds[level]=!!(s&&s.checked);
+ });
+ next.categories=["news","ai","tech","company","cyber","social"].filter(function(category){var node=$("push-category-"+category);return node&&node.checked});
+ next.quietStart=$("push-quiet-start")?$("push-quiet-start").value:"";
+ next.quietEnd=$("push-quiet-end")?$("push-quiet-end").value:"";
+ next.timezone=$("push-timezone")?$("push-timezone").value:pushDefaults().timezone;
+ next.allowBreakingDuringQuiet=!!($("push-breaking-quiet")&&$("push-breaking-quiet").checked);
+ next.lowMode=$("push-low-mode")?$("push-low-mode").value:"group";
+ return next;
+}
+function pushSavePrefs(){
+ pushPrefs=pushCollectPrefs();
+ try{localStorage.setItem("pulse.push.preferences",JSON.stringify(pushPrefs))}catch(e){}
+ navigator.serviceWorker&&navigator.serviceWorker.ready.then(function(reg){return reg.pushManager.getSubscription()}).then(function(subscription){
+  if(!subscription)return;
+  return pushApi({action:"preferences",ownerToken:pushOwnerToken(),endpoint:subscription.endpoint,preferences:pushPrefs});
+ }).then(function(){pushSetStatus("Your preferences are saved for this device.")}).catch(function(error){pushSetStatus(error.message||"Could not sync notification preferences.")});
+}
+function pushHistoryLoad(){
+ var host=$("push-history");if(!host)return;
+ navigator.serviceWorker.ready.then(function(reg){return reg.pushManager.getSubscription()}).then(function(subscription){
+  if(!subscription){host.innerHTML='<div class="empty">Enable push on this device to build a synced notification history.</div>';return}
+  return pushApi({action:"history",ownerToken:pushOwnerToken(),endpoint:subscription.endpoint}).then(function(data){
+   var items=data.items||[];
+   if(!items.length){host.innerHTML='<div class="empty">No background notifications have been recorded yet.</div>';return}
+   host.innerHTML=items.map(function(item){
+    var event=item.event||{},unread=!item.read_at;
+    return '<article class="pulse-history-item"><div class="pulse-history-meta"><span class="pulse-priority pulse-priority-'+esc(item.priority)+'">'+esc(item.priority)+'</span><span>'+esc(new Date(item.created_at).toLocaleString())+'</span><span>'+(unread?"UNREAD":"READ")+'</span></div><a href="'+url(event.url||"/")+'" target="_blank" rel="noopener" data-push-read="'+esc(item.id)+'"><strong>'+esc(event.title||"PULSE notification")+'</strong></a><small>'+esc(item.status||"queued")+(item.delivered_at?" · accepted "+ago(item.delivered_at):"")+'</small></article>';
+   }).join("");
+   host.querySelectorAll("[data-push-read]").forEach(function(link){link.addEventListener("click",function(){pushApi({action:"mark-read",ownerToken:pushOwnerToken(),endpoint:subscription.endpoint,deliveryIds:[link.getAttribute("data-push-read")] }).catch(function(){})})});
+  });
+ }).catch(function(error){host.innerHTML='<div class="empty">'+esc(error.message||"Could not load notification history.")+'</div>'});
+}
+function pushBindPreferenceInputs(){
+ var ids=["push-priority-breaking","push-priority-important","push-priority-general","push-priority-low","push-sound-breaking","push-sound-important","push-sound-general","push-sound-low","push-category-news","push-category-ai","push-category-tech","push-category-company","push-category-cyber","push-category-social","push-quiet-start","push-quiet-end","push-timezone","push-breaking-quiet","push-low-mode"];
+ ids.forEach(function(id){var node=$(id);if(node)node.addEventListener("change",pushSavePrefs)});
+ var refresh=$("push-refresh-history");if(refresh)refresh.onclick=pushHistoryLoad;
+ var clear=$("push-clear-history");if(clear)clear.onclick=function(){
+  navigator.serviceWorker.ready.then(function(reg){return reg.pushManager.getSubscription()}).then(function(sub){if(!sub)throw Error("Enable this device first.");return pushApi({action:"clear-history",ownerToken:pushOwnerToken(),endpoint:sub.endpoint})}).then(function(){pushHistoryLoad();pushSetStatus("Notification history cleared for this device.")}).catch(function(e){pushSetStatus(e.message||"Could not clear notification history.")});
+ };
+ var test=$("push-test");if(test)test.onclick=function(){
+  test.disabled=true;
+  navigator.serviceWorker.ready.then(function(reg){return reg.pushManager.getSubscription()}).then(function(sub){if(!sub)throw Error("Enable notifications on this device first.");return pushApi({action:"test",ownerToken:pushOwnerToken(),endpoint:sub.endpoint})}).then(function(){pushSetStatus("Test push submitted to the browser push service. Delivery and sound depend on your device settings.")}).catch(function(e){pushSetStatus(e.message||"Test notification failed.")}).finally(function(){test.disabled=false});
+ };
+}
+function bindPushControls(){
+ var button=$("enable-push"),status=$("push-status");
+ if(!button||!status)return;
+ pushApplyPrefs(pushReadPrefs());pushBindPreferenceInputs();
+ if(!window.isSecureContext||!("Notification"in window)||!navigator.serviceWorker||!window.PushManager){
+  button.disabled=true;status.textContent="Background push is not supported in this browser or context. Use the live HTTPS PULSE site in a supported browser.";return;
+ }
+ button.onclick=function(){
+  button.disabled=true;pushSetStatus("Checking permission and registering this browser…");
+  var permission=Notification.permission==="granted"?Promise.resolve("granted"):Notification.requestPermission();
+  permission.then(function(choice){
+   if(choice!=="granted")throw Error(choice==="denied"?"Notifications are blocked in browser settings. Allow PULSE notifications there and try again.":"Notification permission was not granted.");
+   return navigator.serviceWorker.register("/service-worker.js").then(function(reg){
+    return reg.pushManager.getSubscription().then(function(existing){
+     if(existing)return existing;
+     return fetch("/api/push").then(function(r){return r.json().then(function(d){if(!r.ok)throw Error(d.error||"Push configuration is unavailable.");return d})}).then(function(config){
+      if(!config.publicKey||!config.configured)throw Error("Push server is not configured yet. Add VAPID keys to Supabase first.");
+      return reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:pushKeyBytes(config.publicKey)});
+     });
+    });
+   });
+  }).then(function(subscription){
+   return pushApi({action:"subscribe",ownerToken:pushOwnerToken(),subscription:subscription.toJSON(),preferences:pushPrefs||pushReadPrefs()}).then(function(){return subscription});
+  }).then(function(){
+   button.textContent="Disable this device";button.disabled=false;button.onclick=disablePush;
+   pushSetStatus("This device is registered. Push can arrive while PULSE is closed when the browser and operating system support background delivery.");
+   pushHistoryLoad();
+  }).catch(function(error){pushSetStatus(error.message||"Could not enable background notifications.");button.disabled=false});
+ };
+ navigator.serviceWorker.register("/service-worker.js").then(function(reg){return reg.pushManager.getSubscription()}).then(function(subscription){
+  if(subscription){
+   button.textContent="Disable this device";button.onclick=disablePush;
+   pushSetStatus("A push subscription exists on this device.");
+   pushHistoryLoad();
+  }else{button.textContent="Enable notifications";pushSetStatus(notificationPermissionText())}
+ }).catch(function(){pushSetStatus(notificationPermissionText())});
+}
+function disablePush(){
+ var button=$("enable-push");if(button)button.disabled=true;
+ navigator.serviceWorker.ready.then(function(reg){return reg.pushManager.getSubscription()}).then(function(subscription){
+  if(!subscription)return;
+  return pushApi({action:"unsubscribe",ownerToken:pushOwnerToken(),endpoint:subscription.endpoint}).then(function(){return subscription.unsubscribe()});
+ }).then(function(){
+  if(button){button.textContent="Enable notifications";button.disabled=false;button.onclick=bindPushControls}
+  pushSetStatus("Push notifications are disabled on this device. Browser permission can be managed in browser settings.");
+ }).catch(function(error){if(button)button.disabled=false;pushSetStatus(error.message||"Could not disable notifications.")});
+}
+
 function openPushEventLink(main){var params=new URLSearchParams(location.search),eventId=params.get("pulseEvent");if(!eventId||openedPushEvent===eventId)return;api("events?id=eq."+encodeURIComponent(eventId)+"&"+SEL+"&limit=1").then(function(items){if(!items.length)return;openedPushEvent=eventId;var wrap=document.createElement("section");wrap.className="notification-target";wrap.innerHTML="<h2>Opened from your PULSE alert</h2>"+card(items[0]);main.insertBefore(wrap,main.firstChild);wrap.scrollIntoView({behavior:"smooth",block:"start"})}).catch(function(){})}
-function nt(){return api("events?"+SEL+"&order=detected_at.desc&limit=100").then(function(ev){var hits=ev.filter(function(e){return importanceRank(e)>=3}).slice(0,20),alertLabel=!window.isSecureContext||!("Notification" in window)?"Open secure PULSE site":Notification.permission==="denied"?"How to allow alerts":Notification.permission==="granted"?"Send test alert":"Enable desktop alerts",intro=head2("Important alerts","PULSE alerts only for critical or high-impact security issues, active exploitation, major outages, and serious incidents. Alerts are checked while this site is open.");var delivery='<div class="card alert-settings"><b>Alert settings</b><label>Alert threshold <select id="alert-mode"><option value="critical" '+(alertMode()==="critical"?"selected":"")+'>Critical only</option><option value="high" '+(alertMode()!=="critical"?"selected":"")+'>Critical and high impact</option></select></label><label><input id="alert-sound" class="alert-sound" type="checkbox" '+(alertSoundOn()?"checked":"")+'> Play a short sound for important alerts</label><div><button class="b" id="allow-alerts" type="button" onclick="requestPulsePermission()">'+alertLabel+'</button><p id="alert-permission" class="sub" aria-live="polite">'+notificationPermissionText()+'</p></div><small>Sound plays in the open PULSE tab after you enable it. Desktop popup appearance and sound are controlled by your browser and device.</small><div class="push-settings"><b>Alerts while PULSE is closed</b><button class="b" id="enable-push" type="button">Enable closed-tab alerts</button><p id="push-status" class="sub" aria-live="polite">Allow push once on this device to receive important alerts while PULSE is closed.</p></div></div>';return intro+delivery+"<h2>Recent important events</h2>"+(hits.length?hits.map(card).join(""):emp("No recent high-impact events."))})}
+function nt(){
+ var label=notificationPermissionText();
+ return api("events?"+SEL+"&order=detected_at.desc&limit=100").then(function(events){
+  var hits=events.filter(function(e){return importanceRank(e)>=3}).slice(0,8);
+  var settings='<section class="pulse-notification-hero"><div><span class="pulse-kicker">PULSE / DELIVERY SETTINGS</span><h2>Stay close to the signal.</h2><p>Choose what reaches this device. Push is delivered by your browser’s Web Push service; the operating system controls the final popup and sound.</p></div><div class="pulse-notification-hero-side"><span class="pulse-live-dot"></span><strong>BACKGROUND DELIVERY</strong><small>Service worker / Web Push / VAPID</small></div></section>';
+  var device='<section class="pulse-notification-device"><div class="pulse-block-heading"><h2>This device</h2><span>01 — PERMISSION & SUBSCRIPTION</span></div><p class="sub" id="push-permission">'+esc(label)+'</p><div class="pulse-hero-actions"><button class="pulse-cta" id="enable-push" type="button">Enable notifications</button><button class="pulse-cta secondary" id="push-test" type="button">Send test alert</button></div><p id="push-status" class="sub" aria-live="polite">Permission is requested only after you press Enable notifications.</p></section>';
+  var priorities='<section class="pulse-settings-section"><div class="pulse-block-heading"><h2>Priority & topics</h2><span>02 — WHAT MATTERS</span></div><div class="pulse-settings-grid"><div><h3>Priority levels</h3><label class="pulse-setting-row"><span><b>Breaking news</b><small>Urgent developments, delivered immediately</small></span><input type="checkbox" id="push-priority-breaking" checked></label><label class="pulse-setting-row"><span><b>Important news</b><small>Significant developments and advisories</small></span><input type="checkbox" id="push-priority-important" checked></label><label class="pulse-setting-row"><span><b>General news</b><small>Regular reports and updates</small></span><input type="checkbox" id="push-priority-general" checked></label><label class="pulse-setting-row"><span><b>Low priority</b><small>Minor updates and quieter signals</small></span><input type="checkbox" id="push-priority-low"></label></div><div><h3>Topics</h3><p class="sub">Leave all topics unchecked to receive every category.</p><div class="pulse-topic-grid">'+["news","ai","tech","company","cyber","social"].map(function(c){return '<label class="pulse-topic"><input type="checkbox" id="push-category-'+c+'"><span>'+c.toUpperCase()+'</span></label>'}).join("")+'</div><label class="pulse-setting-row"><span><b>Low-priority delivery</b><small>Group updates from each source scan, send separately, or mute</small></span><select id="push-low-mode"><option value="group">Grouped</option><option value="immediate">Separate alerts</option><option value="off">Muted</option></select></label></div></div></section>';
+  var sounds='<section class="pulse-settings-section"><div class="pulse-block-heading"><h2>Sound & quiet hours</h2><span>03 — YOUR ATTENTION</span></div><div class="pulse-settings-grid"><div><h3>Allow notification sound</h3><p class="sub">The browser and operating system choose the actual sound. These controls request silent delivery where supported.</p>'+["breaking","important","general","low"].map(function(c){return '<label class="pulse-setting-row"><span><b>'+c.charAt(0).toUpperCase()+c.slice(1)+'</b><small>'+ (c==="breaking"?"Urgent alert":c==="important"?"Priority alert":c==="general"?"Standard alert":"Quiet alert")+'</small></span><input type="checkbox" id="push-sound-'+c+'" '+(c==="low"?"":"checked")+'></label>'}).join("")+'</div><div><h3>Quiet hours</h3><p class="sub">Non-breaking alerts pause during this local time window. Breaking alerts can still pass if you leave the override enabled.</p><label class="pulse-setting-row"><span><b>Start</b><small>Quiet period begins</small></span><input type="time" id="push-quiet-start"></label><label class="pulse-setting-row"><span><b>End</b><small>Quiet period ends</small></span><input type="time" id="push-quiet-end"></label><label class="pulse-setting-row"><span><b>Time zone</b><small>Used to calculate quiet hours</small></span><input id="push-timezone" type="text" maxlength="80" value="'+esc(Intl.DateTimeFormat().resolvedOptions().timeZone||"Asia/Kolkata")+'"></label><label class="pulse-setting-row"><span><b>Allow breaking alerts during quiet hours</b><small>Urgent alerts can override the quiet period</small></span><input type="checkbox" id="push-breaking-quiet" checked></label></div></div></section>';
+  var history='<section class="pulse-settings-section"><div class="pulse-block-heading"><h2>Notification history</h2><span>04 — DEVICE ACTIVITY</span></div><div class="row"><button class="b g" type="button" id="push-refresh-history">Refresh history</button><button class="b g" type="button" id="push-clear-history">Clear this device’s history</button></div><div id="push-history"><div class="empty">Loading notification history…</div></div></section>';
+  var recent='<section class="pulse-settings-section"><div class="pulse-block-heading"><h2>High-impact reports</h2><span>05 — RECENT SIGNALS</span></div>'+(hits.length?hits.map(card).join(""):emp("No high-impact reports at the moment."))+'</section>';
+  return settings+device+priorities+sounds+history+recent;
+ });
+}
 function go(){if(pulseMapTimer){clearInterval(pulseMapTimer);pulseMapTimer=null}if(globeResizeObserver){globeResizeObserver.disconnect();globeResizeObserver=null}if(pulseViewer){pulseViewer.destroy();pulseViewer=null;pulseEntities=[];quakeEntities=[];volcanoEntities=[]}$("nav").innerHTML=S.map(function(s){return '<button class="'+(s[0]==cur?"on":"")+'" onclick="cur=\''+s[0]+'\';location.hash=cur;go()">'+tr(s[1])+"</button>"}).join("");var m=$("m");
 if(cur==="posters"){m.innerHTML=posterPage();localizeUi(m);bindPoster();return}
 if(!OK){m.innerHTML=head2("Setup needed","Database connection <span class='tag wait'>AWAITING CONFIGURATION</span>")+emp("Open config.js and set your Supabase URL and anon (publishable) key. See README.");return}
@@ -1178,7 +1335,7 @@ function tick(){
     }else{
       var fresh=events.filter(function(e){return!seenEventIds.has(String(e.id))});
       fresh.forEach(function(e){seenEventIds.add(String(e.id))});
-      if(fresh.length){var important=fresh.filter(shouldNotify).sort(function(a,b){return importanceRank(b)-importanceRank(a)});important.slice(0,3).forEach(function(e){var toast=document.createElement("div"),level=importance(e);toast.className="pulse-toast";toast.setAttribute("data-level",level);toast.setAttribute("role","status");toast.textContent="🚨 "+(level==="critical"?"CRITICAL ALERT":"IMPORTANT ALERT")+" · "+plain(e.title||"PULSE update");$("pulse-notices").appendChild(toast);setTimeout(function(){toast.remove()},9000)});if(important.length){playAlertSound();if(window.Notification&&Notification.permission==="granted"){var top=important[0],source=top.sources&&top.sources.name?" · "+top.sources.name:"";try{new Notification("PULSE · "+(importance(top)==="critical"?"CRITICAL":"IMPORTANT"),{body:plain(top.title||"Important intelligence update")+source,tag:"pulse-"+top.id})}catch(err){}}}if(cur==="map")getMapPoints().then(plotMapPoints).catch(function(){});else go()}
+      if(fresh.length){var important=fresh.filter(shouldNotify).sort(function(a,b){return importanceRank(b)-importanceRank(a)});important.slice(0,3).forEach(function(e){var toast=document.createElement("div"),level=importance(e);toast.className="pulse-toast";toast.setAttribute("data-level",level);toast.setAttribute("role","status");toast.textContent="🚨 "+(level==="critical"?"CRITICAL ALERT":"IMPORTANT ALERT")+" · "+plain(e.title||"PULSE update");$("pulse-notices").appendChild(toast);setTimeout(function(){toast.remove()},9000)});if(important.length){playAlertSound();}if(cur==="map")getMapPoints().then(plotMapPoints).catch(function(){});else go()}
     }
     last=k
   }).catch(function(){})
