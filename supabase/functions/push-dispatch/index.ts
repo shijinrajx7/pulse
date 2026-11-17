@@ -2,10 +2,6 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2.95.0";
 import webpush from "npm:web-push@3.6.7";
 
-const secret = Deno.env.get("PULSE_PUSH_SECRET") || "";
-const publicKey = Deno.env.get("VAPID_PUBLIC_KEY") || "";
-const privateKey = Deno.env.get("VAPID_PRIVATE_KEY") || "";
-const subject = Deno.env.get("VAPID_SUBJECT") || "mailto:admin@example.com";
 const supabase = createClient(Deno.env.get("SUPABASE_URL") || "", Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || Deno.env.get("SUPABASE_SERVICE_KEY") || "", { auth: { persistSession: false, autoRefreshToken: false } });
 
 function json(data: unknown, status = 200) { return new Response(JSON.stringify(data), { status, headers: { "Content-Type": "application/json", "Cache-Control": "no-store" } }); }
@@ -55,10 +51,10 @@ async function sendWithRetry(subscription: any, payload: string, urgency: string
 }
 Deno.serve(async (req) => {
   if (req.method !== "POST") return json({ error: "POST required." }, 405);
-  if (!secret || req.headers.get("x-pulse-push-secret") !== secret) return json({ error: "Unauthorized dispatch." }, 401);
-  if (!publicKey || !privateKey) return json({ error: "VAPID keys are not configured." }, 503);
   try {
-    webpush.setVapidDetails(subject, publicKey, privateKey);
+    const { data: config, error: configError } = await supabase.rpc("pulse_get_push_config");
+    if (configError || !config?.PULSE_VAPID_PUBLIC_KEY || !config?.PULSE_VAPID_PRIVATE_KEY || !config?.PULSE_VAPID_SUBJECT) throw new Error("VAPID configuration is missing from Supabase Vault.");
+    webpush.setVapidDetails(config.PULSE_VAPID_SUBJECT, config.PULSE_VAPID_PUBLIC_KEY, config.PULSE_VAPID_PRIVATE_KEY);
     const body = await req.json(), events = Array.isArray(body.events) ? body.events.slice(0, 40) : [];
     if (!events.length) return json({ ok: true, received: 0, delivered: 0 });
     const { data: subscriptions, error } = await supabase.from("push_subscriptions").select("id,subscription,preferences").is("disabled_at", null);
