@@ -82,7 +82,7 @@
     resize();draw();
     window.addEventListener("resize",resize,{passive:true});
     document.addEventListener("visibilitychange",function(){
-      if(document.hidden){cancelAnimationFrame(raf)}else if(!raf)draw();
+      if(document.hidden){cancelAnimationFrame(raf);raf=0}else if(!raf)draw();
     });
   }
 
