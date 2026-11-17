@@ -35,16 +35,17 @@ self.addEventListener("push", (event) => {
     renotify: priority === "breaking",
     requireInteraction: priority === "breaking" && payload.requireInteraction === true,
     silent: payload.silent === true,
-    data: { url: payload.url || "/", eventId: payload.eventId || null, deliveryIds: payload.deliveryIds || [] },
-    actions: [{ action: "read", title: "Read report" }, { action: "feed", title: "Open PULSE" }]
+    data: { url: payload.url || "/", eventId: payload.eventId || null, deliveryIds: payload.deliveryIds || [], subscriptionEndpoint: payload.subscriptionEndpoint || "" },
+    actions: [{ action: "read", title: "Read report" }, { action: "dismiss", title: "Dismiss" }]
   };
   if (payload.image) options.image = payload.image;
   event.waitUntil(self.registration.showNotification(String(payload.title || "PULSE update").slice(0, 90), options));
 });
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
+  if (event.action === "dismiss") return;
   const data = event.notification.data || {};
-  const target = new URL(event.action === "feed" ? "/" : (data.url || "/"), self.location.origin).href;
+  const target = new URL(data.url || "/", self.location.origin).href;
   const track = data.subscriptionEndpoint ? fetch("/api/push", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "mark-clicked", endpoint: data.subscriptionEndpoint, deliveryIds: data.deliveryIds || [] }) }).catch(() => {}) : Promise.resolve();
   event.waitUntil(Promise.all([track, self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clients) => {
     for (const client of clients) {
