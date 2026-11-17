@@ -104,22 +104,23 @@ The redesign keeps the existing single-page application and data routes. \`desig
    \`\`\`
 
    Keep the private key out of GitHub, browser code, screenshots, and chat. Use a real contact address for \`VAPID_SUBJECT\`.
-3. Create one random shared dispatch secret locally:
+3. Install the Supabase CLI if it is not already installed, link this existing project, then deploy the two functions:
 
-   \`\`\`sh
-   openssl rand -hex 32
-   \`\`\`
-
-4. Install the Supabase CLI if it is not already installed, link this existing project, then deploy the two functions:
-
-   \`\`\`sh
+   ```sh
    supabase link --project-ref pxcmtgnqqmzposkdkatr
    supabase functions deploy push-client --no-verify-jwt
    supabase functions deploy push-dispatch
-   supabase secrets set VAPID_PUBLIC_KEY=YOUR_PUBLIC_KEY VAPID_PRIVATE_KEY=YOUR_PRIVATE_KEY VAPID_SUBJECT=mailto:YOUR_CONTACT_EMAIL PULSE_PUSH_SECRET=YOUR_RANDOM_DISPATCH_SECRET PULSE_APP_URL=https://pulsex-phi.vercel.app
-   \`\`\`
+   ```
 
-   The public \`push-client\` function validates a random per-browser ownership token before changing subscriptions or reading history. The internal \`push-dispatch\` function requires both the Supabase service-role JWT and the separate dispatch secret. Supabase supplies \`SUPABASE_URL\` and \`SUPABASE_SERVICE_ROLE_KEY\` to Edge Functions.
+   Store the generated VAPID pair in Supabase Vault (run these statements once in the SQL Editor, substituting your generated values):
+
+   ```sql
+   select vault.create_secret('YOUR_PUBLIC_KEY', 'PULSE_VAPID_PUBLIC_KEY', 'PULSE public VAPID key');
+   select vault.create_secret('YOUR_PRIVATE_KEY', 'PULSE_VAPID_PRIVATE_KEY', 'PULSE private VAPID key');
+   select vault.create_secret('mailto:YOUR_CONTACT_EMAIL', 'PULSE_VAPID_SUBJECT', 'PULSE VAPID contact');
+   ```
+
+   The public `push-client` function validates a random per-browser ownership token before changing subscriptions or reading history. The internal `push-dispatch` function requires the Supabase service-role JWT. The VAPID private key stays in Vault and is never returned to the browser. Supabase supplies `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` to Edge Functions.
 5. In the existing Vercel \`pulsex\` project, add these Production environment variables (the anon/publishable key is safe for browser-facing use; never put a service-role key here):
 
    - \`SUPABASE_URL\` — the existing project URL
