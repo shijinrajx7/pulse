@@ -160,7 +160,7 @@
 
     var note = document.createElement("p");
     note.className = "pulse-provider-note";
-    note.textContent = "Email sign-in sends a one-time authorization code and then requires an authenticator check. GitHub and Google sign-ins require authenticator verification before the poster studio opens. Gmail works through Google.";
+    note.textContent = "Email sign-in uses a secure confirmation link, then an authenticator check. New accounts must confirm their email before setting up an authenticator. GitHub and Google sign-ins also require authenticator verification. Gmail works through Google.";
     section.appendChild(note);
 
     emailForm.insertAdjacentElement("afterend", section);
@@ -213,6 +213,7 @@
       "#poster-auth .poster-tab{min-height:42px;border:0;border-radius:7px;background:transparent;color:#aab7aa;font:600 13px system-ui;letter-spacing:.02em}",
       "#poster-auth .poster-tab.active{background:#d7a36a;color:#171810;box-shadow:0 2px 10px #0004}",
       "#poster-auth .poster-form label{gap:7px;color:#cbd2c7;font-size:12px;font-weight:600;letter-spacing:.02em}",
+      "#poster-auth .poster-form label[hidden]{display:none!important}",
       "#poster-auth .poster-form input{min-height:48px;border:1px solid #3b4b41;border-radius:9px;background:#0a100d;color:#f5f1e7;padding:11px 13px;font-size:15px}",
       "#poster-auth .poster-form input:focus{border-color:#d7a36a;outline:2px solid #d7a36a35;outline-offset:1px}",
       "#poster-auth .poster-actions{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}",
