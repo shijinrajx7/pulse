@@ -48,12 +48,29 @@ Deno.serve(async (req) => {
   if (req.method !== "POST") return reply({ error: "Use POST." }, 405);
   try {
     const body = await req.json();
+    const action = String(body.action || "");
+    // A notification click can update only delivery rows belonging to the endpoint
+    // embedded in that browser's own push payload; it cannot read or send notifications.
+    if (action === "mark-clicked") {
+      const endpoint = String(body.endpoint || "");
+      if (!endpoint.startsWith("https://")) return reply({ error: "Invalid push endpoint." }, 400);
+      const endpointHash = await hash(endpoint);
+      const { data: device, error: deviceError } = await db.from("push_subscriptions").select("id").eq("endpoint_hash", endpointHash).maybeSingle();
+      if (deviceError) throw deviceError;
+      if (!device) return reply({ ok: true });
+      const ids = Array.isArray(body.deliveryIds) ? body.deliveryIds.filter((v: unknown) => Number.isInteger(Number(v))).slice(0, 40) : [];
+      if (ids.length) {
+        const now = new Date().toISOString();
+        const { error } = await db.from("push_deliveries").update({ read_at: now, clicked_at: now }).eq("subscription_id", device.id).in("id", ids);
+        if (error) throw error;
+      }
+      return reply({ ok: true });
+    }
     const owner = body.ownerToken;
     if (!validOwner(owner)) return reply({ error: "This device registration is invalid. Refresh and enable alerts again." }, 400);
     const ownerHash = await hash(owner);
     const key = ownerHash.slice(0, 20);
     if (limited(key)) return reply({ error: "Too many notification settings requests. Wait one minute." }, 429);
-    const action = String(body.action || "");
     if (action === "subscribe") {
       const sub = body.subscription;
       if (!sub || typeof sub.endpoint !== "string" || !sub.endpoint.startsWith("https://") || !sub.keys?.p256dh || !sub.keys?.auth) return reply({ error: "The browser returned an invalid push subscription." }, 400);
