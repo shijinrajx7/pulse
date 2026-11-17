@@ -272,3 +272,84 @@ header :where(a,button,label),nav :where(a,button){color:var(--tx)}
 #intro.intro-screen{background:#070908!important;color:#F4F2EC!important}
 #intro .intro-credit{color:#D6FF35!important}
 .site-footer{color:var(--mut)!important;border-color:var(--bd)!important}
+
+
+/* Restore the original PULSE news-card treatment: distinct, readable boxed reports. */
+#m .pulse-story-card{
+  display:grid!important;
+  grid-template-columns:minmax(118px,.34fr) minmax(0,1.5fr) minmax(150px,.42fr)!important;
+  align-items:start!important;
+  gap:20px!important;
+  padding:20px 22px!important;
+  margin:0 0 13px!important;
+  border:1px solid var(--bd)!important;
+  border-radius:3px!important;
+  background:var(--card)!important;
+  color:var(--tx)!important;
+  box-shadow:0 2px 10px #1718160a!important;
+  transition:border-color .22s,transform .22s,box-shadow .22s,background .22s!important;
+}
+#m .pulse-story-card:hover{
+  padding:20px 22px!important;
+  transform:translateY(-2px)!important;
+  border-color:var(--orange)!important;
+  background:var(--card)!important;
+  box-shadow:0 9px 24px #17181612!important;
+}
+#m .pulse-story-meta{gap:8px!important;line-height:1.5}
+#m .pulse-story-copy{min-width:0}
+#m .pulse-story-title h3{
+  max-width:none!important;
+  font-size:clamp(21px,2vw,29px)!important;
+  line-height:1.18!important;
+  overflow-wrap:anywhere!important;
+}
+#m .pulse-story-summary{max-width:72ch!important;line-height:1.65!important}
+#m .pulse-story-actions{display:flex!important;flex-direction:column!important;gap:8px!important;min-width:0}
+#m .pulse-story-actions button{
+  width:100%!important;
+  min-height:40px!important;
+  padding:9px 11px!important;
+  text-align:left!important;
+  white-space:normal!important;
+  overflow-wrap:anywhere!important;
+  background:transparent!important;
+  color:var(--tx)!important;
+  border:1px solid var(--bd)!important;
+  box-shadow:none!important;
+}
+#m .pulse-story-actions button:hover{
+  background:var(--tx)!important;
+  color:var(--bg)!important;
+  border-color:var(--tx)!important;
+}
+#m .pulse-cta{
+  background:var(--tx)!important;
+  color:var(--bg)!important;
+  border-color:var(--tx)!important;
+}
+#m .pulse-cta.secondary{
+  background:transparent!important;
+  color:var(--tx)!important;
+  border-color:var(--bd)!important;
+}
+#m .pulse-cta:hover{background:var(--orange)!important;color:#171816!important;border-color:var(--orange)!important}
+@media(max-width:900px){
+  #m .pulse-story-card{
+    grid-template-columns:minmax(0,1fr) minmax(0,2fr)!important;
+    gap:12px 18px!important;
+  }
+  #m .pulse-story-actions{grid-column:2!important;flex-direction:row!important;flex-wrap:wrap!important}
+  #m .pulse-story-actions button{flex:1 1 140px!important;width:auto!important}
+}
+@media(max-width:640px){
+  #m .pulse-story-card{
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:10px!important;
+    padding:16px!important;
+    margin-bottom:11px!important;
+  }
+  #m .pulse-story-card:hover{padding:16px!important}
+  #m .pulse-story-actions{grid-column:auto!important;flex-direction:row!important}
+  #m .pulse-story-actions button{flex:1 1 120px!important}
+}
