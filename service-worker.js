@@ -45,7 +45,8 @@ self.addEventListener("notificationclick", (event) => {
   event.notification.close();
   const data = event.notification.data || {};
   const target = new URL(event.action === "feed" ? "/" : (data.url || "/"), self.location.origin).href;
-  event.waitUntil(self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clients) => {
+  const track = data.subscriptionEndpoint ? fetch("/api/push", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "mark-clicked", endpoint: data.subscriptionEndpoint, deliveryIds: data.deliveryIds || [] }) }).catch(() => {}) : Promise.resolve();
+  event.waitUntil(Promise.all([track, self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clients) => {
     for (const client of clients) {
       if ("focus" in client) {
         if ("navigate" in client && client.url !== target) return client.navigate(target).then((next) => (next || client).focus());
@@ -53,6 +54,6 @@ self.addEventListener("notificationclick", (event) => {
       }
     }
     return self.clients.openWindow(target);
-  }));
+  })]));
 });
 self.addEventListener("notificationclose", () => {});
