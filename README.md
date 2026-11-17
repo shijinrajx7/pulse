@@ -1,6 +1,6 @@
 # PULSE – setup guide
 
-PULSE is a technology intelligence dashboard with a hooded startup intro, eight color themes, English/Hindi/Malayalam controls, original synthesized soundtracks, a Cesium 3D Earth, live earthquake and volcano feeds, important-event alerts, and an optional AI helper.
+PULSE is an editorial technology intelligence publication with warm-paper and charcoal art direction, English/Hindi/Malayalam controls, original synthesized soundtracks, a Cesium 3D Earth, live earthquake and volcano feeds, source-led reporting, a background Web Push notification centre, and an optional AI helper.
 
 ## Upload to GitHub and deploy
 
@@ -88,3 +88,56 @@ NVIDIA model availability and free endpoint access can change. If the default mo
 ## Data and delivery limits
 
 The worker's source polling intervals mean PULSE is not sub-10-second monitoring. The worker deletes events older than 30 days. Email, Telegram, and user accounts are not configured.
+
+
+## Editorial redesign and zero-budget Web Push
+
+The redesign keeps the existing single-page application and data routes. \`design.css\` applies the warm ivory / charcoal / acid-lime visual system; \`manifest.webmanifest\`, \`service-worker.js\`, and the SVG assets provide the PWA shell and priority-specific notification artwork. The notification system uses browser Web Push, a self-generated VAPID key pair, the existing Supabase project, the existing ingestion Worker, and a small Vercel proxy. It does not use OneSignal, Firebase Cloud Messaging, paid notification APIs, paid AI calls, or notification credits.
+
+### One-time setup
+
+1. Apply \`supabase/migrations/202611170001_push_notifications.sql\` in the existing Supabase project's SQL Editor. It adds device-owned subscriptions and a delivery history table. Legacy subscription rows without an ownership token are disabled, not deleted.
+2. Generate a VAPID pair locally from the repository root:
+
+   \`\`\`sh
+   node scripts/generate-vapid-keys.mjs
+   \`\`\`
+
+   Keep the private key out of GitHub, browser code, screenshots, and chat. Use a real contact address for \`VAPID_SUBJECT\`.
+3. Create one random shared dispatch secret locally:
+
+   \`\`\`sh
+   openssl rand -hex 32
+   \`\`\`
+
+4. Install the Supabase CLI if it is not already installed, link this existing project, then deploy the two functions:
+
+   \`\`\`sh
+   supabase link --project-ref pxcmtgnqqmzposkdkatr
+   supabase functions deploy push-client --no-verify-jwt
+   supabase functions deploy push-dispatch
+   supabase secrets set VAPID_PUBLIC_KEY=YOUR_PUBLIC_KEY VAPID_PRIVATE_KEY=YOUR_PRIVATE_KEY VAPID_SUBJECT=mailto:YOUR_CONTACT_EMAIL PULSE_PUSH_SECRET=YOUR_RANDOM_DISPATCH_SECRET PULSE_APP_URL=https://pulsex-phi.vercel.app
+   \`\`\`
+
+   The public \`push-client\` function validates a random per-browser ownership token before changing subscriptions or reading history. The internal \`push-dispatch\` function requires both the Supabase service-role JWT and the separate dispatch secret. Supabase supplies \`SUPABASE_URL\` and \`SUPABASE_SERVICE_ROLE_KEY\` to Edge Functions.
+5. In the existing Vercel \`pulsex\` project, add these Production environment variables (the anon/publishable key is safe for browser-facing use; never put a service-role key here):
+
+   - \`SUPABASE_URL\` — the existing project URL
+   - \`SUPABASE_ANON_KEY\` — the existing Supabase publishable/anon key
+
+   Redeploy after adding or changing environment variables.
+6. In the existing Cloudflare ingestion Worker, add \`PULSE_PUSH_SECRET\` as a secret with the exact same value used in Supabase. Keep its existing \`SUPABASE_URL\` and \`SUPABASE_SERVICE_KEY\` secrets/variables configured. The Worker calls \`push-dispatch\` only for rows actually inserted into \`events\`; duplicate URL hashes are ignored and do not generate repeat alerts.
+
+### Notification behaviour and platform limits
+
+- Breaking priority is reserved for an explicit \`meta.pulse_priority = "breaking"\` override. The classifier does not promote ordinary articles to breaking. Known-exploited and critical/high CVE signals are classified as important; social discussion is low priority; other articles default to general.
+- Users can enable/disable each priority, choose categories, configure quiet hours and a time zone, mute individual priority sounds where the platform supports \`silent\`, choose how low-priority updates are grouped, send a test push, and view/clear this device's delivery history.
+- Low-priority grouping is performed per ingestion batch; it is not a scheduled once-a-day digest. A scheduled digest would need a separate scheduler and should only be added if it fits the existing free quotas.
+- Web Notifications do not expose a cross-platform custom sound-file setting or arbitrary background-colour setting. The service worker uses priority-specific icons and supported \`silent\`, \`tag\`, \`badge\`, and \`requireInteraction\` options. The browser and operating system still control final notification appearance and sound.
+- Background delivery requires HTTPS, permission, a valid subscription, a functioning browser push service, and operating-system support. Force-quit, power-saving, offline, and vendor-specific restrictions can delay or prevent delivery. Closing the tab is supported; guaranteed delivery after the browser or device is fully stopped is not.
+- The subscription is device-scoped and protected by a random browser ownership token. It is not currently linked to a PULSE account because the existing sign-in is scoped to Story Posters, not the main news reader.
+- No paid plan or automatic upgrade is part of this implementation. Stay within Supabase Free, Vercel Hobby, and the existing Cloudflare Worker free allowance; check provider usage dashboards and pause ingestion if limits are close. Free tiers have quotas and are not an unlimited delivery guarantee.
+
+### Verification checklist
+
+Use the Notifications page on the deployed HTTPS site. Enable push explicitly, then send a test notification. Publish/ingest a genuinely new event to exercise the Worker-to-Edge-Function dispatch path. Test tab closed, browser minimized, and installed-PWA behaviour separately on each target device. Check \`push_deliveries\` and Supabase Edge Function logs for server-side results. Do not interpret a successful push-service response as proof that the operating system displayed the alert. Test quiet hours, priority filters, unsubscribe, and duplicate suppression before relying on alerts operationally.
