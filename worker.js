@@ -59,12 +59,28 @@ async function one(env, s) {
     if (rows.length) {
       const r = await sb(env, "events?on_conflict=url_hash", {
         method: "POST",
-        headers: { Prefer: "resolution=merge-duplicates,return=minimal" },
+        headers: { Prefer: "resolution=ignore-duplicates,return=representation" },
         body: JSON.stringify(rows),
       });
       if (!r.ok) throw new Error("db " + r.status + " " + (await r.text()).slice(0, 150));
+      // Only rows actually inserted by this run enter the push pipeline.
+      // Existing URL hashes are ignored, preventing repeat alerts on every poll.
+      const inserted = await r.json();
+      n = inserted.length;
+      if (inserted.length && env.PULSE_PUSH_SECRET) {
+        try {
+          const push = await fetch(env.SUPABASE_URL.replace(/\\/$/, "") + "/functions/v1/push-dispatch", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "apikey": env.SUPABASE_SERVICE_KEY, "x-pulse-push-secret": env.PULSE_PUSH_SECRET },
+            body: JSON.stringify({ events: inserted }),
+            signal: AbortSignal.timeout(12000),
+          });
+          if (!push.ok) console.error("PULSE push dispatch:", push.status, (await push.text()).slice(0, 180));
+        } catch (pushError) {
+          console.error("PULSE push dispatch unavailable:", String(pushError?.message || pushError).slice(0, 180));
+        }
+      }
     }
-    n = rows.length;
     Object.assign(patch, { status: "operational", last_success_at: t, failures: 0, last_error: null,
       last_latency_ms: Date.now() - t0, items_last_run: n });
   } catch (e) {
