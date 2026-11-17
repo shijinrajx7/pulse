@@ -285,3 +285,83 @@ button.g{background:none;color:var(--tx);border-color:var(--bd)}
  .pulse-section-head h1{font-size:34px}
 }
 @media(prefers-reduced-motion:reduce){.pulse-story-card,.intro-halo{animation:none!important;transition:none!important}}
+
+
+/* Final visual-only correction: restore the simple sun/moon controls and align the mobile header. */
+:root,
+:root[data-theme="light"],
+:root[data-theme="sunset"]{
+  --ac:#ff5938;--signal:#ff5938;--orange:#ff5938;
+  --warn:#c63c32;--ok:#23834a;
+}
+:root[data-theme="dark"],
+:root[data-theme="forest"],
+:root[data-theme="crimson"]{
+  --ac:#ff765c;--signal:#ff765c;--orange:#ff765c;
+  --warn:#ff8a70;--ok:#55b879;
+}
+body{background-image:none!important;letter-spacing:normal}
+header{backdrop-filter:none!important}
+#intro .intro-credit,#intro .intro-progress i,#intro .intro-halo,
+#intro .intro-screen:before,#intro .intro-screen:after{border-color:#ff5938!important}
+#intro .intro-credit{color:#ff765c!important}
+#intro .intro-progress i{background:#ff5938!important;box-shadow:none!important}
+#intro #intro-skip{background:#ff5938!important;border-color:#ff5938!important;color:#fff!important}
+.theme-icon-button,.theme-palette-button{
+ display:grid!important;place-items:center!important;
+ width:38px!important;height:38px!important;min-width:38px!important;
+ padding:0!important;border:1px solid var(--bd)!important;
+ border-radius:7px!important;background:var(--card)!important;
+ color:var(--tx)!important;box-shadow:none!important
+}
+.theme-icon-button svg,.theme-palette-button svg{
+ width:19px;height:19px;fill:none;stroke:currentColor;
+ stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round
+}
+.theme-menu{
+ position:absolute;z-index:50;right:0;top:calc(100% + 8px);
+ min-width:210px;background:var(--card)!important;color:var(--tx)!important;
+ border:1px solid var(--bd)!important;border-radius:9px;
+ box-shadow:0 12px 30px #0003!important
+}
+.theme-menu button{background:transparent!important;color:var(--tx)!important}
+.theme-menu button:hover,.theme-menu button.active{background:var(--bg)!important;color:var(--ac)!important}
+@media(max-width:640px){
+ .top{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 72px 40px 40px!important;
+  grid-template-areas:"brand language toggle palette"
+                      "search search search search"
+                      "track track track sound"!important;
+  align-items:center!important;gap:8px!important;
+  padding:10px 12px!important;min-width:0
+ }
+ .top .logo{grid-area:brand;min-width:0}
+ .top #q{grid-area:search;width:100%!important;min-width:0!important;max-width:100%;min-height:42px}
+ .top .lang-control{grid-area:language;width:72px!important;min-width:0!important;max-width:72px!important}
+ .top .pulse-theme-tools{display:contents!important}
+ .top #theme-toggle{grid-area:toggle;width:40px!important;height:40px!important}
+ .top #theme-palette{grid-area:palette;width:40px!important;height:40px!important}
+ .top .theme-menu{position:absolute;right:12px;top:58px;min-width:205px}
+ .top .track-control{grid-area:track;width:100%!important;min-width:0!important;max-width:100%;min-height:40px}
+ .top #snd{grid-area:sound;width:40px!important;height:40px!important;min-height:40px}
+ nav{display:flex;max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;white-space:nowrap}
+ #m,main{width:100%;max-width:100%;min-width:0;padding:18px 13px 42px}
+ #m *{min-width:0}
+ #m .pulse-hero{grid-template-columns:minmax(0,1fr)!important;min-height:0}
+ #m .pulse-editorial-row{grid-template-columns:minmax(0,1fr)!important}
+ #m .pulse-story-card{grid-template-columns:minmax(0,1fr)!important;gap:9px}
+ #m .pulse-story-actions{grid-column:auto!important;display:flex;flex-wrap:wrap}
+ #m .pulse-story-actions button{flex:1 1 125px;width:auto;max-width:100%}
+ #m .pulse-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #m .poster-shell{grid-template-columns:minmax(0,1fr)!important}
+ #m .poster-preview{position:static!important}
+ .assistant-panel{left:8px!important;right:8px!important;width:auto!important;max-width:none!important}
+}
+@media(max-width:360px){
+ .top{grid-template-columns:minmax(0,1fr) 64px 36px 36px!important;gap:6px!important;padding-inline:9px!important}
+ .top .lang-control{width:64px!important;max-width:64px!important;font-size:11px}
+ .top #theme-toggle,.top #theme-palette{width:36px!important;height:36px!important}
+ .top #snd{width:36px!important;height:38px!important}
+ #m,main{padding-inline:10px}
+}
