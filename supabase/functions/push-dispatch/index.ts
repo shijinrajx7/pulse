@@ -71,9 +71,14 @@ Deno.serve(async (req) => {
         .filter((item: any) => item.priority === "breaking" || !quietNow(prefs));
       if (!candidates.length) { totals.skipped++; continue; }
       const urgent = candidates.filter((item: any) => item.priority === "breaking" || item.priority === "important").slice(0, 3);
-      const regular = candidates.filter((item: any) => item.priority === "general" || item.priority === "low");
+      const general = candidates.filter((item: any) => item.priority === "general");
+      const low = candidates.filter((item: any) => item.priority === "low");
       const batches: any[] = urgent.map((item: any) => ({ items: [item], priority: item.priority }));
-      if (regular.length) batches.push({ items: regular, priority: regular.some((x: any) => x.priority === "general") ? "general" : "low" });
+      if (general.length) batches.push({ items: general, priority: "general" });
+      if (low.length && prefs.lowMode !== "off") {
+        if (prefs.lowMode === "immediate") low.slice(0, 3).forEach((item: any) => batches.push({ items: [item], priority: "low" }));
+        else batches.push({ items: low, priority: "low" });
+      }
       for (const batch of batches) {
         const ids = batch.items.map((x: any) => Number(x.event.id));
         const rows = batch.items.map((x: any) => ({ event_id: Number(x.event.id), subscription_id: sub.id, priority: x.priority, status: "queued", attempt_count: 0 }));
