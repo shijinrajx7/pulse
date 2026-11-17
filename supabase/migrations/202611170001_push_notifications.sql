@@ -30,6 +30,12 @@ update public.push_subscriptions
 set endpoint_hash = encode(extensions.digest(convert_to(endpoint, 'UTF8'), 'sha256'), 'hex')
 where endpoint_hash is null and endpoint is not null;
 
+-- Legacy rows from the earlier prototype had no ownership token. Keep their
+-- records for auditability but do not send to them until the browser re-registers.
+update public.push_subscriptions
+set disabled_at = now()
+where owner_token_hash is null and disabled_at is null;
+
 create unique index if not exists push_subscriptions_endpoint_hash_uidx on public.push_subscriptions(endpoint_hash);
 create index if not exists push_subscriptions_active_idx on public.push_subscriptions(disabled_at) where disabled_at is null;
 
