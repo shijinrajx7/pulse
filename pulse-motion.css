@@ -272,3 +272,38 @@ header :where(a,button,label),nav :where(a,button){color:var(--tx)}
 #intro.intro-screen{background:#070908!important;color:#F4F2EC!important}
 #intro .intro-credit{color:#D6FF35!important}
 .site-footer{color:var(--mut)!important;border-color:var(--bd)!important}
+
+
+/* PULSE default restored: the original warm-paper editorial canvas.
+   "System" uses the brand default instead of inheriting a dark OS preference. */
+@media(prefers-color-scheme:dark){
+  :root:not([data-theme]){
+    --bg:#F4F2EC;--card:#FFFFFF;--tx:#171816;--mut:#77776F;--bd:#D8D6CE;
+    --ac:#D6FF35;--signal:#D6FF35;--orange:#FF5938;--dark:#171816;--paper:#EAE8E0;
+    --ok:#35734A;--warn:#A96A19;--bad:#C63C32;color-scheme:light;
+  }
+}
+@media(prefers-color-scheme:light){
+  :root:not([data-theme]){
+    --bg:#F4F2EC;--card:#FFFFFF;--tx:#171816;--mut:#77776F;--bd:#D8D6CE;
+    --ac:#D6FF35;--signal:#D6FF35;--orange:#FF5938;--dark:#171816;--paper:#EAE8E0;
+    --ok:#35734A;--warn:#A96A19;--bad:#C63C32;color-scheme:light;
+  }
+}
+/* Keep hero actions readable even when the global button reset is active. */
+#m .pulse-hero-actions .pulse-cta{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:48px;padding:0 18px;background:#FFFFFF!important;
+  color:#171816!important;border:1px solid #171816!important;
+  opacity:1!important;visibility:visible!important;text-decoration:none;
+  font:700 11px/1.2 "DM Mono",monospace;letter-spacing:.04em;text-transform:uppercase;
+}
+#m .pulse-hero-actions .pulse-cta:hover{
+  background:#D6FF35!important;color:#171816!important;border-color:#171816!important;
+}
+#m .pulse-hero-actions .pulse-cta.secondary{
+  background:transparent!important;color:var(--tx)!important;border-color:var(--bd)!important;
+}
+#m .pulse-hero-actions .pulse-cta.secondary:hover{
+  background:var(--tx)!important;color:var(--bg)!important;border-color:var(--tx)!important;
+}
