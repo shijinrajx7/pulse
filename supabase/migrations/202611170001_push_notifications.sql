@@ -36,7 +36,6 @@ update public.push_subscriptions
 set disabled_at = now()
 where owner_token_hash is null and disabled_at is null;
 
-create unique index if not exists push_subscriptions_endpoint_hash_uidx on public.push_subscriptions(endpoint_hash);
 create index if not exists push_subscriptions_active_idx on public.push_subscriptions(disabled_at) where disabled_at is null;
 
 create table if not exists public.push_deliveries (
