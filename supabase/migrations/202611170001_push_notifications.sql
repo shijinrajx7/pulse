@@ -1,9 +1,37 @@
--- PULSE zero-cost Web Push storage. Existing push_subscriptions rows are retained.
+-- PULSE zero-cost Web Push storage. No paid provider and no browser-readable secrets.
+create extension if not exists pgcrypto with schema extensions;
+
+create table if not exists public.push_subscriptions (
+  id bigint generated always as identity primary key,
+  endpoint_hash text unique,
+  endpoint text not null,
+  subscription jsonb not null,
+  owner_token_hash text,
+  preferences jsonb not null default '{"priorities":{"breaking":true,"important":true,"general":true,"low":false},"categories":[],"silentLow":true,"sounds":{"breaking":true,"important":true,"general":true}}'::jsonb,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  last_seen_at timestamptz,
+  disabled_at timestamptz
+);
+
 alter table public.push_subscriptions
+  add column if not exists endpoint_hash text,
+  add column if not exists endpoint text,
+  add column if not exists subscription jsonb,
   add column if not exists owner_token_hash text,
-  add column if not exists preferences jsonb not null default '{"priorities":{"breaking":true,"important":true,"general":true,"low":false},"categories":[],"silentLow":true}'::jsonb,
+  add column if not exists preferences jsonb not null default '{"priorities":{"breaking":true,"important":true,"general":true,"low":false},"categories":[],"silentLow":true,"sounds":{"breaking":true,"important":true,"general":true}}'::jsonb,
+  add column if not exists created_at timestamptz not null default now(),
+  add column if not exists updated_at timestamptz not null default now(),
   add column if not exists last_seen_at timestamptz,
   add column if not exists disabled_at timestamptz;
+
+-- Backfill hashes for any legacy rows without changing their subscription payload.
+update public.push_subscriptions
+set endpoint_hash = encode(extensions.digest(convert_to(endpoint, 'UTF8'), 'sha256'), 'hex')
+where endpoint_hash is null and endpoint is not null;
+
+create unique index if not exists push_subscriptions_endpoint_hash_uidx on public.push_subscriptions(endpoint_hash);
+create index if not exists push_subscriptions_active_idx on public.push_subscriptions(disabled_at) where disabled_at is null;
 
 create table if not exists public.push_deliveries (
   id bigint generated always as identity primary key,
