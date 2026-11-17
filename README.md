@@ -27,6 +27,43 @@ In Vercel, import or reconnect the GitHub repository and deploy it. Vercel uses 
 
 The Story Posters section uses Supabase email accounts and allows up to 10 successful poster generations per account. Run `api/poster-usage.sql` once in the Supabase SQL Editor to create the private quota table and server-only quota functions. The server uses the existing `SUPABASE_URL`, `SUPABASE_SERVICE_KEY`, and `NVIDIA_API_KEY` Vercel environment variables. Add `PULSE_ADMIN_PASSWORD`, `PULSE_ADMIN_HOUSE_NAME`, and a long random `PULSE_ADMIN_SESSION_SECRET` as **Sensitive** production environment variables in Vercel, then redeploy. Never add these values to `config.js` or GitHub. Admin access is checked by the server and uses a short-lived session. The poster studio includes 24 layouts with editable colors. It searches for a real image attached to the report or publisher article, shows the source link and preview, and only includes it after the user confirms permission. Users can alternatively upload their own permitted image; it stays in that browser. Email account creation uses a signup confirmation link; email login uses a passwordless, single-use magic link. Both return to PULSE and then require Supabase TOTP MFA: first successful sign-in enrolls an authenticator app, then each login requires its six-digit code. GitHub and Google sign-ins also require TOTP MFA. The poster API accepts only the resulting AAL2 session. In Supabase Authentication → Emails, configure both Confirm signup and Magic Link templates to use `{{ .ConfirmationURL }}`. In Authentication → URL Configuration, set the Site URL to `https://pulsex-phi.vercel.app` and allow `https://pulsex-phi.vercel.app/**` as a redirect URL. Enable Confirm email under Authentication → Sign In / Providers. Upload `api/poster-image.js` as well as `api/poster.js` and `index.html` when updating GitHub.
 
+## PULSE email confirmation links and MFA
+
+The Story Posters email flow uses Supabase confirmation links instead of email OTP entry:
+
+- Signup: users choose an email and password, then confirm the address from the signup email.
+- Login: users enter their email and request a single-use magic sign-in link. No email code is entered.
+- After either link returns to PULSE, the app verifies the session and requires Supabase TOTP MFA. First-time users enroll an authenticator; later logins challenge the verified factor.
+- GitHub and Google OAuth continue through the same TOTP MFA gate. The poster API still requires an AAL2 session.
+
+In Supabase Dashboard:
+
+1. Authentication → Sign In / Providers → Email: enable Email and **Confirm email**.
+2. Authentication → URL Configuration: set Site URL to `https://pulsex-phi.vercel.app` and add `https://pulsex-phi.vercel.app/**` to Redirect URLs. Add any other exact production domains you actively use.
+3. Authentication → Emails → Templates → Confirm signup: use `{{ .ConfirmationURL }}` as the confirmation button destination.
+4. Authentication → Emails → Templates → Magic Link: use `{{ .ConfirmationURL }}` as the sign-in button destination. Do not use `{{ .Token }}` in either template, because that renders a code rather than a link.
+5. Keep the TOTP factor enabled under Authentication → Multi-Factor Authentication.
+
+Suggested Confirm signup body:
+
+```html
+<h2>Confirm your PULSE email</h2>
+<p>Thanks for creating a PULSE account. Confirm your email address to continue.</p>
+<p><a href="{{ .ConfirmationURL }}">Confirm my email</a></p>
+<p>If you did not create this account, you can ignore this message.</p>
+```
+
+Suggested Magic Link body:
+
+```html
+<h2>Your PULSE sign-in link</h2>
+<p>Use the secure link below to sign in to PULSE. It is single-use and expires.</p>
+<p><a href="{{ .ConfirmationURL }}">Sign in to PULSE</a></p>
+<p>If you did not request this link, you can ignore this message.</p>
+```
+
+Email links depend on working SMTP delivery. If custom SMTP is enabled, complete and save the provider credentials first. Supabase's built-in email sender is intended for limited testing, not unrestricted public transactional delivery.
+
 ## Set up Supabase
 
 1. Create a Supabase project and wait for it to finish starting.
