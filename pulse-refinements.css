@@ -1,0 +1,36 @@
+/* PULSE typography and layout repair; intentionally loaded after legacy theme rules. */
+:root{--bg:#F4F2EC;--card:#FFFFFF;--tx:#171816;--mut:#77776F;--bd:#D8D6CE;--ac:#D6FF35;--ok:#347A57;--warn:#A46B1D;--bad:#C94A38;color-scheme:light}
+html{overflow-x:hidden;text-size-adjust:100%;-webkit-text-size-adjust:100%}
+body{overflow-x:hidden;background:#F4F2EC;color:#171816;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.55;letter-spacing:normal}
+main,#m{min-width:0;width:min(100%,1320px);margin-inline:auto}
+#m *,#assistant-panel *,.poster-page *{box-sizing:border-box;min-width:0}
+#m p,#m li,#m a,#m button,#m label,#m h1,#m h2,#m h3,#m h4{overflow-wrap:anywhere;word-break:normal}
+#m p{line-height:1.65}
+#m h1,#m h2,#m h3,#m h4{line-height:1.18;letter-spacing:-.025em}
+#m .card{height:auto;min-height:0;overflow-wrap:anywhere}
+#m .grid{align-items:stretch}
+#m .grid>*{min-width:0}
+#m table{table-layout:fixed}
+#m th,#m td{overflow-wrap:anywhere;word-break:normal;line-height:1.45}
+.assistant-panel{background:#fff;border:1px solid #D8D6CE;border-radius:12px;grid-template-rows:auto minmax(0,1fr) auto}
+.assistant-messages{min-height:0;align-items:stretch;gap:12px;overflow-y:auto;overflow-x:hidden;scrollbar-gutter:stable}
+.assistant-msg{display:block;position:relative;flex:0 0 auto;width:fit-content;max-width:min(92%,38rem);min-width:0;white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;line-height:1.65;font-size:14px;padding:12px 14px;border-radius:10px}
+.assistant-msg.assistant{align-self:flex-start;background:#F4F2EC;color:#171816}
+.assistant-msg.user{align-self:flex-end;background:#171816;color:#F4F2EC}
+.assistant-composer{align-items:center;gap:8px;background:#fff}
+.assistant-composer input{min-width:0;flex:1 1 auto;line-height:1.4}
+.assistant-composer button{flex:0 0 auto;min-height:42px}
+.poster-shell{align-items:start;gap:18px}
+.poster-card,.poster-preview{min-width:0;overflow:hidden}
+.poster-form{gap:14px}
+.poster-form label,.poster-customize label{line-height:1.45;min-width:0}
+.poster-form input,.poster-form select{max-width:100%;min-width:0;line-height:1.4}
+.poster-template-note,.poster-note,.poster-intro{line-height:1.6;overflow-wrap:anywhere}
+.poster-preview{position:sticky;top:18px;align-self:start}
+.poster-canvas{max-width:100%;height:auto;object-fit:contain}
+#poster-auth{min-width:0}
+#poster-auth h3{line-height:1.2;overflow-wrap:anywhere}
+.pulse-social-login{min-width:0}
+@media(max-width:760px){.poster-preview{position:static}.poster-shell{grid-template-columns:minmax(0,1fr)}.poster-card{width:100%}}
+@media(max-width:520px){.assistant-panel{right:8px;left:8px;width:auto;max-width:none;height:min(76dvh,680px)}.assistant-msg{max-width:96%;font-size:13px}.poster-customize{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){.assistant-panel.open{animation:none!important}}
