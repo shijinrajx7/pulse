@@ -1,0 +1,116 @@
+/* PULSE final layout guard + cinematic creator sequence.
+   Loaded last so older component rules cannot make text collide. */
+:root{--bg:#F4F2EC;--card:#fff;--tx:#171816;--mut:#77776F;--bd:#D8D6CE;--ac:#D6FF35;--signal:#D6FF35;--orange:#FF5938}
+html{overflow-x:clip;text-size-adjust:100%;-webkit-text-size-adjust:100%}
+body{overflow-x:clip;line-height:1.55;letter-spacing:normal}
+# m{min-width:0}
+#m,#m *,.site-footer,.site-footer *,.assistant-panel,.assistant-panel *,.poster-page,.poster-page *{box-sizing:border-box;min-width:0}
+#m :where(h1,h2,h3,h4,h5,p,li,a,label,small,strong,span,button,td,th,code){overflow-wrap:anywhere;word-break:normal}
+#m :where(p,li,label,small){line-height:1.6}
+#m :where(h1,h2,h3,h4){line-height:1.14;letter-spacing:-.035em;text-wrap:pretty}
+#m :where(button,a,input,select,textarea){max-width:100%}
+#m button{height:auto;min-height:40px;white-space:normal;line-height:1.35}
+#m .card{height:auto;min-height:0;overflow:visible}
+#m .grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));align-items:stretch}
+#m .grid>*{min-width:0}
+#m .row{align-items:center;min-width:0}
+#m .scroll{max-width:100%;overflow-x:auto;overscroll-behavior-x:contain}
+#m table{width:100%;min-width:560px;table-layout:fixed}
+#m th,#m td{line-height:1.45;vertical-align:top;overflow-wrap:anywhere}
+#m :where(.pulse-section-head,.pulse-block-heading){min-width:0;flex-wrap:wrap;align-items:flex-start}
+#m .pulse-section-head h1{max-width:100%;line-height:1.02;text-wrap:balance}
+#m .pulse-hero{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);min-width:0}
+#m .pulse-hero-copy,#m .pulse-hero-visual,#m .pulse-story-copy{min-width:0}
+#m .pulse-hero h1{line-height:.94;overflow-wrap:normal;text-wrap:balance}
+#m .pulse-story-card{grid-template-columns:minmax(110px,.38fr) minmax(0,1.3fr) minmax(130px,.42fr);min-width:0}
+#m .pulse-story-title h3{line-height:1.14;overflow-wrap:anywhere;text-wrap:pretty}
+#m .pulse-story-summary{overflow-wrap:anywhere}
+#m .pulse-metrics{grid-template-columns:repeat(4,minmax(0,1fr))}
+#m .pulse-metric{min-width:0;overflow-wrap:anywhere}
+#m .pulse-metric strong{line-height:1.05;overflow-wrap:anywhere}
+#m .pulse-editorial-row{grid-template-columns:minmax(0,.62fr) minmax(0,1.38fr)}
+#m .pulse-notification-hero{grid-template-columns:minmax(0,1fr) minmax(0,.42fr)}
+#m .pulse-settings-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+#m .poster-shell{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.85fr);align-items:start;gap:clamp(14px,2vw,24px)}
+#m .poster-card,#m .poster-preview,#m .poster-form,#m .poster-customize{min-width:0;max-width:100%}
+#m .poster-preview{position:sticky;top:18px}
+#m .poster-canvas{display:block;width:100%;max-width:100%;height:auto;object-fit:contain}
+#m .poster-form label,#m .poster-customize label{display:grid;gap:7px;min-width:0;line-height:1.45}
+#m .poster-form input,#m .poster-form select,#m .poster-customize input,#m .poster-customize select{width:100%;min-width:0;max-width:100%}
+#m .poster-actions{display:flex;flex-wrap:wrap;gap:8px;min-width:0}
+#m .poster-actions>*{flex:1 1 150px;min-width:0}
+#m .poster-note,#m .poster-intro,#m .poster-status,#m .poster-template-note{line-height:1.6;overflow-wrap:anywhere}
+#poster-auth,#poster-email-check,#poster-mfa{width:100%;min-width:0;max-width:100%}
+#poster-auth .poster-login-portrait img{object-fit:contain;max-width:100%;height:auto;aspect-ratio:1}
+#poster-email-check-status,#poster-email-check-note,#poster-mfa-note{overflow-wrap:anywhere;line-height:1.6}
+.assistant-panel{grid-template-rows:auto minmax(0,1fr) auto;min-width:0}
+.assistant-messages{min-height:0;min-width:0;overflow-x:hidden;overflow-y:auto}
+.assistant-msg{max-width:min(94%,38rem);min-width:0;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.6}
+.assistant-composer{min-width:0;align-items:center}
+.assistant-composer input{min-width:0;flex:1 1 auto}
+.assistant-composer button{flex:0 0 auto;white-space:nowrap}
+.site-footer-links{min-width:0;flex-wrap:wrap}
+.site-footer a{overflow-wrap:anywhere}
+/* Stable compact header: every control gets its own grid cell on phones. */
+@media(max-width:760px){
+  #m .pulse-hero{grid-template-columns:minmax(0,1fr);min-height:0}
+  #m .pulse-editorial-row{grid-template-columns:minmax(0,1fr)}
+  #m .pulse-story-card{grid-template-columns:minmax(0,1fr);gap:10px}
+  #m .pulse-story-actions{grid-column:auto;flex-direction:row;flex-wrap:wrap}
+  #m .pulse-story-actions button{flex:1 1 130px;width:auto}
+  #m .poster-shell{grid-template-columns:minmax(0,1fr)}
+  #m .poster-preview{position:static}
+  #m .pulse-notification-hero{grid-template-columns:minmax(0,1fr)}
+  #m .pulse-notification-hero-side{border-left:0;border-top:1px solid #41433C;padding:16px 0 0}
+}
+@media(max-width:640px){
+  .top{display:grid!important;grid-template-columns:minmax(0,1fr) auto auto!important;grid-template-areas:"brand language theme" "search search search" "track track sound";gap:8px!important;align-items:center;padding:10px 12px!important}
+  .top .logo{grid-area:brand;min-width:0}
+  .top #q{grid-area:search;width:100%;min-width:0;min-height:44px}
+  .top .lang-control{grid-area:language;width:auto;min-width:72px;max-width:88px}
+  .top #th{grid-area:theme;width:40px;height:40px;min-height:40px}
+  .top .track-control{grid-area:track;width:100%;min-width:0;min-height:40px}
+  .top #snd{grid-area:sound;width:44px;height:40px;min-height:40px}
+  nav{max-width:100%;overflow-x:auto;overscroll-behavior-x:contain}
+  #m{padding:22px 14px 48px}
+  #m .pulse-hero h1{font-size:clamp(48px,14vw,76px);line-height:.96;overflow-wrap:normal}
+  #m .pulse-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #m .pulse-metric{padding:14px 10px 16px 0}
+  #m .pulse-metric:not(:first-child){padding-left:10px}
+  #m .pulse-metric strong{font-size:clamp(28px,8vw,36px)}
+  #m .pulse-settings-grid{grid-template-columns:minmax(0,1fr)}
+  #m .poster-actions>*{flex:1 1 100%}
+  .assistant-panel{left:8px;right:8px;width:auto;max-width:none;height:min(76dvh,680px)}
+}
+@media(max-width:380px){
+  .top{grid-template-columns:minmax(0,1fr) auto auto!important}
+  .top .lang-control{min-width:66px;font-size:11px}
+  .top #th{width:36px;height:36px;min-height:36px}
+  #m .pulse-story-title h3{font-size:22px}
+}
+/* Cinematic portrait intro: motion-picture language, no crop, no external video dependency. */
+#intro.intro-screen{isolation:isolate;gap:0;padding:clamp(20px,4vh,52px) 18px;background:#070908;color:#F4F2EC}
+#intro.intro-screen:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 50% 42%,#d6ff3510 0,transparent 35%),linear-gradient(90deg,transparent 49.9%,#d6ff350c 50%,transparent 50.1%),linear-gradient(#d6ff3508 1px,transparent 1px);background-size:auto,100% 100%,100% 54px;mask-image:linear-gradient(to bottom,#000,transparent 92%)}
+#intro.intro-screen:after{content:"";position:absolute;inset:-35% 0;z-index:0;pointer-events:none;background:linear-gradient(180deg,transparent 42%,#D6FF3510 49%,#D6FF3528 50%,transparent 56%);transform:translateY(-65%);animation:intro-scan 5.5s ease-in-out infinite}
+#intro .intro-portrait-frame,#intro .intro-title,#intro .intro-credit,#intro .intro-caption,#intro .intro-progress,#intro #intro-skip{z-index:1}
+#intro .intro-portrait-frame{width:clamp(230px,35vw,390px);max-width:82vw;flex:0 1 auto}
+#intro .intro-portrait{display:block;width:88%;height:auto;max-height:min(44vh,390px);aspect-ratio:1;object-fit:contain;object-position:center;border-radius:0;filter:drop-shadow(0 24px 55px #000b);animation:cinema-portrait-in 1.45s cubic-bezier(.16,1,.3,1) both,cinema-portrait-breathe 6s 1.5s ease-in-out infinite}
+#intro .intro-title{margin-top:clamp(12px,2.4vh,24px);font:600 clamp(34px,7vw,68px)/1 "Space Grotesk",Inter,sans-serif;letter-spacing:.18em;text-align:center}
+#intro .intro-credit{margin-top:9px;color:#D6FF35;font:500 9px/1.4 "DM Mono",ui-monospace,monospace;letter-spacing:.24em;text-transform:uppercase;text-align:center}
+#intro .intro-caption{max-width:min(88vw,480px);margin-top:12px;text-align:center;font:10px/1.7 "DM Mono",ui-monospace,monospace;letter-spacing:.12em;text-transform:uppercase;color:#AAA99F}
+#intro .intro-progress{width:min(180px,56vw);margin-top:22px}
+#intro #intro-skip{margin-top:20px;min-height:42px;padding:11px 18px;border-radius:0}
+.intro-screen.leaving:after{animation:none;opacity:0}
+@keyframes intro-scan{0%{transform:translateY(-65%);opacity:0}25%{opacity:.8}75%{opacity:.55}100%{transform:translateY(65%);opacity:0}}
+@keyframes cinema-portrait-in{0%{opacity:0;transform:translateY(34px) scale(.82);filter:brightness(.3) blur(12px)}55%{opacity:1;filter:brightness(1.12) blur(0)}100%{opacity:1;transform:translateY(0) scale(1);filter:brightness(1) blur(0)}}
+@keyframes cinema-portrait-breathe{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-5px) scale(1.012)}}
+#intro.leaving .intro-title,#intro.leaving .intro-credit,#intro.leaving .intro-caption,#intro.leaving .intro-progress,#intro.leaving #intro-skip{animation:intro-content-out .4s ease both}
+.pulse-cinematic-exit{isolation:isolate}
+.pulse-cinematic-exit:before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(ellipse at center,#D6FF3510,transparent 48%),linear-gradient(90deg,transparent 50%,#D6FF3508 50%,transparent 50.2%)}
+.pulse-cinematic-exit img{object-fit:contain;border-radius:0}
+.poster-login-portrait img{object-fit:contain}
+@media(prefers-reduced-motion:reduce){
+  #intro.intro-screen:after{display:none}
+  #intro .intro-portrait,#intro .intro-portrait-frame:before,#intro .intro-portrait-frame:after,.pulse-cinematic-exit img{animation:none!important}
+  #intro.leaving .intro-title,#intro.leaving .intro-credit,#intro.leaving .intro-caption,#intro.leaving .intro-progress,#intro.leaving #intro-skip{animation:none!important}
+}
