@@ -10,9 +10,6 @@ const corsHeaders = {
 };
 const url = Deno.env.get("SUPABASE_URL") || "";
 const serviceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || Deno.env.get("SUPABASE_SERVICE_KEY") || "";
-const publicKey = Deno.env.get("VAPID_PUBLIC_KEY") || "";
-const privateKey = Deno.env.get("VAPID_PRIVATE_KEY") || "";
-const subject = Deno.env.get("VAPID_SUBJECT") || "mailto:admin@example.com";
 const db = createClient(url, serviceKey, { auth: { persistSession: false, autoRefreshToken: false } });
 const encoder = new TextEncoder();
 const attempts = new Map<string, { at: number; count: number }>();
@@ -31,9 +28,13 @@ function limited(key: string) {
   current.count++;
   return current.count > 20;
 }
-function setupPush() {
-  if (!publicKey || !privateKey) throw new Error("Push is not configured yet. Add the VAPID secrets in Supabase.");
-  webpush.setVapidDetails(subject, publicKey, privateKey);
+async function setupPush() {
+  const { data, error } = await db.rpc("pulse_get_push_config");
+  if (error) throw error;
+  const config = data || {};
+  if (!config.PULSE_VAPID_PUBLIC_KEY || !config.PULSE_VAPID_PRIVATE_KEY || !config.PULSE_VAPID_SUBJECT) throw new Error("Push is not configured yet. Add the VAPID keys to Supabase Vault.");
+  webpush.setVapidDetails(config.PULSE_VAPID_SUBJECT, config.PULSE_VAPID_PUBLIC_KEY, config.PULSE_VAPID_PRIVATE_KEY);
+  return config;
 }
 async function owned(endpoint: string, ownerHash: string) {
   const endpointHash = await hash(endpoint);
@@ -44,7 +45,10 @@ async function owned(endpoint: string, ownerHash: string) {
 }
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
-  if (req.method === "GET") return reply({ publicKey, configured: !!(publicKey && privateKey) });
+  if (req.method === "GET") {
+    try { const config = await setupPush(); return reply({ publicKey: config.PULSE_VAPID_PUBLIC_KEY, configured: true }); }
+    catch { return reply({ publicKey: "", configured: false, error: "Push keys are not configured in Supabase Vault." }, 503); }
+  }
   if (req.method !== "POST") return reply({ error: "Use POST." }, 405);
   try {
     const body = await req.json();
@@ -102,7 +106,7 @@ Deno.serve(async (req) => {
       return reply({ ok: true });
     }
     if (action === "test") {
-      setupPush();
+      await setupPush();
       await webpush.sendNotification(record.subscription, JSON.stringify({ title: "PULSE · TEST ALERT", body: "Background push is connected on this device.", priority: "general", icon: "/assets/pulse-alert-general.svg", badge: "/assets/pulse-badge.svg", url: "/" }), { TTL: 60, urgency: "normal" });
       return reply({ ok: true, message: "Test push accepted by the browser push service." });
     }
