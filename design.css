@@ -1,5 +1,5 @@
 /* PULSE — editorial technology identity. Warm paper, charcoal ink, signal accents. */
-@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap');
 :root{--bg:#F4F2EC;--card:#FFFFFF;--tx:#171816;--mut:#77776F;--bd:#D8D6CE;--ac:#D6FF35;--ok:#35734A;--warn:#A96A19;--bad:#C63C32;--signal:#D6FF35;--orange:#FF5938;--dark:#171816;--paper:#EAE8E0;color-scheme:light}
 :root[data-theme="dark"]{--bg:#171816;--card:#20221E;--tx:#F4F2EC;--mut:#AAA99F;--bd:#41433C;--ac:#D6FF35;--signal:#D6FF35;--paper:#262822;color-scheme:dark}
 :root[data-theme="forest"]{--bg:#17221B;--card:#202D24;--tx:#F0F2E9;--mut:#A6B5A5;--bd:#435246;--ac:#D6FF35;--signal:#D6FF35;color-scheme:dark}
