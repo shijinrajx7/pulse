@@ -3,7 +3,6 @@
 :root{--bg:#F4F2EC;--card:#fff;--tx:#171816;--mut:#77776F;--bd:#D8D6CE;--ac:#D6FF35;--signal:#D6FF35;--orange:#FF5938}
 html{overflow-x:clip;text-size-adjust:100%;-webkit-text-size-adjust:100%}
 body{overflow-x:clip;line-height:1.55;letter-spacing:normal}
-# m{min-width:0}
 #m,#m *,.site-footer,.site-footer *,.assistant-panel,.assistant-panel *,.poster-page,.poster-page *{box-sizing:border-box;min-width:0}
 #m :where(h1,h2,h3,h4,h5,p,li,a,label,small,strong,span,button,td,th,code){overflow-wrap:anywhere;word-break:normal}
 #m :where(p,li,label,small){line-height:1.6}
