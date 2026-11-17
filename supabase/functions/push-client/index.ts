@@ -89,6 +89,7 @@ Deno.serve(async (req) => {
       await webpush.sendNotification(record.subscription, JSON.stringify({ title: "PULSE · TEST ALERT", body: "Background push is connected on this device.", priority: "general", icon: "/assets/pulse-alert-general.svg", badge: "/assets/pulse-badge.svg", url: "/" }), { TTL: 60, urgency: "normal" });
       return reply({ ok: true, message: "Test push accepted by the browser push service." });
     }
+    if (action === "settings") return reply({ preferences: record.preferences || {} });
     if (action === "history") {
       const { data, error } = await db.from("push_deliveries").select("id,event_id,priority,status,created_at,delivered_at,read_at,event:events(id,title,url,category,region,published_at)").eq("subscription_id", record.id).order("created_at", { ascending: false }).limit(40);
       if (error) throw error;
