@@ -64,7 +64,7 @@ Deno.serve(async (req) => {
       const prefs = sub.preferences || {};
       const candidates = events.map((event: any) => ({ event, priority: priorityOf(event) }))
         .filter((item: any) => Number.isInteger(Number(item.event.id)) && enabled(prefs, item.priority, String(item.event.category || "news")))
-        .filter((item: any) => item.priority === "breaking" || !quietNow(prefs));
+        .filter((item: any) => (item.priority === "breaking" && prefs.allowBreakingDuringQuiet !== false) || !quietNow(prefs));
       if (!candidates.length) { totals.skipped++; continue; }
       const urgent = candidates.filter((item: any) => item.priority === "breaking" || item.priority === "important").slice(0, 3);
       const general = candidates.filter((item: any) => item.priority === "general");
