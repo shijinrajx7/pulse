@@ -33,7 +33,7 @@ body{overflow-x:clip;line-height:1.55;letter-spacing:normal}
 #m .poster-shell{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.85fr);align-items:start;gap:clamp(14px,2vw,24px)}
 #m .poster-card,#m .poster-preview,#m .poster-form,#m .poster-customize{min-width:0;max-width:100%}
 #m .poster-preview{position:sticky;top:18px}
-#m .poster-canvas{display:block;width:100%;max-width:100%;height:auto;object-fit:contain}
+#m .poster-canvas{width:100%;max-width:100%;height:auto;object-fit:contain}
 #m .poster-form label,#m .poster-customize label{display:grid;gap:7px;min-width:0;line-height:1.45}
 #m .poster-form input,#m .poster-form select,#m .poster-customize input,#m .poster-customize select{width:100%;min-width:0;max-width:100%}
 #m .poster-actions{display:flex;flex-wrap:wrap;gap:8px;min-width:0}
@@ -72,7 +72,7 @@ body{overflow-x:clip;line-height:1.55;letter-spacing:normal}
   .top #snd{grid-area:sound;width:44px;height:40px;min-height:40px}
   nav{max-width:100%;overflow-x:auto;overscroll-behavior-x:contain}
   #m{padding:22px 14px 48px}
-  #m .pulse-hero h1{font-size:clamp(48px,14vw,76px);line-height:.96;overflow-wrap:normal}
+  #m .pulse-hero h1{font-size:clamp(48px,14vw,76px);line-height:.96;overflow-wrap:anywhere}
   #m .pulse-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}
   #m .pulse-metric{padding:14px 10px 16px 0}
   #m .pulse-metric:not(:first-child){padding-left:10px}
