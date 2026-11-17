@@ -61,7 +61,7 @@ Deno.serve(async (req) => {
     webpush.setVapidDetails(subject, publicKey, privateKey);
     const body = await req.json(), events = Array.isArray(body.events) ? body.events.slice(0, 40) : [];
     if (!events.length) return json({ ok: true, received: 0, delivered: 0 });
-    const { data: subscriptions, error } = await supabase.from("push_subscriptions").select("id,subscription,preferences");
+    const { data: subscriptions, error } = await supabase.from("push_subscriptions").select("id,subscription,preferences").is("disabled_at", null);
     if (error) throw error;
     const totals = { received: events.length, subscriptions: subscriptions?.length || 0, delivered: 0, skipped: 0, failed: 0 };
     for (const sub of subscriptions || []) {
