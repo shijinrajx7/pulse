@@ -57,16 +57,33 @@ async function one(env, s) {
       processed_at: t, meta: i.meta || {},
     }));
     if (rows.length) {
-      const r = await sb(env, "events?on_conflict=url_hash", {
-        method: "POST",
-        headers: { Prefer: "resolution=ignore-duplicates,return=representation" },
-        body: JSON.stringify(rows),
-      });
-      if (!r.ok) throw new Error("db " + r.status + " " + (await r.text()).slice(0, 150));
-      // Only rows actually inserted by this run enter the push pipeline.
-      // Existing URL hashes are ignored, preventing repeat alerts on every poll.
-      const inserted = await r.json();
-      n = inserted.length;
+      // Split first-seen rows from known URLs so existing article metadata still refreshes,
+      // while only newly inserted records are eligible for a push alert.
+      const hashes = rows.map((row) => row.url_hash);
+      const lookup = await sb(env, "events?url_hash=in.(" + hashes.join(",") + ")&select=url_hash");
+      if (!lookup.ok) throw new Error("db lookup " + lookup.status + " " + (await lookup.text()).slice(0, 150));
+      const known = new Set((await lookup.json()).map((row) => row.url_hash));
+      const freshRows = rows.filter((row) => !known.has(row.url_hash));
+      const existingRows = rows.filter((row) => known.has(row.url_hash));
+      if (existingRows.length) {
+        const update = await sb(env, "events?on_conflict=url_hash", {
+          method: "POST",
+          headers: { Prefer: "resolution=merge-duplicates,return=minimal" },
+          body: JSON.stringify(existingRows),
+        });
+        if (!update.ok) throw new Error("db update " + update.status + " " + (await update.text()).slice(0, 150));
+      }
+      let inserted = [];
+      if (freshRows.length) {
+        const create = await sb(env, "events?on_conflict=url_hash", {
+          method: "POST",
+          headers: { Prefer: "resolution=ignore-duplicates,return=representation" },
+          body: JSON.stringify(freshRows),
+        });
+        if (!create.ok) throw new Error("db insert " + create.status + " " + (await create.text()).slice(0, 150));
+        inserted = await create.json();
+      }
+      n = rows.length;
       if (inserted.length && env.PULSE_PUSH_SECRET) {
         try {
           const push = await fetch(env.SUPABASE_URL.replace(/\/$/, "") + "/functions/v1/push-dispatch", {
