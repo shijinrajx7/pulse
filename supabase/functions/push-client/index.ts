@@ -75,9 +75,9 @@ Deno.serve(async (req) => {
       const sub = body.subscription;
       if (!sub || typeof sub.endpoint !== "string" || !sub.endpoint.startsWith("https://") || !sub.keys?.p256dh || !sub.keys?.auth) return reply({ error: "The browser returned an invalid push subscription." }, 400);
       const endpointHash = await hash(sub.endpoint);
-      const { data: existing, error: readError } = await db.from("push_subscriptions").select("id,owner_token_hash").eq("endpoint_hash", endpointHash).maybeSingle();
+      const { data: existing, error: readError } = await db.from("push_subscriptions").select("id,owner_token_hash,disabled_at").eq("endpoint_hash", endpointHash).maybeSingle();
       if (readError) throw readError;
-      if (existing && existing.owner_token_hash !== ownerHash) return reply({ error: "This browser subscription belongs to another PULSE installation. Disable it in the original browser first." }, 409);
+      if (existing && existing.owner_token_hash && existing.owner_token_hash !== ownerHash && !existing.disabled_at) return reply({ error: "This browser subscription belongs to another PULSE installation. Disable it in the original browser first." }, 409);
       const preferences = body.preferences && typeof body.preferences === "object" ? body.preferences : {};
       const { error } = await db.from("push_subscriptions").upsert({
         endpoint_hash: endpointHash, endpoint: sub.endpoint, subscription: sub, owner_token_hash: ownerHash,
