@@ -63,7 +63,6 @@ header{background:color-mix(in srgb,var(--bg) 88%,transparent)!important;border-
 .poster-card,.poster-preview,.map-visual,.globe-shell,.assistant-panel{
   transition:background-color .35s ease,border-color .35s ease,color .35s ease;
 }
-# m{min-width:0}
 #m{position:relative;z-index:1;min-width:0}
 #m,#m *{min-width:0}
 #m :where(h1,h2,h3,h4,h5,p,li,a,label,small,strong,span,button,td,th,code,pre){
