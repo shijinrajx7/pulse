@@ -84,11 +84,11 @@ async function one(env, s) {
         inserted = await create.json();
       }
       n = rows.length;
-      if (inserted.length && env.PULSE_PUSH_SECRET) {
+      if (inserted.length) {
         try {
           const push = await fetch(env.SUPABASE_URL.replace(/\/$/, "") + "/functions/v1/push-dispatch", {
             method: "POST",
-            headers: { "Content-Type": "application/json", "apikey": env.SUPABASE_SERVICE_KEY, "Authorization": "Bearer " + env.SUPABASE_SERVICE_KEY, "x-pulse-push-secret": env.PULSE_PUSH_SECRET },
+            headers: { "Content-Type": "application/json", "apikey": env.SUPABASE_SERVICE_KEY, "Authorization": "Bearer " + env.SUPABASE_SERVICE_KEY },
             body: JSON.stringify({ events: inserted }),
             signal: AbortSignal.timeout(12000),
           });
