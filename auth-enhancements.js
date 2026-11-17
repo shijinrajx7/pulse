@@ -155,12 +155,11 @@
     var grid = document.createElement("div");
     grid.className = "pulse-provider-grid";
     grid.appendChild(providerButton("github", "Continue with GitHub", "GH", "github"));
-    grid.appendChild(providerButton("google", "Continue with Google", "G", "google"));
     section.appendChild(grid);
 
     var note = document.createElement("p");
     note.className = "pulse-provider-note";
-    note.textContent = "Email sign-in uses a secure confirmation link, then an authenticator check. New accounts must confirm their email before setting up an authenticator. GitHub and Google sign-ins also require authenticator verification. Gmail works through Google.";
+    note.textContent = "Sign in with your email address or GitHub. Email sign-in uses a secure confirmation link, followed by an authenticator check. Gmail addresses work with email sign-in; no Google app or Google sign-in is required.";
     section.appendChild(note);
 
     emailForm.insertAdjacentElement("afterend", section);
@@ -178,7 +177,7 @@
       var button = event.target.closest("[data-pulse-provider]");
       if (!button || button.disabled) return;
       var provider = button.getAttribute("data-pulse-provider");
-      if (provider === "github" || provider === "google") startOAuth(provider);
+      if (provider === "github") startOAuth(provider);
     });
   }
 
@@ -236,8 +235,6 @@
       ".pulse-provider-mark{display:inline-grid;place-items:center;min-width:25px;height:25px;padding:0 5px;border-radius:7px;background:#e8e8e4;color:#161b17;font-size:12px;font-weight:800}",
       ".pulse-provider-github{background:#d7a36a;border-color:#d7a36a;color:#171810}",
       ".pulse-provider-github .pulse-provider-mark{background:#171d18;color:#f2f1e9}",
-      ".pulse-provider-google{background:#f4f4f1;border-color:#e2e3de;color:#242923}",
-      ".pulse-provider-google .pulse-provider-mark{background:#fff;color:#4285f4;border:1px solid #e4e5e0}",
 
       ".pulse-provider-grid-muted{opacity:.8}",
       ".pulse-provider-note{margin:0;color:#9da99e;font-size:11px;line-height:1.6}",
