@@ -116,12 +116,12 @@
     }
     var buttonList = document.querySelectorAll("[data-pulse-provider]");
     buttonList.forEach(function (button) { button.disabled = true; });
-    status("Connecting to GitHub…");
+    status("Connecting to " + (provider === "google" ? "Google" : "GitHub") + "…");
 
     var options = {
       redirectTo: window.location.origin + window.location.pathname + "#posters"
     };
-    options.scopes = "read:user user:email";
+    if (provider === "github") options.scopes = "read:user user:email";
 
     auth.auth.signInWithOAuth({ provider: provider, options: options }).then(function (result) {
       if (result.error) throw result.error;
@@ -155,11 +155,12 @@
     var grid = document.createElement("div");
     grid.className = "pulse-provider-grid";
     grid.appendChild(providerButton("github", "Continue with GitHub", "GH", "github"));
+    grid.appendChild(providerButton("google", "Continue with Google", "G", "google"));
     section.appendChild(grid);
 
     var note = document.createElement("p");
     note.className = "pulse-provider-note";
-    note.textContent = "Email and GitHub sign-ins both require PULSE two-step verification with an authenticator app before the poster studio opens.";
+    note.textContent = "Email, GitHub and Google sign-ins all require PULSE two-step verification with an authenticator app before the poster studio opens. Gmail works through Google.";
     section.appendChild(note);
 
     emailForm.insertAdjacentElement("afterend", section);
@@ -177,7 +178,7 @@
       var button = event.target.closest("[data-pulse-provider]");
       if (!button || button.disabled) return;
       var provider = button.getAttribute("data-pulse-provider");
-      if (provider === "github") startOAuth(provider);
+      if (provider === "github" || provider === "google") startOAuth(provider);
     });
   }
 
@@ -204,7 +205,23 @@
     var style = document.createElement("style");
     style.id = "pulse-social-auth-styles";
     style.textContent = [
-      ".pulse-social-login{display:grid;gap:10px;margin-top:15px;padding-top:13px;border-top:1px solid #47564a}",
+      ".pulse-social-login{display:grid;gap:11px;margin-top:15px;padding-top:15px;border-top:1px solid #34453d}",
+      "#poster-auth{gap:15px}",
+      "#poster-auth h3{font:600 25px/1.18 Georgia,serif;letter-spacing:-.025em;color:#f5f0e5}",
+      "#poster-auth>.poster-note{max-width:42ch;font-size:12px;line-height:1.6;color:#aab5a9}",
+      "#poster-auth .poster-tabs{padding:4px;border:1px solid #35483e;border-radius:10px;background:#0b120e;gap:4px}",
+      "#poster-auth .poster-tab{min-height:42px;border:0;border-radius:7px;background:transparent;color:#aab7aa;font:600 13px system-ui;letter-spacing:.02em}",
+      "#poster-auth .poster-tab.active{background:#d7a36a;color:#171810;box-shadow:0 2px 10px #0004}",
+      "#poster-auth .poster-form label{gap:7px;color:#cbd2c7;font-size:12px;font-weight:600;letter-spacing:.02em}",
+      "#poster-auth .poster-form input{min-height:48px;border:1px solid #3b4b41;border-radius:9px;background:#0a100d;color:#f5f1e7;padding:11px 13px;font-size:15px}",
+      "#poster-auth .poster-form input:focus{border-color:#d7a36a;outline:2px solid #d7a36a35;outline-offset:1px}",
+      "#poster-auth .poster-actions{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px}",
+      "#poster-auth .poster-action{min-height:46px;border-radius:9px;background:#d7a36a;border-color:#d7a36a;color:#171810;font-size:13px}",
+      "#poster-auth .poster-action.secondary{background:#151e18;border-color:#46584b;color:#e8e9df}",
+      ".poster-password-row{align-items:stretch;gap:7px}",
+      ".poster-eye{display:grid;place-items:center;min-width:46px;width:46px;min-height:46px;padding:0;border-radius:9px;background:#151e18;border-color:#46584b;color:#d7a36a}",
+      ".poster-eye svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}",
+      ".poster-eye:hover{border-color:#d7a36a;background:#1b2820}",
       ".pulse-social-divider{display:flex;align-items:center;justify-content:center;color:#aeb7aa;font-size:10px;font-weight:700;letter-spacing:.16em}",
       ".pulse-provider-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}",
       "#poster-auth .poster-form[hidden],#poster-auth [hidden]{display:none!important}",
@@ -212,14 +229,18 @@
       "#poster-auth .poster-tab{width:100%;min-width:0}",
       "#poster-auth .poster-form:not([hidden]){display:grid;grid-template-columns:minmax(0,1fr);width:100%}",
       "#poster-auth .poster-form[hidden]{display:none!important}",
-      ".pulse-provider{display:flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:9px 10px;border:1px solid #526253;border-radius:9px;background:#121c16;color:#f3f0e3;font:600 13px system-ui,sans-serif;cursor:pointer;transition:border-color .18s,background .18s,transform .18s}",
-      ".pulse-provider:hover:not(:disabled){border-color:#d9a05d;background:#1c2a20;transform:translateY(-1px)}",
+      ".pulse-provider{display:flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:11px 14px;border:1px solid #435349;border-radius:9px;background:#141d17;color:#f4f1e7;font:600 13px system-ui,sans-serif;letter-spacing:.01em;cursor:pointer;transition:border-color .18s,background .18s,transform .18s,box-shadow .18s}",
+      ".pulse-provider:hover:not(:disabled){border-color:#d7a36a;background:#1c2a20;transform:translateY(-1px);box-shadow:0 7px 20px #0003}",
       ".pulse-provider:disabled{opacity:.42;cursor:not-allowed}",
-      ".pulse-provider-mark{display:inline-grid;place-items:center;min-width:23px;height:23px;padding:0 4px;border-radius:6px;background:#27362a;color:#f2c17e;font-size:11px;font-weight:800}",
-      ".pulse-provider-github .pulse-provider-mark{background:#e8e8e4;color:#161b17}",
+      ".pulse-provider-mark{display:inline-grid;place-items:center;min-width:25px;height:25px;padding:0 5px;border-radius:7px;background:#e8e8e4;color:#161b17;font-size:12px;font-weight:800}",
+      ".pulse-provider-github{background:#d7a36a;border-color:#d7a36a;color:#171810}",
+      ".pulse-provider-github .pulse-provider-mark{background:#171d18;color:#f2f1e9}",
+      ".pulse-provider-google{background:#f4f4f1;border-color:#e2e3de;color:#242923}",
+      ".pulse-provider-google .pulse-provider-mark{background:#fff;color:#4285f4;border:1px solid #e4e5e0}",
 
       ".pulse-provider-grid-muted{opacity:.8}",
-      ".pulse-provider-note{margin:0;color:#aeb7aa;font-size:11px;line-height:1.5}",
+      ".pulse-provider-note{margin:0;color:#9da99e;font-size:11px;line-height:1.6}",
+      "@media(max-width:640px){#poster-auth .poster-actions{grid-template-columns:1fr}#poster-auth .poster-action{width:100%}.poster-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.poster-actions .poster-action{width:100%;min-width:0;min-height:46px;padding:10px 8px;font-size:12px}}",
       ".pulse-provider:focus-visible{outline:2px solid #e2a34c;outline-offset:2px}",
       "@media(max-width:380px){.pulse-provider-grid{grid-template-columns:1fr}}"
     ].join("");
