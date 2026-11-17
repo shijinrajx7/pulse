@@ -102,6 +102,19 @@ Deno.serve(async (req) => {
       if (error) throw error;
       return reply({ ok: true });
     }
+    if (action === "mark-clicked") {
+      const ids = Array.isArray(body.deliveryIds) ? body.deliveryIds.filter((v: unknown) => Number.isInteger(Number(v))).slice(0, 40) : [];
+      if (!ids.length) return reply({ ok: true });
+      const now = new Date().toISOString();
+      const { error } = await db.from("push_deliveries").update({ read_at: now, clicked_at: now }).eq("subscription_id", record.id).in("id", ids);
+      if (error) throw error;
+      return reply({ ok: true });
+    }
+    if (action === "clear-history") {
+      const { error } = await db.from("push_deliveries").delete().eq("subscription_id", record.id);
+      if (error) throw error;
+      return reply({ ok: true });
+    }
     return reply({ error: "Unknown notification action." }, 400);
   } catch (error) {
     const message = String((error as Error)?.message || error).slice(0, 240);
