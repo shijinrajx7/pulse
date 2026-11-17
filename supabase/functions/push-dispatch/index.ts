@@ -86,7 +86,7 @@ Deno.serve(async (req) => {
         const url = priority === "breaking" ? "/?pulseEvent=" + Number(first.id) + "#breaking" : "/?pulseEvent=" + Number(first.id) + "#overview";
         const title = priority === "breaking" ? "BREAKING · PULSE" : priority === "important" ? "IMPORTANT · PULSE" : selected.length > 1 ? "PULSE · " + selected.length + " new reports" : "PULSE · New report";
         const bodyText = selected.length > 1 ? selected.slice(0, 3).map((x: any) => String(x.event.title || "New report").slice(0, 100)).join(" · ") : String(first.title || "Open PULSE for details").slice(0, 180);
-        const payload = JSON.stringify({ title, body: bodyText, priority, eventId: Number(first.id), deliveryIds: inserted.map((x: any) => x.id), url, icon: "/assets/pulse-alert-" + priority + ".svg", badge: "/assets/pulse-badge.svg", requireInteraction: priority === "breaking", silent: priority === "low" && prefs.silentLow === true });
+        const payload = JSON.stringify({ title, body: bodyText, priority, eventId: Number(first.id), deliveryIds: inserted.map((x: any) => x.id), url, icon: "/assets/pulse-alert-" + priority + ".svg", badge: "/assets/pulse-badge.svg", requireInteraction: priority === "breaking", silent: (priority === "low" && prefs.silentLow === true) || (prefs.sounds && prefs.sounds[priority] === false) });
         try {
           await sendWithRetry(sub.subscription, payload, priority === "breaking" ? "high" : priority === "important" ? "high" : "normal");
           const now = new Date().toISOString();
