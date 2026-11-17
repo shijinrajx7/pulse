@@ -160,7 +160,7 @@
 
     var note = document.createElement("p");
     note.className = "pulse-provider-note";
-    note.textContent = "Email, GitHub and Google sign-ins all require PULSE two-step verification with an authenticator app before the poster studio opens. Gmail works through Google.";
+    note.textContent = "Email sign-in sends a one-time authorization code and then requires an authenticator check. GitHub and Google sign-ins require authenticator verification before the poster studio opens. Gmail works through Google.";
     section.appendChild(note);
 
     emailForm.insertAdjacentElement("afterend", section);
