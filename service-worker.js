@@ -1,5 +1,5 @@
-const CACHE_NAME = "pulse-shell-v3";
-const SHELL = ["/", "/design.css", "/pulse-refinements.css", "/pulse-portrait-auth.css", "/assets/hooded-portrait.webp", "/manifest.webmanifest", "/assets/pulse-pwa.svg", "/assets/pulse-badge.svg"];
+const CACHE_NAME = "pulse-shell-v4";
+const SHELL = ["/", "/design.css", "/pulse-refinements.css", "/pulse-portrait-auth.css", "/pulse-final-polish.css", "/assets/hooded-portrait.webp", "/manifest.webmanifest", "/assets/pulse-pwa.svg", "/assets/pulse-badge.svg"];
 self.addEventListener("install", (event) => {
   event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(SHELL)).catch(() => {}).then(() => self.skipWaiting()));
 });
