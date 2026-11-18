@@ -5,3 +5,9 @@
 :root[data-theme="paper"]{--bg:#f2eee5;--card:#fffdf7;--tx:#25231e;--mut:#777166;--bd:#ded7c9;--ac:#a65a32;--ok:#287b54;--warn:#986b20;--bad:#b84242;color-scheme:light}
 :root[data-theme="mono"]{--bg:#101010;--card:#1c1c1c;--tx:#f5f5f5;--mut:#a5a5a5;--bd:#3b3b3b;--ac:#f1f1f1;--ok:#a6d5b0;--warn:#e4c27a;--bad:#ff8585;color-scheme:dark}
 :root[data-theme="rose"]{--bg:#1c1018;--card:#2b1925;--tx:#fff0f7;--mut:#c7a6ba;--bd:#543348;--ac:#f08ab9;--ok:#83d2ae;--warn:#f1c16e;--bad:#ff7189;color-scheme:dark}
+
+/* Reveal fallback for browsers without Anime.js execution. */
+#m .pulse-reveal{opacity:0;transform:translate3d(0,22px,0);transition:opacity .72s cubic-bezier(.2,.72,.22,1),transform .72s cubic-bezier(.2,.72,.22,1)}
+#m .pulse-reveal.is-visible{opacity:1;transform:translate3d(0,0,0)}
+@media(max-width:760px){#m .pulse-reveal{transform:translate3d(0,14px,0)}}
+@media(prefers-reduced-motion:reduce){#m .pulse-reveal,#m .pulse-reveal.is-visible{opacity:1;transform:none;transition:none!important}}
