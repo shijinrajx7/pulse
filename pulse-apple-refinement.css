@@ -1,0 +1,219 @@
+/* PULSE — Apple-inspired refinement.
+   Scoped to content surfaces only. The header, theme cycle control, auth,
+   notification controls, poster tools and application scripts are intentionally untouched.
+   Uses the existing PULSE theme tokens so every theme continues to work. */
+
+#m {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  letter-spacing: normal;
+}
+
+#m .pulse-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(300px, .95fr);
+  align-items: center;
+  gap: clamp(28px, 5vw, 72px);
+  min-height: 440px;
+  padding: clamp(30px, 5vw, 64px) 0;
+}
+
+#m .pulse-hero h1 {
+  max-width: 760px;
+  margin: 18px 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: clamp(48px, 7vw, 88px);
+  font-weight: 650;
+  line-height: .98;
+  letter-spacing: -.065em;
+  text-wrap: balance;
+}
+
+#m .pulse-hero h1 em {
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: -.055em;
+}
+
+#m .pulse-hero-lede {
+  max-width: 52ch;
+  font-size: clamp(16px, 1.4vw, 19px);
+  line-height: 1.65;
+}
+
+#m .pulse-hero-visual {
+  min-height: 330px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 24px;
+  background: var(--paper);
+  box-shadow: none;
+}
+
+#m .pulse-hero-visual svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+#m .pulse-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+#m .pulse-cta {
+  min-height: 44px;
+  padding: 12px 22px;
+  border: 1px solid var(--ac);
+  border-radius: 999px;
+  background: var(--ac);
+  color: var(--dark, #171816);
+  font: 600 14px/1.2 -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  transition: transform .18s ease, opacity .18s ease;
+}
+
+#m .pulse-cta.secondary {
+  background: transparent;
+  color: var(--tx);
+  border-color: var(--bd);
+}
+
+#m .pulse-cta:hover {
+  transform: translateY(-1px);
+  opacity: .9;
+}
+
+#m .pulse-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 22px 0 42px;
+}
+
+#m .pulse-metric {
+  min-width: 0;
+  padding: 22px;
+  border: 1px solid var(--bd);
+  border-radius: 18px;
+  background: var(--card);
+  box-shadow: none;
+}
+
+#m .pulse-metric strong {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 650;
+  letter-spacing: -.055em;
+}
+
+#m .pulse-editorial-row {
+  gap: 18px;
+  margin: 0 0 44px;
+}
+
+#m .pulse-ai-note {
+  min-height: 0;
+  padding: clamp(22px, 3vw, 32px);
+  border: 1px solid var(--bd);
+  border-radius: 20px;
+  background: var(--card);
+  box-shadow: none;
+}
+
+#m .pulse-ai-note h3,
+#m .pulse-block-heading h2 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-weight: 650;
+  letter-spacing: -.04em;
+}
+
+#m .pulse-block-heading {
+  margin: 0 0 16px;
+  padding: 0 0 14px;
+  border-bottom: 1px solid var(--bd);
+}
+
+#m .pulse-story-card {
+  display: grid;
+  grid-template-columns: minmax(130px, .32fr) minmax(0, 1fr) minmax(130px, .34fr);
+  align-items: start;
+  gap: 20px;
+  margin: 0 0 12px;
+  padding: 22px;
+  border: 1px solid var(--bd);
+  border-radius: 18px;
+  background: var(--card);
+  box-shadow: none;
+  transition: background-color .18s ease, border-color .18s ease;
+}
+
+#m .pulse-story-card:hover,
+#m .pulse-story-card.is-selected {
+  padding: 22px;
+  background: var(--paper);
+  border-color: var(--bd);
+  box-shadow: none;
+  transform: none;
+}
+
+#m .pulse-story-title h3 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-size: clamp(19px, 2vw, 25px);
+  font-weight: 650;
+  line-height: 1.18;
+  letter-spacing: -.04em;
+}
+
+#m .pulse-story-summary {
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+#m .pulse-story-actions button {
+  min-height: 40px;
+  padding: 9px 15px;
+  border-radius: 999px;
+  box-shadow: none;
+}
+
+#m :where(button, a, input, select, textarea):focus-visible {
+  outline: 2px solid var(--ac);
+  outline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+  #m .pulse-hero {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+  #m .pulse-hero-visual { min-height: 240px; }
+  #m .pulse-story-card {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+  }
+  #m .pulse-story-meta {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+}
+
+@media (max-width: 640px) {
+  #m .pulse-hero { gap: 22px; padding: 28px 0 34px; }
+  #m .pulse-hero h1 { font-size: clamp(44px, 13vw, 64px); }
+  #m .pulse-hero-visual { min-height: 190px; border-radius: 18px; }
+  #m .pulse-metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+  #m .pulse-metric { padding: 16px; border-radius: 15px; }
+  #m .pulse-editorial-row { grid-template-columns: minmax(0, 1fr); }
+  #m .pulse-story-card { padding: 17px; border-radius: 15px; }
+  #m .pulse-story-card:hover,
+  #m .pulse-story-card.is-selected { padding: 17px; }
+  #m .pulse-story-actions { display: flex; flex-wrap: wrap; }
+  #m .pulse-story-actions button { flex: 1 1 125px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #m .pulse-cta,
+  #m .pulse-story-card { transition: none; }
+}
