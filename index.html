@@ -867,7 +867,7 @@ button.g{box-shadow:none;background:color-mix(in srgb,var(--card) 78%,transparen
 <link rel="stylesheet" href="/pulse-apple-refinement.css">
 <link rel="stylesheet" href="/pulse-motion-refinement.css">
 <link rel="stylesheet" href="/pulse-camera-refinement.css">
-</head>
+<link rel="stylesheet" href="/pulse-story-motion.css">\n</head>
 <body>
 <header><div class="top"><span class="logo"><svg class="pulse-mark" viewBox="0 0 34 22" aria-hidden="true"><path d="M1 12h8l4-9 6 17 5-12 3 4h6"/></svg><span>PULSE</span></span><input id="q" type="search" placeholder="Search title or summary, press Enter"><select id="language" class="lang-control" aria-label="Choose language" title="Language"><option value="en">EN</option><option value="hi">हिन्दी</option><option value="ml">മലയാളം</option></select><button class="b g" id="th" type="button" aria-label="Change color theme" title="Change color theme">◐</button><select id="pulse-track" class="track-control" aria-label="Choose PULSE soundtrack" title="Choose PULSE soundtrack"><option value="signal">Signal Bloom</option><option value="night">Night Shift</option><option value="focus">Deep Focus</option></select><button class="b g" id="snd" aria-label="Play PULSE soundtrack" title="Play or stop PULSE original soundtrack">♫</button></div><nav id="nav"></nav></header>
 <main id="m"><section class="boot-card"><h1>PULSE</h1><p>Loading technology intelligence…</p><noscript><p>PULSE needs JavaScript enabled to load its live dashboard. You can still visit the links below.</p></noscript></section></main>
@@ -890,7 +890,7 @@ var Q={
   breaking:"category=in.(news,company,tech,ai)",social:"category=eq.social",early:"category=eq.social",ai:"category=eq.ai",cyber:"category=eq.cyber",tech:"category=eq.tech",company:"category=eq.company",local:"region=like.IN*"
 }
 ;
-var SEL="select=id,title,url,summary,label,platform,severity,score,published_at,detected_at,meta,sources(name)";
+var SEL="select=id,title,url,summary,label,category,region,platform,severity,score,published_at,detected_at,meta,sources(name)";
 var C=window.PULSE||{
 }
 ,OK=!!(C.url&&C.key),cur=(location.hash||"#overview").slice(1),T=0,term="";
@@ -927,8 +927,35 @@ function card(e){
 function emp(t){return '<div class="empty">'+(t||"No events yet. Run the worker once (see README), then refresh.")+"</div>"}
 function head(id){var n=S.filter(function(x){return x[0]==id})[0];return "<h2>"+n[1]+'</h2><p class="sub">'+(DESC[id]||"")+"</p>"}
 function stat(s){var iv=s.interval_min*6e4*3;if(!s.last_run_at)return["AWAITING CONFIGURATION","wait"];if(s.status=="rate_limited")return["RATE LIMITED","warn"];if(s.status=="offline")return["OFFLINE","off"];if(s.status=="degraded")return["DEGRADED","warn"];if(Date.now()-Date.parse(s.last_success_at)>iv)return["DELAYED","warn"];return["OPERATIONAL","ok"]}
-function list(id){var o=id=="social"||id=="early"?"score.desc.nullslast":"published_at.desc.nullslast";var f=id=="early"?"&published_at=gte."+new Date(Date.now()-216e5).toISOString():"";
-return api("events?"+SEL+"&"+Q[id]+f+srch()+"&order="+o+"&limit=50").then(function(r){return head(id)+(r.length?r.map(card).join(""):emp(id=="early"?"No recent discussions yet. Early signals come from social sources only.":0))})}
+var PULSE_FEED_STATE={id:"",offset:0,order:"published_at.desc.nullslast",filter:"",search:""};
+function list(id){
+ var o=id=="social"||id=="early"?"score.desc.nullslast":"published_at.desc.nullslast";
+ var f=id=="early"?"&published_at=gte."+new Date(Date.now()-216e5).toISOString():"";
+ PULSE_FEED_STATE={id:id,offset:0,order:o,filter:Q[id]+f,search:srch()};
+ return api("events?"+SEL+"&"+PULSE_FEED_STATE.filter+PULSE_FEED_STATE.search+"&order="+o+"&limit=50&offset=0").then(function(r){
+  PULSE_FEED_STATE.offset=r.length;
+  var emptyText=id=="early"?"No recent discussions yet. Early signals come from social sources only.":"No reports match this section or search.";
+  return head(id)+'<div id="pulse-news-feed">'+(r.length?r.map(card).join(""):emp(emptyText))+'</div><div class="pulse-feed-pagination" id="pulse-feed-pagination" '+(r.length<50?'hidden':'')+'><span id="pulse-feed-count">Showing '+r.length+' reports</span><button class="b g" id="pulse-load-more" type="button">Load 50 more reports ↓</button></div>';
+ });
+}
+function bindNewsPagination(){
+ var button=$("pulse-load-more"),count=$("pulse-feed-count"),host=$("pulse-news-feed"),wrap=$("pulse-feed-pagination");
+ if(!button||!host||!wrap)return;
+ button.onclick=function(){
+  if(button.disabled||PULSE_FEED_STATE.id!==cur)return;
+  button.disabled=true;button.textContent="Loading reports…";
+  var state=PULSE_FEED_STATE,offset=state.offset;
+  api("events?"+SEL+"&"+state.filter+state.search+"&order="+state.order+"&limit=50&offset="+offset).then(function(items){
+   if(state!==PULSE_FEED_STATE||state.id!==cur)return;
+   if(items.length){host.insertAdjacentHTML("beforeend",items.map(card).join(""));state.offset+=items.length}
+   if(count)count.textContent="Showing "+state.offset+" reports";
+   if(items.length<50){wrap.hidden=true}else{button.disabled=false;button.textContent="Load 50 more reports ↓"}
+  }).catch(function(error){
+   button.disabled=false;button.textContent="Retry loading reports";
+   if(count)count.textContent="Could not load more reports: "+(error.message||"connection error");
+  });
+ };
+}
 function ov(){
  var day=new Date(Date.now()-864e5).toISOString();
  return Promise.all([
@@ -1338,7 +1365,7 @@ function go(){if(pulseMapTimer){clearInterval(pulseMapTimer);pulseMapTimer=null}
 if(cur==="posters"){m.innerHTML=posterPage();localizeUi(m);bindPoster();return}
 if(!OK){m.innerHTML=head2("Setup needed","Database connection <span class='tag wait'>AWAITING CONFIGURATION</span>")+emp("Open config.js and set your Supabase URL and anon (publishable) key. See README.");return}
 var t=++T;m.innerHTML='<p class="sub">Loading…</p>';var p=cur=="overview"?ov():cur=="sources"?src():cur=="notif"?nt():cur=="map"?mp():list(cur);
-p.then(function(h){if(t==T){m.innerHTML=h;localizeUi(m);if(cur==="posters")bindPoster();if(cur==="notif")bindPushControls();openPushEventLink(m);if(window.anime&&!matchMedia("(prefers-reduced-motion: reduce)").matches){try{window.anime.animate(m.querySelectorAll(".card"),{opacity:[0,1],translateY:[10,0],delay:window.anime.stagger(28),duration:360,ease:"out(3)"})}catch(e){}}if(cur=="map"){startGlobe();$("globe-home").onclick=function(){if(pulseViewer)pulseViewer.camera.flyTo({destination:Cesium.Cartesian3.fromDegrees(10,18,23000000),duration:1.5})};$("globe-refresh").onclick=function(){if(!pulseViewer)startGlobe();Promise.all([getMapPoints().then(plotMapPoints),loadQuakes(),getVolcanoes().then(plotVolcanoes)]).catch(function(e){var status=$("globe-status");if(status)status.textContent="Refresh failed: "+e.message})};$("quake-toggle").onclick=function(){quakesEnabled=!quakesEnabled;this.textContent="USGS earthquakes: "+(quakesEnabled?"ON":"OFF");loadQuakes().catch(function(e){var s=$("globe-status");if(s)s.textContent="USGS feed unavailable: "+e.message})};$("volcano-toggle").onclick=function(){volcanoesEnabled=!volcanoesEnabled;this.textContent="GDACS volcanoes: "+(volcanoesEnabled?"ON":"OFF");getVolcanoes().then(plotVolcanoes).catch(function(e){var status=$("globe-status");if(status)status.textContent="Volcano feed unavailable: "+e.message})};pulseMapTimer=setInterval(function(){if(cur=="map"&&document.visibilityState=="visible"){getMapPoints().then(plotMapPoints).catch(function(){});loadQuakes().catch(function(){});getVolcanoes().then(plotVolcanoes).catch(function(){})}},60000)}}}).catch(function(e){if(t==T)m.innerHTML=head2("Connection problem","Database <span class='tag off'>OFFLINE</span>")+emp("Could not read the database ("+esc(e.message)+"). Check config.js, that schema.sql was run, and that the project is not paused.")})}
+p.then(function(h){if(t==T){m.innerHTML=h;localizeUi(m);if(cur==="posters")bindPoster();if(["breaking","social","early","ai","cyber","tech","company","local"].indexOf(cur)>=0)bindNewsPagination();if(cur==="notif")bindPushControls();openPushEventLink(m);if(window.anime&&!matchMedia("(prefers-reduced-motion: reduce)").matches){try{window.anime.animate(m.querySelectorAll(".card"),{opacity:[0,1],translateY:[10,0],delay:window.anime.stagger(28),duration:360,ease:"out(3)"})}catch(e){}}if(cur=="map"){startGlobe();$("globe-home").onclick=function(){if(pulseViewer)pulseViewer.camera.flyTo({destination:Cesium.Cartesian3.fromDegrees(10,18,23000000),duration:1.5})};$("globe-refresh").onclick=function(){if(!pulseViewer)startGlobe();Promise.all([getMapPoints().then(plotMapPoints),loadQuakes(),getVolcanoes().then(plotVolcanoes)]).catch(function(e){var status=$("globe-status");if(status)status.textContent="Refresh failed: "+e.message})};$("quake-toggle").onclick=function(){quakesEnabled=!quakesEnabled;this.textContent="USGS earthquakes: "+(quakesEnabled?"ON":"OFF");loadQuakes().catch(function(e){var s=$("globe-status");if(s)s.textContent="USGS feed unavailable: "+e.message})};$("volcano-toggle").onclick=function(){volcanoesEnabled=!volcanoesEnabled;this.textContent="GDACS volcanoes: "+(volcanoesEnabled?"ON":"OFF");getVolcanoes().then(plotVolcanoes).catch(function(e){var status=$("globe-status");if(status)status.textContent="Volcano feed unavailable: "+e.message})};pulseMapTimer=setInterval(function(){if(cur=="map"&&document.visibilityState=="visible"){getMapPoints().then(plotMapPoints).catch(function(){});loadQuakes().catch(function(){});getVolcanoes().then(plotVolcanoes).catch(function(){})}},60000)}}}).catch(function(e){if(t==T)m.innerHTML=head2("Connection problem","Database <span class='tag off'>OFFLINE</span>")+emp("Could not read the database ("+esc(e.message)+"). Check config.js, that schema.sql was run, and that the project is not paused.")})}
 $("q").addEventListener("keydown",function(e){if(e.key=="Enter"){term=this.value;go()}});
 // Theme selection is handled by the persisted site-wide selector below.
 var audioCtx=null,audioOsc=[],musicTimer=null,musicStep=0;
