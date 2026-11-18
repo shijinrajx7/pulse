@@ -1,0 +1,18 @@
+/* PULSE original look: charcoal surfaces + blue accent, plus the single cycling theme button.
+   Additive. To undo: delete this file and its <link> line in index.html. */
+:root{--bg:#f4f5f7;--card:#fff;--tx:#14171c;--mut:#5d6673;--bd:#d9dde3;--ac:#1f6feb;--ok:#1a7f37;--warn:#9a6700;--bad:#cf222e;--signal:#1f6feb;--orange:#1f6feb;--paper:#eceff3}
+@media(prefers-color-scheme:dark){:root:not([data-theme]){--bg:#0d0f12;--card:#161a1f;--tx:#e6e9ee;--mut:#8b94a1;--bd:#262c34;--ac:#4c8dff;--ok:#3fb950;--warn:#d29922;--bad:#f85149;--signal:#4c8dff;--orange:#4c8dff;--paper:#1b2027;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d0f12;--card:#161a1f;--tx:#e6e9ee;--mut:#8b94a1;--bd:#262c34;--ac:#4c8dff;--ok:#3fb950;--warn:#d29922;--bad:#f85149;--signal:#4c8dff;--orange:#4c8dff;--paper:#1b2027;color-scheme:dark}
+:root[data-theme="light"]{--bg:#f4f5f7;--card:#fff;--tx:#14171c;--mut:#5d6673;--bd:#d9dde3;--ac:#1f6feb;--ok:#1a7f37;--warn:#9a6700;--bad:#cf222e;--signal:#1f6feb;--orange:#1f6feb;--paper:#eceff3;color-scheme:light}
+/* startup screen and poster accents that were hard-coded orange */
+.intro-halo{border-color:#4c8dff44;box-shadow:0 0 0 22px #4c8dff10,0 0 0 58px #4c8dff08}
+.intro-halo::before{border-color:#4c8dff33}
+.intro-portrait-frame:after{border-color:#4c8dff66}
+.intro-progress i,.intro-screen button{background:#4c8dff;border-color:#4c8dff}
+.poster-tab.active{box-shadow:0 0 0 2px #4c8dff30}
+/* theme button: only a color dot. One tap = next theme; the dot shows the current theme's accent. */
+.top #th{display:inline-flex;align-items:center;justify-content:center;width:40px;min-width:40px;height:40px;padding:0}
+.top #th .th-dot{flex:none;width:16px;height:16px;border-radius:50%;background:var(--ac);box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 28%,transparent)}
+.top #th:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+@media(max-width:640px){.top #th{grid-area:auto;grid-column:3!important;grid-row:1!important;width:40px;min-width:40px;height:40px}}
+@media(max-width:360px){.top #th{width:36px;min-width:36px;height:36px}}
