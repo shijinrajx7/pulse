@@ -1,0 +1,44 @@
+/* PULSE camera movement refinement — lightweight, scroll-linked depth. */
+#m .pulse-hero-visual{
+  position:relative;
+  transform-style:preserve-3d;
+  perspective:1100px;
+  backface-visibility:hidden;
+}
+#m .pulse-hero-visual :where(img,svg,canvas){
+  max-width:100%;
+}
+@supports (animation-timeline:view()){
+  @media (prefers-reduced-motion:no-preference) and (min-width:761px){
+    #m .pulse-hero-visual{
+      animation:pulse-camera-dolly linear both;
+      animation-timeline:view();
+      animation-range:entry 0% exit 82%;
+    }
+    @keyframes pulse-camera-dolly{
+      0%{transform:perspective(1100px) translate3d(0,18px,-24px) scale(.965) rotateX(1.4deg)}
+      48%{transform:perspective(1100px) translate3d(0,0,10px) scale(1.012) rotateX(0)}
+      100%{transform:perspective(1100px) translate3d(0,-9px,24px) scale(1.025) rotateX(-.4deg)}
+    }
+  }
+}
+@media(max-width:760px){
+  #m .pulse-hero-visual{perspective:none;transform:none!important;animation:none!important}
+  #m .pulse-hero-visual :where(img,svg,canvas){height:auto;max-width:100%}
+  #m .poster-shell{display:grid;grid-template-columns:minmax(0,1fr)!important;gap:16px}
+  #m .poster-card,#m .poster-preview,#m #poster-email-check,#m #poster-auth,#m #poster-mfa{
+    width:100%;min-width:0;max-width:100%;box-sizing:border-box
+  }
+  #m .poster-preview{position:static!important}
+  #m .poster-actions{grid-template-columns:minmax(0,1fr)!important}
+  #m .poster-actions>*{width:100%;min-width:0}
+}
+@media(max-width:420px){
+  #m .poster-card,#m .poster-preview{padding:clamp(12px,4vw,18px)}
+  #m #poster-email-check{padding:clamp(12px,4vw,18px)}
+  #m .poster-form input,#m .poster-form button{font-size:16px}
+  #m .poster-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(prefers-reduced-motion:reduce){
+  #m .pulse-hero-visual{animation:none!important;transform:none!important}
+}
