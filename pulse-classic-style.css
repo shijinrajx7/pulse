@@ -406,30 +406,10 @@ header{backdrop-filter:none!important}
   outline:2px solid var(--orange);outline-offset:2px
 }
 
-/* Original PULSE theme selector control — restored without changing theme options or behaviour. */
-.theme-control{
-  width:auto;min-width:132px;max-width:170px;min-height:38px;
-  padding:0 30px 0 10px;background:var(--card);color:var(--tx);
-  border:1px solid var(--bd);border-radius:6px;font:600 12px system-ui,sans-serif;
-}
-@media(max-width:640px){
-  .top .theme-control{grid-column:3;grid-row:1;width:100%;min-width:0;max-width:none;min-height:40px;font-size:11px;padding-inline:6px}
-}
-@media(max-width:360px){
-  .top .theme-control{font-size:10px;padding-inline:4px}
-}
 
-/* Mobile layout for the restored single theme selector. */
+/* Original compact PULSE theme cycle button. */
+.top #th{width:40px;height:40px;min-width:40px;padding:0;display:inline-flex;align-items:center;justify-content:center;font-size:19px}
 @media(max-width:640px){
-  .top{
-    grid-template-columns:minmax(0,1fr) 64px minmax(96px,1.2fr) 40px!important;
-    grid-template-areas:"brand language theme theme"
-                        "search search search search"
-                        "track track track sound"!important;
-  }
-  .top .theme-control{grid-area:theme!important;grid-column:auto!important;grid-row:auto!important;width:100%!important;min-width:0!important;max-width:100%!important}
-}
-@media(max-width:360px){
-  .top{grid-template-columns:minmax(0,1fr) 56px minmax(84px,1.2fr) 36px!important}
-  .top .theme-control{font-size:10px!important}
+ .top #th{grid-column:3;grid-row:1;width:40px;height:40px;min-width:40px}
+ .top #snd{grid-column:4;grid-row:1;width:40px;height:40px}
 }
