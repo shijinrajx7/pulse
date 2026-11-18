@@ -92,6 +92,9 @@
       entries.forEach(function(entry){
         if(entry.isIntersecting){
           entry.target.classList.add("is-visible");
+          if(window.anime&&typeof window.anime.animate==="function"){
+            try{window.anime.animate(entry.target,{opacity:[0,1],y:[24,0],scale:[.985,1],duration:760,ease:"outExpo"})}catch(error){}
+          }
           revealObserver.unobserve(entry.target);
         }
       });
