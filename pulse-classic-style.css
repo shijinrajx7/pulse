@@ -405,3 +405,16 @@ header{backdrop-filter:none!important}
 #theme-toggle:focus-visible,#theme-palette:focus-visible,.theme-menu button:focus-visible{
   outline:2px solid var(--orange);outline-offset:2px
 }
+
+/* Original PULSE theme selector control — restored without changing theme options or behaviour. */
+.theme-control{
+  width:auto;min-width:132px;max-width:170px;min-height:38px;
+  padding:0 30px 0 10px;background:var(--card);color:var(--tx);
+  border:1px solid var(--bd);border-radius:6px;font:600 12px system-ui,sans-serif;
+}
+@media(max-width:640px){
+  .top .theme-control{grid-column:3;grid-row:1;width:100%;min-width:0;max-width:none;min-height:40px;font-size:11px;padding-inline:6px}
+}
+@media(max-width:360px){
+  .top .theme-control{font-size:10px;padding-inline:4px}
+}
