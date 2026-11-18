@@ -418,3 +418,18 @@ header{backdrop-filter:none!important}
 @media(max-width:360px){
   .top .theme-control{font-size:10px;padding-inline:4px}
 }
+
+/* Mobile layout for the restored single theme selector. */
+@media(max-width:640px){
+  .top{
+    grid-template-columns:minmax(0,1fr) 64px minmax(96px,1.2fr) 40px!important;
+    grid-template-areas:"brand language theme theme"
+                        "search search search search"
+                        "track track track sound"!important;
+  }
+  .top .theme-control{grid-area:theme!important;grid-column:auto!important;grid-row:auto!important;width:100%!important;min-width:0!important;max-width:100%!important}
+}
+@media(max-width:360px){
+  .top{grid-template-columns:minmax(0,1fr) 56px minmax(84px,1.2fr) 36px!important}
+  .top .theme-control{font-size:10px!important}
+}
