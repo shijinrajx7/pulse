@@ -1,0 +1,7 @@
+/* PULSE additional theme palettes. Existing theme names and defaults remain unchanged. */
+:root[data-theme="ocean"]{--bg:#071a22;--card:#102a35;--tx:#e8f7fb;--mut:#91b4bf;--bd:#254653;--ac:#55d6d2;--ok:#79d8b1;--warn:#f1c56b;--bad:#ff8292;color-scheme:dark}
+:root[data-theme="aurora"]{--bg:#0b1715;--card:#142722;--tx:#eff9ef;--mut:#a3c0b0;--bd:#2b4a3e;--ac:#b6ef65;--ok:#77d9a4;--warn:#f0c66d;--bad:#ff8491;color-scheme:dark}
+:root[data-theme="amber"]{--bg:#1b130b;--card:#2b2014;--tx:#fff4df;--mut:#c6ad88;--bd:#56402a;--ac:#f2b84b;--ok:#8dc99a;--warn:#ffd166;--bad:#ff7d75;color-scheme:dark}
+:root[data-theme="paper"]{--bg:#f2eee5;--card:#fffdf7;--tx:#25231e;--mut:#777166;--bd:#ded7c9;--ac:#a65a32;--ok:#287b54;--warn:#986b20;--bad:#b84242;color-scheme:light}
+:root[data-theme="mono"]{--bg:#101010;--card:#1c1c1c;--tx:#f5f5f5;--mut:#a5a5a5;--bd:#3b3b3b;--ac:#f1f1f1;--ok:#a6d5b0;--warn:#e4c27a;--bad:#ff8585;color-scheme:dark}
+:root[data-theme="rose"]{--bg:#1c1018;--card:#2b1925;--tx:#fff0f7;--mut:#c7a6ba;--bd:#543348;--ac:#f08ab9;--ok:#83d2ae;--warn:#f1c16e;--bad:#ff7189;color-scheme:dark}
