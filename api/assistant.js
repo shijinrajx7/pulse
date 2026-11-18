@@ -4,7 +4,7 @@ import { z } from "zod";
 
 const modelName = process.env.NVIDIA_MODEL || "nvidia/nemotron-3.5-lightning-30b-a3b";
 const pageNames = ["overview", "breaking", "social", "early", "ai", "cyber", "tech", "map", "company", "local", "sources", "notif", "posters"];
-const themes = ["system", "light", "dark"];
+const themes = ["system", "light", "dark", "forest", "sunset", "crimson", "ocean", "aurora", "amber", "paper", "mono", "rose"];
 const requestWindows = new Map();
 
 function overLimit(req) {
