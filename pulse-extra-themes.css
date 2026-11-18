@@ -11,3 +11,61 @@
 #m .pulse-reveal.is-visible{opacity:1;transform:translate3d(0,0,0)}
 @media(max-width:760px){#m .pulse-reveal{transform:translate3d(0,14px,0)}}
 @media(prefers-reduced-motion:reduce){#m .pulse-reveal,#m .pulse-reveal.is-visible{opacity:1;transform:none;transition:none!important}}
+
+/* Topic ribbon: keep every label separated and readable across themes. */
+#m .pulse-motion-marquee{
+  display:block;
+  width:100%;
+  max-width:100%;
+  margin:0 auto 28px;
+  overflow:hidden;
+  border-top:1px solid var(--bd);
+  border-bottom:1px solid var(--bd);
+  color:var(--mut);
+  background:color-mix(in srgb,var(--card) 34%,transparent);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+  mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+}
+#m .pulse-motion-marquee-track{
+  display:flex;
+  align-items:center;
+  width:max-content;
+  gap:0;
+  padding:13px 0;
+  white-space:nowrap;
+  will-change:transform;
+  animation:pulse-topic-marquee 34s linear infinite;
+}
+#m .pulse-motion-marquee-track span{
+  display:inline-flex;
+  align-items:center;
+  flex:0 0 auto;
+  gap:1.35rem;
+  padding:0 1.35rem;
+  color:var(--mut);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.105em;
+  line-height:1.5;
+  text-transform:uppercase;
+}
+#m .pulse-motion-marquee-track span::after{
+  content:"|";
+  color:var(--ac);
+  opacity:.9;
+  font-weight:500;
+}
+#m .pulse-motion-marquee:hover .pulse-motion-marquee-track{animation-play-state:paused}
+@keyframes pulse-topic-marquee{
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(-50%,0,0)}
+}
+@media(max-width:600px){
+  #m .pulse-motion-marquee{margin-bottom:20px}
+  #m .pulse-motion-marquee-track{padding:11px 0;animation-duration:42s}
+  #m .pulse-motion-marquee-track span{font-size:10px;padding:0 1rem;gap:1rem}
+}
+@media(prefers-reduced-motion:reduce){
+  #m .pulse-motion-marquee-track{animation:none;transform:none}
+  #m .pulse-motion-marquee{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
+}
