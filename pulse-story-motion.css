@@ -1,0 +1,33 @@
+/* PULSE story feed motion — reveal, depth and responsive-safe transitions. */
+#m .pulse-story-card{
+  transform:translate3d(0,0,0);
+  transform-origin:50% 60%;
+  backface-visibility:hidden;
+  animation:pulse-story-arrive .62s cubic-bezier(.2,.72,.22,1) both;
+}
+#m .pulse-story-card:nth-child(3n + 2){animation-delay:55ms}
+#m .pulse-story-card:nth-child(3n){animation-delay:100ms}
+@keyframes pulse-story-arrive{
+  from{opacity:.58;transform:translate3d(0,22px,0) scale(.988);filter:blur(2px)}
+  to{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}
+}
+#m .pulse-story-card:hover{
+  transform:translate3d(0,-3px,0);
+}
+#m .pulse-feed-pagination{
+  display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;
+  padding:26px 0 38px;color:var(--mut);font-size:12px;
+}
+#m .pulse-feed-pagination[hidden]{display:none!important}
+#m #pulse-load-more{min-height:44px;padding:10px 20px;border:1px solid var(--bd);background:var(--card);color:var(--tx);cursor:pointer}
+#m #pulse-load-more:hover{border-color:var(--tx);transform:translateY(-2px)}
+#m #pulse-load-more:disabled{opacity:.55;cursor:wait;transform:none}
+@media(max-width:760px){
+  #m .pulse-story-card{animation-duration:.48s}
+  #m .pulse-feed-pagination{padding:20px 0 30px}
+  #m #pulse-load-more{width:100%;min-height:46px}
+}
+@media(prefers-reduced-motion:reduce){
+  #m .pulse-story-card{animation:none!important;transition:none!important;transform:none!important;filter:none!important;opacity:1!important}
+  #m #pulse-load-more{transition:none!important}
+}
