@@ -27,7 +27,7 @@
         flowType: "pkce",
         persistSession: true,
         autoRefreshToken: true,
-        detectSessionInUrl: true
+        detectSessionInUrl: false
       }
     });
     return supabaseClient;
@@ -75,7 +75,7 @@
     }
 
     status("Finishing secure provider sign-in…");
-    auth.auth.getSession().then(function (result) {
+    auth.auth.exchangeCodeForSession(params.get("code")).then(function (result) {
       if (result.error) throw result.error;
       var session = savePosterSession(result.data && result.data.session);
       if (typeof window.posterBeginMfa !== "function") {
@@ -83,7 +83,7 @@
       }
       window.posterBeginMfa(session);
       try {
-        window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
+        window.history.replaceState({}, document.title, window.location.pathname + "#posters");
       } catch (error) {
         /* The session is already stored; URL cleanup is cosmetic. */
       }
