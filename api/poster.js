@@ -160,12 +160,14 @@ export default async function handler(req, res) {
 
     if (body.action === "quota") {
       if (admin) return json(res, 200, { admin: true, used: null, limit: null });
-      const result = await fetch(supabaseUrl + "/rest/v1/poster_generations?user_id=eq." + encodeURIComponent(userId) + "&select=generation_count", {
-        headers: { apikey: serviceKey, Authorization: "Bearer " + serviceKey },
+      const result = await fetch(supabaseUrl + "/rest/v1/rpc/get_pulse_poster_usage", {
+        method: "POST",
+        headers: { apikey: serviceKey, Authorization: "Bearer " + serviceKey, "Content-Type": "application/json" },
+        body: JSON.stringify({ p_user_id: userId }),
       });
-      if (!result.ok) return json(res, 503, { error: "Run api/poster-usage.sql once in Supabase to enable poster limits." });
-      const rows = await result.json();
-      return json(res, 200, { admin: false, used: Number(rows?.[0]?.generation_count || 0), limit: LIMIT });
+      if (!result.ok) return json(res, 503, { error: "Daily poster quota is not configured. Please contact PULSE support." });
+      const used = Number(await result.json() || 0);
+      return json(res, 200, { admin: false, used, limit: LIMIT, resets: "UTC midnight" });
     }
 
     if (body.action !== "generate") return json(res, 400, { error: "Choose a poster action." });
