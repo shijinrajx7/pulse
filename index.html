@@ -1361,7 +1361,7 @@ function nt(){
   return settings+device+priorities+sounds+history+recent;
  });
 }
-function go(){if(pulseMapTimer){clearInterval(pulseMapTimer);pulseMapTimer=null}if(globeResizeObserver){globeResizeObserver.disconnect();globeResizeObserver=null}if(pulseViewer){pulseViewer.destroy();pulseViewer=null;pulseEntities=[];quakeEntities=[];volcanoEntities=[]}$("nav").innerHTML=S.map(function(s){return '<button class="'+(s[0]==cur?"on":"")+'" onclick="cur=\''+s[0]+'\';location.hash=cur;go()">'+tr(s[1])+"</button>"}).join("");var m=$("m");
+function go(){if(pulseMapTimer){clearInterval(pulseMapTimer);pulseMapTimer=null}if(globeResizeObserver){globeResizeObserver.disconnect();globeResizeObserver=null}if(pulseViewer){pulseViewer.destroy();pulseViewer=null;pulseEntities=[];quakeEntities=[];volcanoEntities=[]}$("nav").innerHTML=S.map(function(s){return '<button type="button" class="'+(s[0]==cur?"on":"")+'" data-pulse-nav="'+esc(s[0])+'" aria-current="'+(s[0]===cur?"page":"false")+'">'+tr(s[1])+"</button>"}).join("");var m=$("m");
 if(cur==="posters"){m.innerHTML=posterPage();localizeUi(m);bindPoster();return}
 if(!OK){m.innerHTML=head2("Setup needed","Database connection <span class='tag wait'>AWAITING CONFIGURATION</span>")+emp("Open config.js and set your Supabase URL and anon (publishable) key. See README.");return}
 var t=++T;m.innerHTML='<p class="sub">Loading…</p>';var p=cur=="overview"?ov():cur=="sources"?src():cur=="notif"?nt():cur=="map"?mp():list(cur);
@@ -1431,6 +1431,18 @@ function sendAssistant(text){
 $("assistant-launcher").addEventListener("click",function(){setAssistantOpen(true);checkAssistantConnection()});$("assistant-close").addEventListener("click",function(){setAssistantOpen(false)});$("assistant-health").addEventListener("click",checkAssistantConnection);$("assistant-form").addEventListener("submit",function(e){e.preventDefault();var input=$("assistant-input"),text=input.value;input.value="";sendAssistant(text)});document.querySelectorAll("[data-assist]").forEach(function(button){button.addEventListener("click",function(){sendAssistant(button.getAttribute("data-assist"))})});
 if(window.anime&&!matchMedia("(prefers-reduced-motion: reduce)").matches){try{window.anime.animate(".pulse-mark path",{strokeDashoffset:[58,-58],opacity:[.5,1],duration:1900,ease:"inOutSine",loop:true})}catch(e){}}
 var intro=$("intro"),introClosed=false;function closeIntro(){if(introClosed||!intro)return;introClosed=true;pulseEnterExperience();try{sessionStorage.setItem("pulse-intro-seen","1")}catch(e){}}window.PULSE_CLOSE_INTRO=closeIntro;$("intro-skip").addEventListener("click",closeIntro);try{if(sessionStorage.getItem("pulse-intro-seen")||matchMedia("(prefers-reduced-motion: reduce)").matches)closeIntro();else setTimeout(closeIntro,3200)}catch(e){setTimeout(closeIntro,3200)}
+/* Delegated navigation survives nav re-rendering and avoids inline-handler failures. */
+window.go=go;
+document.getElementById("nav").addEventListener("click",function(event){
+ var button=event.target.closest("[data-pulse-nav]");
+ if(!button)return;
+ var next=button.getAttribute("data-pulse-nav");
+ if(!S.some(function(item){return item[0]===next}))return;
+ event.preventDefault();
+ cur=next;
+ if(location.hash!=="#"+next)history.replaceState(null,"","#"+next);
+ go();
+});
 window.addEventListener("hashchange",function(){cur=location.hash.slice(1)||"overview";go()});
 var last="",seenEventIds=null,alertAudio=null;
 if(location.protocol!=="file:"&&navigator.serviceWorker)navigator.serviceWorker.register("/service-worker.js").catch(function(){});
