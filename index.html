@@ -866,6 +866,7 @@ button.g{box-shadow:none;background:color-mix(in srgb,var(--card) 78%,transparen
 <link rel="stylesheet" href="/pulse-original-look.css">
 <link rel="stylesheet" href="/pulse-apple-refinement.css">
 <link rel="stylesheet" href="/pulse-motion-refinement.css">
+<link rel="stylesheet" href="/pulse-camera-refinement.css">
 </head>
 <body>
 <header><div class="top"><span class="logo"><svg class="pulse-mark" viewBox="0 0 34 22" aria-hidden="true"><path d="M1 12h8l4-9 6 17 5-12 3 4h6"/></svg><span>PULSE</span></span><input id="q" type="search" placeholder="Search title or summary, press Enter"><select id="language" class="lang-control" aria-label="Choose language" title="Language"><option value="en">EN</option><option value="hi">हिन्दी</option><option value="ml">മലയാളം</option></select><button class="b g" id="th" type="button" aria-label="Change color theme" title="Change color theme">◐</button><select id="pulse-track" class="track-control" aria-label="Choose PULSE soundtrack" title="Choose PULSE soundtrack"><option value="signal">Signal Bloom</option><option value="night">Night Shift</option><option value="focus">Deep Focus</option></select><button class="b g" id="snd" aria-label="Play PULSE soundtrack" title="Play or stop PULSE original soundtrack">♫</button></div><nav id="nav"></nav></header>
@@ -1036,6 +1037,7 @@ function posterEmailFriendlyError(error){
  if(/sender.*(not verified|unverified)|not.*verified.*sender/i.test(raw))return "Brevo has not verified the sender address. Verify shijinrajx@gmail.com under Brevo → Settings → Senders, domains, IPs, then retry.";
  if(/535|authentication failed|invalid login|bad credentials/i.test(raw))return "Brevo rejected the SMTP credentials. Recheck the SMTP login and SMTP key in Supabase → Authentication → Emails → SMTP settings.";
  if(/rate.?limit|too many requests/i.test(raw))return "Email sending is temporarily rate-limited. Wait a few minutes before requesting another link.";
+ if(/failed to fetch|networkerror|network request failed|load failed|fetch failed|connection.*(reset|refused|timed out)/i.test(raw))return "PULSE could not reach Supabase Auth from this browser, so no email request was confirmed. Check your connection or browser privacy extensions, then retry. If the request reaches Supabase but sending still fails, check the Auth logs for the SMTP provider error (for example, Brevo's 5.7.1 IP restriction).";
  return raw;
 }
 function posterRequestEmailLink(){
@@ -1434,5 +1436,6 @@ go();tick();setInterval(tick,10000);
 <script defer src="/auth-enhancements.js"></script>
 <script defer src="/pulse-motion.js"></script>
 <script defer src="/pulse-story-selection.js"></script>
+<script defer src="/pulse-camera-refinement.js"></script>
 </body>
 </html>
