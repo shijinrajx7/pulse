@@ -1,0 +1,175 @@
+/* PULSE — restrained motion layer
+   Additive visual enhancement only. No application logic, navigation,
+   authentication, notifications, posters, theme controls or content changed.
+   Uses native CSS scroll timelines when supported; static layout is the fallback. */
+
+#m .pulse-hero {
+  position: relative;
+  isolation: isolate;
+}
+
+#m .pulse-hero-copy,
+#m .pulse-hero-visual {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+#m .pulse-hero-visual {
+  position: relative;
+  perspective: 1000px;
+  transform-origin: 50% 50%;
+}
+
+#m .pulse-hero-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(135deg, transparent 35%, color-mix(in srgb, var(--ac) 7%, transparent) 100%);
+  opacity: .7;
+}
+
+#m .pulse-hero-visual svg {
+  transform: translate3d(0, 0, 0) scale(1.015);
+  transform-origin: center;
+  will-change: transform;
+}
+
+#m .pulse-hero-visual .gridline {
+  opacity: .42;
+}
+
+#m .pulse-hero-visual .signal-line {
+  stroke-dasharray: 900;
+  stroke-dashoffset: 0;
+}
+
+#m .pulse-hero-visual .node {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform .35s cubic-bezier(.2,.7,.2,1), opacity .35s ease;
+}
+
+#m .pulse-hero-visual:hover .node {
+  transform: scale(1.18);
+}
+
+#m .pulse-hero-actions .pulse-cta {
+  transform: translateZ(0);
+  transition: transform .24s cubic-bezier(.2,.8,.2,1), background-color .2s ease, border-color .2s ease, opacity .2s ease;
+}
+
+#m .pulse-hero-actions .pulse-cta:hover {
+  transform: translate3d(0,-3px,0);
+}
+
+#m .pulse-metric,
+#m .pulse-story-card,
+#m .pulse-ai-note {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+#m .pulse-story-card {
+  transition: transform .28s cubic-bezier(.2,.7,.2,1), border-color .2s ease, background-color .2s ease;
+}
+
+#m .pulse-story-card:hover {
+  transform: translate3d(0,-3px,0);
+}
+
+#m .pulse-metric {
+  transition: transform .28s cubic-bezier(.2,.7,.2,1), border-color .2s ease;
+}
+
+#m .pulse-metric:hover {
+  transform: translate3d(0,-2px,0);
+}
+
+/* Scroll-linked motion is progressive enhancement, not a dependency. */
+@supports (animation-timeline: view()) {
+  #m .pulse-hero-copy {
+    animation: pulse-copy-arrive linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 38%;
+  }
+
+  #m .pulse-hero-visual svg {
+    animation: pulse-signal-camera linear both;
+    animation-timeline: view();
+    animation-range: entry 0% exit 85%;
+  }
+
+  #m .pulse-hero-visual .signal-line {
+    animation: pulse-signal-draw linear both;
+    animation-timeline: view();
+    animation-range: entry 8% cover 48%;
+  }
+
+  #m .pulse-metric,
+  #m .pulse-story-card,
+  #m .pulse-ai-note {
+    animation: pulse-content-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 24%;
+  }
+}
+
+@keyframes pulse-copy-arrive {
+  from { opacity: .55; transform: translate3d(0,18px,0); }
+  to   { opacity: 1; transform: translate3d(0,0,0); }
+}
+
+@keyframes pulse-signal-camera {
+  from { transform: translate3d(0,24px,0) scale(.965); }
+  to   { transform: translate3d(0,-8px,0) scale(1.035); }
+}
+
+@keyframes pulse-signal-draw {
+  from { stroke-dashoffset: 900; opacity: .35; }
+  to   { stroke-dashoffset: 0; opacity: 1; }
+}
+
+@keyframes pulse-content-reveal {
+  from { opacity: .45; transform: translate3d(0,16px,0); }
+  to   { opacity: 1; transform: translate3d(0,0,0); }
+}
+
+@media (max-width: 640px) {
+  #m .pulse-hero-visual svg {
+    transform: scale(1.005);
+  }
+
+  #m .pulse-hero-visual:hover .node,
+  #m .pulse-story-card:hover,
+  #m .pulse-metric:hover,
+  #m .pulse-hero-actions .pulse-cta:hover {
+    transform: none;
+  }
+
+  #m .pulse-hero-visual .gridline {
+    opacity: .3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #m .pulse-hero-copy,
+  #m .pulse-hero-visual svg,
+  #m .pulse-hero-visual .signal-line,
+  #m .pulse-metric,
+  #m .pulse-story-card,
+  #m .pulse-ai-note {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    stroke-dashoffset: 0 !important;
+  }
+
+  #m .pulse-hero-actions .pulse-cta,
+  #m .pulse-story-card,
+  #m .pulse-metric,
+  #m .pulse-hero-visual .node {
+    transition: none !important;
+  }
+}
