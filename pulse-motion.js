@@ -7,6 +7,24 @@
   var finePointer=window.matchMedia&&window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   var body=document.body;
 
+  /* Separate the overview topic ribbon labels that were rendered as one run-on text node. */
+  function separateTopicLabels(){
+    var root=document.getElementById("m");
+    if(!root)return;
+    var walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+    var node;
+    var pattern=/Artificial Intelligence\\s*Cybersecurity\\s*Global Signals\\s*Emerging Technology\\s*Independent Sources\\s*Digital Culture/gi;
+    while((node=walker.nextNode())){
+      if(!pattern.test(node.nodeValue)){pattern.lastIndex=0;continue;}
+      pattern.lastIndex=0;
+      node.nodeValue=node.nodeValue.replace(pattern,"Artificial Intelligence  |  Cybersecurity  |  Global Signals  |  Emerging Technology  |  Independent Sources  |  Digital Culture");
+      pattern.lastIndex=0;
+    }
+  }
+  separateTopicLabels();
+  var topicObserver=new MutationObserver(separateTopicLabels);
+  topicObserver.observe(document.getElementById("m")||document.body,{childList:true,subtree:true,characterData:true});
+
   var progress=document.createElement("div");
   progress.id="pulse-scroll-progress";
   progress.setAttribute("aria-hidden","true");
