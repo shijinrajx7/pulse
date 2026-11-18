@@ -865,14 +865,7 @@ button.g{box-shadow:none;background:color-mix(in srgb,var(--card) 78%,transparen
 <link rel="stylesheet" href="/pulse-classic-style.css">
 </head>
 <body>
-<header><div class="top"><span class="logo"><svg class="pulse-mark" viewBox="0 0 34 22" aria-hidden="true"><path d="M1 12h8l4-9 6 17 5-12 3 4h6"/></svg><span>PULSE</span></span><input id="q" type="search" placeholder="Search title or summary, press Enter"><select id="language" class="lang-control" aria-label="Choose language" title="Language"><option value="en">EN</option><option value="hi">हिन्दी</option><option value="ml">മലയാളം</option></select><select class="theme-control" id="th" aria-label="Choose PULSE colour theme" title="Choose PULSE colour theme">
-<option value="light">Paper Signal</option>
-<option value="dark">Night Signal</option>
-<option value="forest">Forest</option>
-<option value="sunset">Warm Ember</option>
-<option value="crimson">Crimson</option>
-<option value="system">System</option>
-</select><select id="pulse-track" class="track-control" aria-label="Choose PULSE soundtrack" title="Choose PULSE soundtrack"><option value="signal">Signal Bloom</option><option value="night">Night Shift</option><option value="focus">Deep Focus</option></select><button class="b g" id="snd" aria-label="Play PULSE soundtrack" title="Play or stop PULSE original soundtrack">♫</button></div><nav id="nav"></nav></header>
+<header><div class="top"><span class="logo"><svg class="pulse-mark" viewBox="0 0 34 22" aria-hidden="true"><path d="M1 12h8l4-9 6 17 5-12 3 4h6"/></svg><span>PULSE</span></span><input id="q" type="search" placeholder="Search title or summary, press Enter"><select id="language" class="lang-control" aria-label="Choose language" title="Language"><option value="en">EN</option><option value="hi">हिन्दी</option><option value="ml">മലയാളം</option></select><button class="b g" id="th" type="button" aria-label="Change color theme" title="Change color theme">◐</button><select id="pulse-track" class="track-control" aria-label="Choose PULSE soundtrack" title="Choose PULSE soundtrack"><option value="signal">Signal Bloom</option><option value="night">Night Shift</option><option value="focus">Deep Focus</option></select><button class="b g" id="snd" aria-label="Play PULSE soundtrack" title="Play or stop PULSE original soundtrack">♫</button></div><nav id="nav"></nav></header>
 <main id="m"><section class="boot-card"><h1>PULSE</h1><p>Loading technology intelligence…</p><noscript><p>PULSE needs JavaScript enabled to load its live dashboard. You can still visit the links below.</p></noscript></section></main>
 <footer class="site-footer"><strong>More from Shijin</strong><div class="site-footer-links"><a href="https://shijinexe.vercel.app" target="_blank" rel="noopener noreferrer">Shijin EXE</a><a href="https://moodle-liard.vercel.app" target="_blank" rel="noopener noreferrer">Moodle Liard</a></div></footer>
 <div id="pulse-notices" aria-live="polite" aria-relevant="additions"></div>
@@ -1359,24 +1352,21 @@ document.addEventListener("change",function(e){if(e.target&&e.target.id==="alert
 document.addEventListener("click",function(e){var target=e.target&&e.target.closest?e.target.closest("button"):null;if(!target)return;var posterId=target.getAttribute("data-generate-poster");if(posterId){posterPendingEvent=PULSE_EVENT_CACHE[String(posterId)]||null;cur="posters";location.hash="posters";go();return}var eventId=target.getAttribute("data-analyze-event");if(eventId){var event=PULSE_EVENT_CACHE[String(eventId)];if(event)analyzePulseEvent(event)}});
 var languageSelect=$("language");if(languageSelect){languageSelect.value=PULSE_LANG;languageSelect.addEventListener("change",function(){PULSE_LANG=this.value;document.documentElement.lang=PULSE_LANG;try{localStorage.setItem("pulse.language",PULSE_LANG)}catch(e){}go()})}
 try{
- var savedTheme=localStorage.getItem("pulse.theme")||"light";
- if(!["system","light","dark","forest","sunset","crimson"].includes(savedTheme))savedTheme="light";
- if(savedTheme==="system")document.documentElement.removeAttribute("data-theme");
- else document.documentElement.setAttribute("data-theme",savedTheme);
- $("th").value=savedTheme;
-}catch(e){
- document.documentElement.setAttribute("data-theme","light");
- $("th").value="light";
-}
-$("th").addEventListener("change",function(){
- var selected=this.value;
- if(selected==="system")document.documentElement.removeAttribute("data-theme");
- else document.documentElement.setAttribute("data-theme",selected);
- try{localStorage.setItem("pulse.theme",selected)}catch(e){}
- this.title="Colour theme: "+this.options[this.selectedIndex].text;
+ var savedTheme=localStorage.getItem("pulse.theme");
+ if(savedTheme&&savedTheme!=="system")document.documentElement.setAttribute("data-theme",savedTheme);
+}catch(e){}
+$("th").onclick=function(){
+ var root=document.documentElement,options=["system","light","dark","forest","sunset","crimson"];
+ var current=root.getAttribute("data-theme")||"system";
+ var next=(options.indexOf(current)+1)%options.length;
+ if(options[next]==="system")root.removeAttribute("data-theme");
+ else root.setAttribute("data-theme",options[next]);
+ try{localStorage.setItem("pulse.theme",options[next])}catch(e){}
+ this.title="Theme: "+options[next];
+ this.setAttribute("aria-label",this.title);
  var meta=document.querySelector('meta[name="theme-color"]');
- if(meta)meta.content=getComputedStyle(document.documentElement).getPropertyValue("--bg").trim()||"#171816";
-});
+ if(meta)meta.content=getComputedStyle(root).getPropertyValue("--bg").trim()||"#171816";
+};
 function setAssistantOpen(open){var panel=$("assistant-panel");if(!panel)return;panel.classList.toggle("open",open);panel.setAttribute("aria-hidden",open?"false":"true");if(open)setTimeout(function(){var input=$("assistant-input");if(input)input.focus()},60)}
 function assistantBubble(text,who){var bubble=document.createElement("div");bubble.className="assistant-msg "+who;bubble.textContent=text;$("assistant-messages").appendChild(bubble);bubble.scrollIntoView({block:"nearest"});return bubble}
 function analyzePulseEvent(event){
@@ -1390,7 +1380,7 @@ function analyzePulseEvent(event){
  .finally(function(){clearTimeout(timer);send.disabled=false;send.textContent=tr("Send")});
 }
 function saveHeadlineText(file){var blob=new Blob([file.text||""],{type:"text/plain;charset=utf-8"}),filename=(file.filename||"pulse-headlines.txt").replace(/[^a-z0-9._-]/gi,"-");if(window.showDirectoryPicker){window.showDirectoryPicker().then(function(parent){return parent.getDirectoryHandle("PULSE",{create:true})}).then(function(folder){return folder.getFileHandle(filename,{create:true})}).then(function(handle){return handle.createWritable()}).then(function(writer){return writer.write(blob).then(function(){return writer.close()})}).then(function(){assistantBubble("Saved in the PULSE folder inside the location you selected.","assistant")}).catch(function(err){if(err&&err.name!=="AbortError")assistantBubble("Could not save the file. Check the folder permission and try again.","assistant")});return}if(window.showSaveFilePicker){window.showSaveFilePicker({suggestedName:filename,types:[{description:"Text file",accept:{"text/plain":[".txt"]}}]}).then(function(handle){return handle.createWritable()}).then(function(writer){return writer.write(blob).then(function(){return writer.close()})}).catch(function(err){if(err&&err.name!=="AbortError")assistantBubble("Could not save the file. Try again.","assistant")});return}var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(a.href)},1000)}
-function applyAssistantActions(actions){(actions||[]).forEach(function(action){if(action.clientAction){var a=action.clientAction;if(a.type==="navigate"&&S.some(function(s){return s[0]===a.value})){cur=a.value;location.hash=cur;go()}else if(a.type==="theme"&&["system","light","dark","forest","sunset","crimson"].indexOf(a.value)>=0){if(a.value==="system")document.documentElement.removeAttribute("data-theme");else document.documentElement.setAttribute("data-theme",a.value);try{localStorage.setItem("pulse.theme",a.value)}catch(e){}var themeControl=$("th");if(themeControl)themeControl.value=a.value;}}if(action.kind==="headline_export"){var bubble=assistantBubble("Ready: "+(action.count||0)+" matching headline(s). Choose a location to save the text file.","assistant"),button=document.createElement("button");button.className="b assistant-save";button.type="button";button.textContent="Save headlines as .txt";button.addEventListener("click",function(){saveHeadlineText(action)});bubble.appendChild(document.createElement("br"));bubble.appendChild(button)}})}
+function applyAssistantActions(actions){(actions||[]).forEach(function(action){if(action.clientAction){var a=action.clientAction;if(a.type==="navigate"&&S.some(function(s){return s[0]===a.value})){cur=a.value;location.hash=cur;go()}else if(a.type==="theme"&&["system","light","dark","forest","sunset","crimson"].indexOf(a.value)>=0){if(a.value==="system")document.documentElement.removeAttribute("data-theme");else document.documentElement.setAttribute("data-theme",a.value);try{localStorage.setItem("pulse.theme",a.value)}catch(e){}}}if(action.kind==="headline_export"){var bubble=assistantBubble("Ready: "+(action.count||0)+" matching headline(s). Choose a location to save the text file.","assistant"),button=document.createElement("button");button.className="b assistant-save";button.type="button";button.textContent="Save headlines as .txt";button.addEventListener("click",function(){saveHeadlineText(action)});bubble.appendChild(document.createElement("br"));bubble.appendChild(button)}})}
 var assistantHistory=[];
 function checkAssistantConnection(){
  var status=$("assistant-index"),button=$("assistant-health");if(button){button.disabled=true;button.textContent="Checking…"}if(status)status.textContent="Checking PULSE AI endpoint…";
